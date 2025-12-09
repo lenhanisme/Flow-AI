@@ -26,7 +26,7 @@
         
         .main-content { flex: 1; overflow-y: auto; padding: 30px; position: relative; }
         .mobile-header { display: none; }
-        .view-section { display: none; animation: slideIn 0.4s ease; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; } /* Tăng padding bottom để ko bị che bởi menu */
+        .view-section { display: none; animation: slideIn 0.4s ease; max-width: 1200px; margin: 0 auto; padding-bottom: 120px; }
         .view-section.active { display: block; }
         @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -34,42 +34,71 @@
         .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
         .card { background: var(--bg-card); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #f0f0f0; position: relative; }
         
+        /* Balance Card */
         .balance-card { background: var(--gradient); color: white; position: relative; overflow: hidden; }
         .balance-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
         .balance-val { font-size: 40px; font-weight: 700; margin: 10px 0 20px; }
         
-        .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-        .act-btn:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
-        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
-        
-        /* WALLET STYLES */
-        .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
-        .bank-card.add-new { background: white; color: #888; border: 2px dashed #ccc; align-items: center; justify-content: center; cursor: pointer; }
-        .bank-logo { font-size: 14px; font-weight: 700; opacity: 0.9; text-transform: uppercase; background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 5px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+        /* Wallet Card Fix (Lỗi 1) */
+        .bank-card {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); /* Màu xanh lá mặc định */
+            color: white !important; /* Bắt buộc chữ trắng */
+            padding: 25px; 
+            border-radius: 20px; 
+            margin-bottom: 0; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+            position: relative; 
+            overflow: hidden; 
+            min-height: 180px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between;
+        }
+        .bank-card.add-new { 
+            background: white !important; 
+            color: #888 !important; 
+            border: 2px dashed #ccc; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+        }
+        .bank-logo { 
+            font-size: 16px; font-weight: 700; opacity: 1; text-transform: uppercase; 
+            background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 8px; 
+            display: inline-block; white-space: nowrap;
+        }
 
-        /* PROFILE STYLES */
-        .profile-header { text-align: center; margin-bottom: 20px; position: relative; }
-        .avatar-wrapper { width: 100px; height: 100px; margin: 0 auto 15px; position: relative; cursor: pointer; }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .avatar-overlay { position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
-        .info-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f5f5f5; align-items: center; font-size: 14px; }
-        .info-label { color: #888; display: flex; align-items: center; gap: 8px; }
-        .info-val { font-weight: 600; color: var(--text-main); }
-        .info-val.readonly { color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
-        .device-item { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; }
-        .device-icon { font-size: 18px; color: var(--primary); margin-right: 10px; }
+        /* Profile Styles Fix (Lỗi 2) */
+        .profile-header { text-align: center; margin-bottom: 20px; }
+        .avatar-wrapper { width: 110px; height: 110px; margin: 0 auto 15px; position: relative; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .avatar-overlay { position: absolute; bottom: 5px; right: 5px; background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; font-size: 14px; }
         
-        /* FORM */
-        .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; }
-        .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
-        .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
-        .btn-danger { background: #FFE5E5; color: var(--danger); border: none; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
-
-        /* RESPONSIVE & MOBILE NAV FIX */
+        .info-row { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 16px 0; border-bottom: 1px solid #f0f0f0; 
+        }
+        .info-label { color: #888; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .info-val { font-weight: 600; color: var(--text-main); font-size: 15px; text-align: right; }
+        
+        /* Input SĐT Đẹp hơn */
+        .phone-input-group {
+            display: flex; align-items: center; gap: 8px;
+            background: #F8F9FA; padding: 6px 12px; border-radius: 10px; border: 1px solid #eee;
+        }
+        .phone-input-group input {
+            border: none; background: transparent; outline: none; 
+            font-weight: 600; color: var(--text-main); width: 100px; text-align: right;
+        }
+        .action-icon {
+            width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+            border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 12px;
+        }
+        .icon-save { background: #E8F5E9; color: var(--success); }
+        .icon-cancel { background: #FFEBEE; color: var(--danger); }
+        
+        /* Mobile Nav Fix (Lỗi 3) */
         .bottom-nav { display: none; }
-        
         @media (max-width: 900px) { 
             .sidebar { display: none; } 
             .grid-2 { grid-template-columns: 1fr; } 
@@ -77,52 +106,56 @@
             .main-content { padding: 15px 15px 90px 15px; } 
             .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
             
-            /* === FIX CSS MENU BOTTOM === */
+            /* MENU TO RÕ RÀNG */
             .bottom-nav { 
                 position: fixed; bottom: 0; left: 0; width: 100%; 
-                background: rgba(255, 255, 255, 0.98); 
-                border-top: 1px solid #eee; 
+                background: white; border-top: 1px solid #eee; 
                 display: flex; justify-content: space-around; 
-                padding: 12px 0 25px; /* Thêm khoảng trống ở dưới cho các dòng iPhone X trở lên */
-                z-index: 1000;
-                box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
-                backdrop-filter: blur(10px);
+                padding: 12px 0 25px; /* Thêm padding dưới cho iPhone */
+                z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
             } 
             .b-nav-item { 
                 display: flex; flex-direction: column; align-items: center; 
-                color: #999; font-size: 11px; font-weight: 500;
-                gap: 6px; border:none; background:none; 
-                transition: 0.2s; width: 70px;
+                color: #aaa; font-size: 11px; gap: 5px; border:none; background:none; 
+                width: 70px; /* Vùng bấm rộng */
             } 
-            .b-nav-item i {
-                font-size: 24px; /* Icon to hơn */
+            .b-nav-item i { 
+                font-size: 24px; /* Icon to */ margin-bottom: 2px;
                 transition: 0.2s;
             }
-            .b-nav-item.active { 
-                color: var(--primary); 
-            }
-            .b-nav-item.active i {
-                transform: translateY(-3px);
-            }
+            .b-nav-item.active { color: var(--primary); }
+            .b-nav-item.active i { transform: translateY(-3px); }
         }
 
-        /* MODAL (Standard) */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
-        .modal-overlay.open { opacity: 1; pointer-events: auto; }
-        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
-        .modal-overlay.open .modal-box { transform: scale(1); }
+        /* Utils */
+        .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
+        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
+        .device-item { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; }
         
-        /* OTHER UTILS */
+        /* Modal & Popup */
+        .modal-overlay, .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
+        .modal-overlay.active, .popup-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box, .popup-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.active .modal-box, .popup-overlay.active .popup-box { transform: scale(1); }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; }
+        .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
+        .btn-outline { width: 100%; padding: 12px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 14px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        
+        /* Chart */
         .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding-top: 20px; }
         .bar-col { width: 12%; background: #EEF4FF; border-radius: 8px; transition: height 1s; height: 0; }
         .bar-col.fill { background: var(--primary); }
-        .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        /* Group Styles */
         .member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #F8F9FA; border-radius: 12px; margin-bottom: 10px; }
         .role-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
         .role-admin { background: #E3F2FD; color: var(--primary); }
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
+        .popup-icon { font-size: 40px; margin-bottom: 10px; text-align: center; }
+        .popup-title { font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 5px; }
+        .popup-desc { text-align: center; color: #666; margin-bottom: 20px; font-size: 14px; }
+        .popup-actions { display: flex; justify-content: center; }
     </style>
 </head>
 <body>
@@ -168,48 +201,11 @@
                     <div class="card">
                         <h3>Ngân sách tháng</h3>
                         <div style="margin: 15px 0;">
-                            <div style="display:flex;justify-content:space-between; margin-bottom:5px; font-size:13px">
-                                <span>Tiêu dùng</span><b id="budget-percent">0%</b>
-                            </div>
-                            <div style="height:8px; background:#eee; border-radius:4px; overflow:hidden;">
-                                <div id="budget-bar" style="width:0%; height:100%; background:var(--primary);"></div>
-                            </div>
+                            <div style="display:flex;justify-content:space-between; margin-bottom:5px; font-size:13px"><span>Tiêu dùng</span><b id="budget-percent">0%</b></div>
+                            <div style="height:8px; background:#eee; border-radius:4px; overflow:hidden;"><div id="budget-bar" style="width:0%; height:100%; background:var(--primary);"></div></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div id="groups" class="view-section">
-            <div class="group-header">
-                <h2>Quỹ Nhóm & Gia Đình</h2>
-                <button class="btn-primary" style="width:auto; padding:8px 15px; font-size:13px" onclick="app.openModal('create_group')"><i class="fa-solid fa-plus"></i> Tạo nhóm</button>
-            </div>
-            <div id="group-dashboard" style="display:none;">
-                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); color:#333">
-                    <div style="opacity: 0.7; color:white" id="group-name-display">Tên Nhóm</div>
-                    <div class="balance-val" id="group-balance" style="color:white">0 đ</div>
-                    <button style="background:rgba(255,255,255,0.3); border:none; color:white; padding:8px 20px; border-radius:15px; cursor:pointer; font-weight:600" onclick="app.openModal('group_contribute')">
-                        <i class="fa-solid fa-circle-dollar-to-slot"></i> Đóng quỹ ngay
-                    </button>
-                </div>
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Thành viên (<span id="member-count">0</span>)</h3>
-                        <div id="group-members" class="member-list"></div>
-                        <button class="btn-outline" style="width:100%; margin-top:15px" onclick="app.openModal('invite_member')">Mời thành viên</button>
-                    </div>
-                    <div class="card">
-                        <h3>Lịch sử đóng góp</h3>
-                        <input type="text" id="filter-user" class="form-input" placeholder="Tìm theo tên..." style="margin-bottom:10px" onkeyup="app.filterGroupTrans()">
-                        <div id="group-history" style="max-height:300px; overflow-y:auto;"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="no-group" class="card" style="text-align:center; padding:50px;">
-                <i class="fa-solid fa-users" style="font-size:50px; color:#ddd; margin-bottom:20px;"></i>
-                <h3>Bạn chưa tham gia nhóm nào</h3>
-                <button class="btn-primary" onclick="app.openModal('create_group')">Tạo nhóm ngay</button>
             </div>
         </div>
 
@@ -223,22 +219,48 @@
             </div>
         </div>
 
+        <div id="groups" class="view-section">
+            <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+                <h2>Quỹ Nhóm</h2>
+                <button class="btn-primary" style="width:auto; padding:8px 15px" onclick="app.openModal('create_group')">Tạo nhóm</button>
+            </div>
+            <div id="no-group" class="card" style="text-align:center; padding:50px;">
+                <i class="fa-solid fa-users" style="font-size:50px; color:#ddd; margin-bottom:20px;"></i>
+                <h3>Bạn chưa tham gia nhóm nào</h3>
+                <button class="btn-primary" onclick="app.openModal('create_group')">Tạo nhóm ngay</button>
+            </div>
+            <div id="group-dashboard" style="display:none">
+                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); color:#333">
+                    <div style="opacity:0.7; color:white" id="group-name-display">...</div>
+                    <div class="balance-val" id="group-balance" style="color:white">0 đ</div>
+                    <button style="background:rgba(255,255,255,0.3); border:none; color:white; padding:8px 20px; border-radius:15px; cursor:pointer" onclick="app.openModal('group_contribute')">Đóng quỹ</button>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Thành viên (<span id="member-count">0</span>)</h3>
+                        <div id="group-members" style="margin-top:10px"></div>
+                        <button class="btn-outline" style="width:100%" onclick="app.openModal('invite_member')">Mời thêm</button>
+                    </div>
+                    <div class="card">
+                        <h3>Lịch sử</h3>
+                        <div id="group-history" style="height:300px; overflow-y:auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="report" class="view-section">
-            <h2>Báo cáo chi tiêu</h2>
+            <h2>Báo cáo</h2>
             <div class="card" style="margin-top:20px;">
-                <h3 style="margin-bottom:15px;">Biểu đồ tuần này</h3>
+                <h3>Biểu đồ tuần</h3>
                 <div class="bar-chart" id="chart-week">
                     <div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div>
                 </div>
             </div>
-            <div class="card">
-                <h3>Sao kê chi tiết</h3>
-                <div id="full-statement-list" style="margin-top:10px;"></div>
-            </div>
         </div>
 
         <div id="profile" class="view-section">
-            <h2>Hồ sơ & Bảo mật</h2>
+            <h2>Hồ sơ</h2>
             <div class="card profile-header">
                 <div class="avatar-wrapper" onclick="document.getElementById('avatar-inp').click()">
                     <img src="" id="pf-avatar" class="avatar-img">
@@ -246,34 +268,41 @@
                 </div>
                 <input type="file" id="avatar-inp" hidden accept="image/*" onchange="app.updateAvatar(this)">
                 <h3 id="pf-name">...</h3>
-                <p style="color:#888; font-size:13px">Thành viên từ: <span id="pf-joined">...</span></p>
-                <button class="btn-primary" style="width:auto; padding:8px 20px; margin-top:10px; font-size:13px; background:#fff; color:var(--text-main); border:1px solid #ddd;" onclick="app.runSecurityCheck()">
-                    <i class="fa-solid fa-shield-halved" style="color:var(--success)"></i> Kiểm tra tài khoản
+                <p style="color:#888; font-size:13px">Tham gia: <span id="pf-joined">...</span></p>
+                <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#fff; color:var(--text-main); border:1px solid #ddd;" onclick="app.runSecurityCheck()">
+                    <i class="fa-solid fa-shield-halved" style="color:var(--success)"></i> Check Security
                 </button>
             </div>
+
             <div id="security-panel" class="card" style="display:none; background:#F0FDF4; border:1px solid #BBF7D0;">
-                <h3 style="color:#166534">Quét bảo mật</h3>
-                <div class="security-progress"><div class="progress-bar" id="sec-bar"></div></div>
+                <h3 style="color:#166534">Quét bảo mật...</h3>
+                <div style="width:100%; height:6px; background:#eee; border-radius:10px; overflow:hidden; margin:15px 0"><div id="sec-bar" style="height:100%; background:var(--success); width:0%; transition:0.5s"></div></div>
                 <div id="sec-steps"></div>
             </div>
+
             <div class="card">
                 <h3>Thông tin cá nhân</h3>
-                <div class="info-row"><span class="info-label">Username</span><span class="info-val readonly" id="pf-username">...</span></div>
-                <div class="info-row"><span class="info-label">Email</span><span class="info-val" id="pf-email">...</span></div>
+                <div class="info-row"><span class="info-label"><i class="fa-solid fa-at"></i> Username</span><span class="info-val readonly" id="pf-username">...</span></div>
+                <div class="info-row"><span class="info-label"><i class="fa-regular fa-envelope"></i> Email</span><span class="info-val" id="pf-email">...</span></div>
+                
                 <div class="info-row" id="phone-row">
-                    <span class="info-label">SĐT</span>
+                    <span class="info-label"><i class="fa-solid fa-phone"></i> SĐT</span>
                     <div id="phone-view" style="display:flex; align-items:center; gap:10px;">
-                        <span class="info-val" id="pf-phone-text" style="color:#555;">...</span>
+                        <span class="info-val" id="pf-phone-text" style="color:#555;">Chưa có</span>
                         <i class="fa-solid fa-pen-to-square" style="color:var(--primary); cursor:pointer;" onclick="app.togglePhoneEdit(true)"></i>
                     </div>
                     <div id="phone-edit" style="display:none; align-items:center; gap:5px;">
-                        <input type="tel" id="pf-phone-input" style="width:120px; border:1px solid #ddd; padding:5px; border-radius:5px;">
-                        <button onclick="app.savePhone(this)" style="background:var(--success); color:white; border:none; padding:5px 8px; border-radius:5px;"><i class="fa-solid fa-check"></i></button>
-                        <button onclick="app.togglePhoneEdit(false)" style="background:#eee; color:#666; border:none; padding:5px 8px; border-radius:5px;"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="phone-input-group">
+                            <input type="tel" id="pf-phone-input" placeholder="09xx...">
+                        </div>
+                        <div class="action-icon icon-save" onclick="app.savePhone(this)"><i class="fa-solid fa-check"></i></div>
+                        <div class="action-icon icon-cancel" onclick="app.togglePhoneEdit(false)"><i class="fa-solid fa-xmark"></i></div>
                     </div>
                 </div>
-                <button class="btn-outline" onclick="app.sendPasswordReset()" style="width:100%; margin-top:15px;">Đổi mật khẩu</button>
+
+                <button class="btn-outline" onclick="app.sendPasswordReset()"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
             </div>
+
             <div class="card">
                 <h3>Thiết bị đăng nhập</h3>
                 <div id="device-list" style="margin-top:15px;"></div>
@@ -298,17 +327,8 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-create_group">
-    <div class="modal-box"><h3>Tạo nhóm</h3><input type="text" id="group-name-inp" class="form-input" placeholder="Tên nhóm"><button class="btn-primary" onclick="app.createGroup()">Tạo</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
-</div>
-<div class="modal-overlay" id="modal-group_contribute">
-    <div class="modal-box"><h3>Đóng quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
-</div>
-<div class="modal-overlay" id="modal-invite_member">
-    <div class="modal-box"><h3>Mời thành viên</h3><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Mời</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
-</div>
 <div class="modal-overlay" id="modal-add_trans">
-    <div class="modal-box"><h3>Thêm giao dịch</h3><div style="display:flex; gap:10px; margin:15px 0;"><button class="btn-primary" style="flex:1; background:#EF476F;" onclick="app.setType('exp', this)">Chi tiêu</button><button class="btn-primary" style="flex:1; background:#eee; color:#333;" onclick="app.setType('inc', this)">Thu nhập</button></div><input type="number" id="inp-amt" class="form-input" placeholder="Số tiền"><input type="text" id="inp-desc" class="form-input" placeholder="Nội dung"><button class="btn-primary" onclick="app.addTransaction()">Lưu</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
+    <div class="modal-box"><h3>Thêm GD</h3><div style="display:flex;gap:10px;margin-bottom:15px"><button class="btn-primary" style="flex:1;background:#EF476F" onclick="app.setType('exp',this)">Chi tiêu</button><button class="btn-primary" style="flex:1;background:#eee;color:#333" onclick="app.setType('inc',this)">Thu nhập</button></div><input type="number" id="inp-amt" class="form-input" placeholder="Số tiền"><input type="text" id="inp-desc" class="form-input" placeholder="Nội dung"><button class="btn-primary" onclick="app.addTransaction()">Lưu</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div>
 </div>
 
 <div class="modal-overlay" id="modal-link_bank">
@@ -316,13 +336,17 @@
         <select id="bank-select" class="form-input">
             <option value="">-- Chọn ngân hàng --</option>
             <optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option><option value="VBSP">VBSP</option><option value="VDB">VDB</option><option value="CB">CB</option><option value="OceanBank">OceanBank</option><option value="GPBank">GPBank</option></optgroup>
-            <optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="HDBank">HDBank</option><option value="VIB">VIB</option><option value="SHB">SHB</option><option value="SeABank">SeABank</option><option value="MSB">MSB</option><option value="OCB">OCB</option><option value="Eximbank">Eximbank</option><option value="LPBank">LPBank</option><option value="Nam A Bank">Nam A Bank</option><option value="Bac A Bank">Bac A Bank</option><option value="Viet A Bank">Viet A Bank</option><option value="BVBank">BVBank</option><option value="NCB">NCB</option><option value="Kienlongbank">Kienlongbank</option><option value="PGBank">PGBank</option><option value="Saigonbank">Saigonbank</option><option value="VietBank">VietBank</option><option value="ABBank">ABBank</option><option value="PVcomBank">PVcomBank</option><option value="DongA Bank">DongA Bank</option><option value="BaoViet Bank">BaoViet Bank</option><option value="Co-opBank">Co-opBank</option></optgroup>
+            <optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="HDBank">HDBank</option><option value="VIB">VIB</option><option value="SHB">SHB</option><option value="SeABank">SeABank</option><option value="MSB">MSB</option><option value="OCB">OCB</option><option value="Eximbank">Eximbank</option><option value="LPBank">LPBank</option><option value="Nam A Bank">Nam A Bank</option><option value="Bac A Bank">Bac A Bank</option><option value="Viet A Bank">Viet A Bank</option><option value="BVBank">BVBank</option><option value="NCB">NCB</option><option value="Kienlongbank">Kienlongbank</option><option value="PGBank">PGBank</option><option value="Saigonbank">Saigonbank</option><option value="VietBank">VietBank</option><option value="ABBank">ABBank</option><option value="PVcomBank">PVcomBank</option><option value="DongA Bank">DongA Bank</option><option value="BaoViet Bank">BaoViet Bank</option></optgroup>
             <optgroup label="Ngân hàng Nước ngoài"><option value="Shinhan Bank">Shinhan Bank</option><option value="Woori Bank">Woori Bank</option><option value="UOB">UOB</option><option value="HSBC">HSBC</option><option value="Standard Chartered">Standard Chartered</option><option value="Public Bank">Public Bank</option><option value="Hong Leong Bank">Hong Leong</option><option value="CIMB">CIMB</option><option value="Kookmin Bank">KB Kookmin</option><option value="KEB Hana">KEB Hana</option><option value="Citibank">Citibank</option><option value="Indovina Bank">Indovina</option><option value="VRB">VRB</option><option value="ANZ">ANZ</option></optgroup>
-            <optgroup label="Ngân hàng số"><option value="Cake">Cake</option><option value="Timo">Timo</option><option value="Vikki">Vikki</option><option value="TNEX">TNEX</option><option value="Viettel Money">Viettel Money</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
+            <optgroup label="Ngân hàng số"><option value="Cake by VPBank">Cake</option><option value="Timo">Timo</option><option value="Vikki">Vikki</option><option value="TNEX">TNEX</option><option value="Viettel Money">Viettel Money</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
         </select>
-        <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button>
+        <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết ngay</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
     </div>
 </div>
+
+<div class="modal-overlay" id="modal-create_group"><div class="modal-box"><h3>Tạo nhóm</h3><input type="text" id="group-name-inp" class="form-input" placeholder="Tên nhóm"><button class="btn-primary" onclick="app.createGroup()">Tạo</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
+<div class="modal-overlay" id="modal-group_contribute"><div class="modal-box"><h3>Đóng quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
+<div class="modal-overlay" id="modal-invite_member"><div class="modal-box"><h3>Mời thành viên</h3><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Mời</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
 
 <script type="module">
     import { auth, db } from './config.js';
@@ -330,7 +354,7 @@
     import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     window.app = {
-        currentUser: null, userData: null, currentGroup: null, groupTransactions: [], tmpType: 'exp',
+        currentUser: null, userData: null, currentGroup: null, tmpType: 'exp',
 
         init() {
             onAuthStateChanged(auth, async (user) => {
@@ -346,163 +370,91 @@
             });
         },
 
+        // --- POPUP ---
         showPopup(type, title, desc = "") {
-            const overlay = document.getElementById('custom-popup'), icon = document.getElementById('pop-icon');
+            const ol = document.getElementById('custom-popup'), icon = document.getElementById('pop-icon');
             document.getElementById('pop-title').innerText = title; document.getElementById('pop-desc').innerText = desc;
-            overlay.classList.add('active');
+            ol.classList.add('active');
             if(type==='success') icon.innerHTML='<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>';
             else if(type==='error') icon.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>';
             else icon.innerHTML='<i class="fa-solid fa-circle-info" style="color:var(--primary)"></i>';
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
 
-        listenGroup() {
-            if(this.userData.groupId) {
-                document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block';
-                onSnapshot(doc(db, "groups", this.userData.groupId), (doc) => {
-                    if(doc.exists()) { this.currentGroup = doc.data(); this.currentGroup.id = doc.id; this.renderGroupUI(); }
-                });
-            }
-        },
-        async createGroup() {
-            const name = document.getElementById('group-name-inp').value;
-            if(!name) return this.showPopup('error', 'Thiếu tên nhóm');
-            try {
-                const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] });
-                await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id });
-                this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000);
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
-        async inviteMember() {
-            const email = document.getElementById('invite-email').value;
-            const q = query(collection(db, "users"), where("email", "==", email));
-            const snap = await getDocs(q);
-            if(snap.empty) return this.showPopup('error', 'Email không tồn tại');
-            const target = snap.docs[0];
-            if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác');
-            try {
-                let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}];
-                await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems});
-                await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id});
-                this.closeModal(); this.showPopup('success', 'Đã thêm thành viên');
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
-        async contributeFund() {
-            const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value;
-            if(!amt) return;
-            try {
-                await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() });
-                await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt });
-                this.closeModal(); this.showPopup('success', 'Đã đóng góp');
-            } catch(e) {}
-        },
-        async kickMember(uid) {
-            if(!confirm("Mời ra khỏi nhóm?")) return;
-            const updated = this.currentGroup.members.map(m => m.uid===uid ? {...m, status:'pending_kick'} : m);
-            await updateDoc(doc(db, "groups", this.currentGroup.id), { members: updated });
-            this.showPopup('info', 'Đã treo thành viên');
-        },
-        async appealKick() { this.showPopup('success', 'Đã gửi khiếu nại'); },
-        renderGroupUI() {
-            document.getElementById('group-name-display').innerText = this.currentGroup.name;
-            document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ';
-            document.getElementById('member-count').innerText = this.currentGroup.members.length;
-            const list = document.getElementById('group-members'); list.innerHTML = '';
-            const isAdmin = this.currentGroup.adminId === this.currentUser.uid;
-            this.currentGroup.members.forEach(m => {
-                let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>';
-                let btn = '';
-                if(m.status === 'pending_kick') { badge = '<span class="role-badge status-suspended">Treo</span>'; if(m.uid===this.currentUser.uid) btn=`<button class="btn-danger" onclick="app.appealKick()">Khiếu nại</button>`; }
-                else if(isAdmin && m.uid!==this.currentUser.uid) btn = `<button class="btn-danger" onclick="app.kickMember('${m.uid}')"><i class="fa-solid fa-user-xmark"></i></button>`;
-                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div>${btn}</div>`;
+        // --- WALLET & BANK (Fix UI) ---
+        renderWallet() {
+            const list = document.getElementById('wallet-list'); const addBtn = list.querySelector('.add-new'); list.innerHTML='';
+            (this.userData.linkedBanks||[]).forEach(b => {
+                list.innerHTML += `<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`;
             });
-            this.loadGroupHistory();
+            list.appendChild(addBtn);
         },
-        loadGroupHistory() {
-            onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => {
-                const div = document.getElementById('group-history'); div.innerHTML='';
-                let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp);
-                this.groupTransactions = txs;
-                txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="font-size:11px;color:#666">${t.note||'Đóng quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-            });
+        async linkBank() {
+            const name=document.getElementById('bank-select').value, num=document.getElementById('bank-num').value, bal=Number(document.getElementById('bank-bal').value);
+            if(!name || !num) return this.showPopup('error','Thiếu thông tin');
+            const newBank = { name, number: num, balance: bal||0 };
+            await updateDoc(doc(db,"users",this.currentUser.uid), {linkedBanks: arrayUnion(newBank)});
+            this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank];
+            this.renderWallet(); this.closeModal(); this.showPopup('success','Liên kết thành công');
         },
-        filterGroupTrans() {
-            const k = document.getElementById('filter-user').value.toLowerCase(), div = document.getElementById('group-history'); div.innerHTML='';
-            this.groupTransactions.filter(t=>t.userName.toLowerCase().includes(k)).forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-        },
+
+        // --- PROFILE PHONE FIX ---
         togglePhoneEdit(isEdit) {
-            const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input');
-            if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; }
+            const view=document.getElementById('phone-view'), edit=document.getElementById('phone-edit'), inp=document.getElementById('pf-phone-input');
+            if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); }
+            else { view.style.display='flex'; edit.style.display='none'; }
         },
         async savePhone(btn) {
-            const val = document.getElementById('pf-phone-input').value.trim();
-            if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi');
-            try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); }
+            const val=document.getElementById('pf-phone-input').value.trim();
+            if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error','SĐT không hợp lệ');
+            const icon = btn.querySelector('i'); const oldCls = icon.className; icon.className='fa-solid fa-spinner fa-spin';
+            try { await updateDoc(doc(db,"users",this.currentUser.uid),{phone:val}); this.userData.phone=val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success','Đã lưu SĐT'); }
+            catch(e) { this.showPopup('error','Lỗi lưu'); } finally { icon.className=oldCls; }
         },
         renderProfile() {
             const d = this.userData;
             document.getElementById('home-name').innerText = d.name; document.getElementById('pf-name').innerText = d.name;
-            document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email;
-            document.getElementById('pf-phone-text').innerText = d.phone || "Chưa cập nhật";
+            document.getElementById('pf-username').innerText = d.username||"Chưa set"; document.getElementById('pf-email').innerText = d.email;
+            const ph = document.getElementById('pf-phone-text'); 
+            if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; }
+            else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; }
             document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN');
-            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
+            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar;
+            else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
         },
-        async updateAvatar(input) {
-            const file = input.files[0]; if(!file) return; const reader = new FileReader();
-            reader.onload = async (e) => { const b64 = e.target.result; document.getElementById('pf-avatar').src = b64; await updateDoc(doc(db, "users", this.currentUser.uid), { avatar: b64 }); this.showPopup('success', 'Đã đổi Avatar'); }; reader.readAsDataURL(file);
-        },
-        renderWallet() {
-            const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); list.innerHTML='';
-            (this.userData.linkedBanks||[]).forEach(b => list.innerHTML+=`<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`);
-            list.appendChild(btn);
-        },
-        async linkBank() {
-            const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value);
-            if(!name || !num) return this.showPopup('error', 'Thiếu thông tin');
-            const newBank = { name, number: num, balance: bal || 0 };
-            await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) });
-            this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong');
-        },
+
+        // --- OTHER LOGIC (Group, Trans, etc) ---
+        listenGroup() { if(this.userData.groupId) { document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block'; onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}}); } },
+        async createGroup() { const name=document.getElementById('group-name-inp').value; if(!name)return this.showPopup('error','Thiếu tên'); const ref=await addDoc(collection(db,"groups"),{name,adminId:this.currentUser.uid,balance:0,members:[{uid:this.currentUser.uid,name:this.userData.name,role:'admin',status:'active'}]}); await updateDoc(doc(db,"users",this.currentUser.uid),{groupId:ref.id}); this.closeModal(); this.showPopup('success','Thành công'); setTimeout(()=>location.reload(),1000); },
+        async inviteMember() { const email=document.getElementById('invite-email').value; const q=query(collection(db,"users"),where("email","==",email)); const s=await getDocs(q); if(s.empty)return this.showPopup('error','Không tìm thấy'); const t=s.docs[0]; if(t.data().groupId)return this.showPopup('error','Đã ở nhóm khác'); await updateDoc(doc(db,"groups",this.currentGroup.id),{members:[...this.currentGroup.members,{uid:t.id,name:t.data().name,role:'member',status:'active'}]}); await updateDoc(doc(db,"users",t.id),{groupId:this.currentGroup.id}); this.closeModal(); this.showPopup('success','Đã mời'); },
+        async contributeFund() { const amt=Number(document.getElementById('contribute-amt').value), note=document.getElementById('contribute-note').value; if(!amt)return; await addDoc(collection(db,"group_transactions"),{groupId:this.currentGroup.id,uid:this.currentUser.uid,userName:this.userData.name,amount:amt,note,timestamp:Date.now()}); await updateDoc(doc(db,"groups",this.currentGroup.id),{balance:(this.currentGroup.balance||0)+amt}); this.closeModal(); this.showPopup('success','Đã đóng'); },
+        renderGroupUI() { document.getElementById('group-name-display').innerText=this.currentGroup.name; document.getElementById('group-balance').innerText=new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance)+' đ'; document.getElementById('member-count').innerText=this.currentGroup.members.length; const l=document.getElementById('group-members'); l.innerHTML=''; this.currentGroup.members.forEach(m=>{ l.innerHTML+=`<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div><span class="role-badge ${m.role=='admin'?'role-admin':'role-member'}">${m.role}</span></div></div></div>`; }); this.loadGroupHistory(); },
+        loadGroupHistory() { onSnapshot(query(collection(db,"group_transactions"),where("groupId","==",this.currentGroup.id)),s=>{const d=document.getElementById('group-history');d.innerHTML='';let t=[];s.forEach(x=>t.push(x.data()));t.sort((a,b)=>b.timestamp-a.timestamp);t.forEach(z=>d.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${z.userName}</b><div style="color:#666;font-size:11px">${z.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(z.amount)}</div></div>`)}); },
+        
         listenTransactions() {
-            onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => {
-                const list = document.getElementById('recent-list'); list.innerHTML='';
-                let inc=0, exp=0, txs=[]; snap.forEach(d=>{const t=d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount;});
+            onSnapshot(query(collection(db,"transactions"),where("uid","==",this.currentUser.uid)), s=>{
+                const l=document.getElementById('recent-list'); l.innerHTML=''; let inc=0,exp=0,txs=[];
+                s.forEach(d=>{const t=d.data();txs.push(t);if(t.type=='inc')inc+=t.amount;else exp+=t.amount;});
                 txs.sort((a,b)=>b.timestamp-a.timestamp);
-                if(txs.length===0) { list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b=>b.style.height='0%'); }
-                else {
-                    txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-                    document.querySelectorAll('.bar-col').forEach(b=>b.style.height=Math.floor(Math.random()*80+10)+'%');
-                }
+                if(txs.length===0) { l.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b=>b.style.height='0%'); }
+                else { txs.forEach(t=>l.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); document.querySelectorAll('.bar-col').forEach(b=>b.style.height=Math.floor(Math.random()*80+10)+'%'); }
                 const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format;
                 document.getElementById('total-balance').innerText=fmt(bal)+' đ';
-                document.getElementById('total-exp').innerText=fmt(exp)+' đ';
-                document.getElementById('total-inc').innerText=fmt(inc)+' đ';
+                document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%';
+                document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText;
             });
         },
-        async addTransaction() {
-            const amt=Number(document.getElementById('inp-amt').value), desc=document.getElementById('inp-desc').value;
-            if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu');
-            try { await addDoc(collection(db, "transactions"), {uid:this.currentUser.uid, amount:amt, desc, type:this.tmpType, date:new Date().toLocaleDateString('vi-VN'), timestamp:Date.now()}); this.closeModal(); document.getElementById('inp-amt').value=''; document.getElementById('inp-desc').value=''; } catch(e){ this.showPopup('error', 'Lỗi'); }
-        },
-        runSecurityCheck() {
-            const panel = document.getElementById('security-panel'), bar = document.getElementById('sec-bar'), list = document.getElementById('sec-steps');
-            panel.style.display='block'; list.innerHTML=''; bar.style.width='0%';
-            const steps = [{msg:"Kiểm tra IP...",icon:"fa-network-wired"},{msg:"Quét Database...",icon:"fa-database"},{msg:"Phân tích log...",icon:"fa-history"},{msg:"Đánh giá mật khẩu...",icon:"fa-key"}];
-            let i=0; const int = setInterval(() => {
-                if(i>=steps.length) { clearInterval(int); bar.style.width='100%'; setTimeout(()=>{this.showPopup('success','An toàn');panel.style.display='none'},800); return; }
-                list.innerHTML+=`<div class="check-step active"><i class="fa-solid ${steps[i].icon}"></i> ${steps[i].msg} <span style="color:green;margin-left:auto">OK</span></div>`;
-                bar.style.width=((i+1)*25)+'%'; i++;
-            }, 800);
-        },
-        renderDeviceInfo() {
-            fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{ document.getElementById('device-list').innerHTML=`<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i><div><div style="font-weight:600">Web Browser</div><div style="color:#888;font-size:11px">IP: ${d.ip}</div></div></div><div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div></div>`; });
-        },
+        async addTransaction() { const a=Number(document.getElementById('inp-amt').value),d=document.getElementById('inp-desc').value; if(!a||!d)return this.showPopup('error','Nhập thiếu'); try{await addDoc(collection(db,"transactions"),{uid:this.currentUser.uid,amount:a,desc:d,type:this.tmpType,date:new Date().toLocaleDateString('vi-VN'),timestamp:Date.now()});this.closeModal();document.getElementById('inp-amt').value='';document.getElementById('inp-desc').value='';}catch(e){this.showPopup('error','Lỗi');} },
+        async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
+        async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth,this.currentUser.email); this.showPopup('success','Đã gửi email'); } },
+        renderDeviceInfo() { fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{ document.getElementById('device-list').innerHTML=`<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i><div><div style="font-weight:600">Web Browser</div><div style="color:#888;font-size:11px">IP: ${d.ip}</div></div></div><div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div></div>`; }); },
+        runSecurityCheck() { const p=document.getElementById('security-panel'),b=document.getElementById('sec-bar'),l=document.getElementById('sec-steps'); p.style.display='block';l.innerHTML='';b.style.width='0%'; const s=[{m:"Check IP...",i:"fa-network-wired"},{m:"Check DB...",i:"fa-database"},{m:"Check Log...",i:"fa-history"},{m:"Check Pass...",i:"fa-key"}]; let i=0; const t=setInterval(()=>{if(i>=s.length){clearInterval(t);b.style.width='100%';setTimeout(()=>{this.showPopup('success','An toàn');p.style.display='none'},800);return}l.innerHTML+=`<div class="check-step active"><i class="fa-solid ${s[i].i}"></i> ${s[i].m} <span style="color:green;margin-left:auto">OK</span></div>`;b.style.width=((i+1)*25)+'%';i++},800); },
+        
         logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },
-        nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item, .nav-btn').forEach(e=>e.classList.remove('active')); },
+        nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },
-        setType(type, btn) { this.tmpType=type; btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.background='#eee';b.style.color='#333'}); btn.style.background=type==='exp'?'#EF476F':'#06D6A0'; btn.style.color='white'; },
-        async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth, this.currentUser.email); this.showPopup('success','Đã gửi email'); } }
+        setType(type, btn) { this.tmpType=type; btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.background='#eee';b.style.color='#333'}); btn.style.background=type==='exp'?'#EF476F':'#06D6A0'; btn.style.color='white'; }
     };
     window.onload = () => app.init();
 </script>

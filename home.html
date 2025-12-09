@@ -100,6 +100,15 @@
         .auth-overlay.active { display: flex; }
         .auth-box { width: 100%; max-width: 400px; text-align: center; }
 
+        /* SECURITY CHECK MODAL STYLES (NEW) */
+        .sec-step-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+        .sec-step-item:last-child { border-bottom: none; }
+        .sec-step-label { display: flex; align-items: center; gap: 10px; }
+        .sec-step-status { font-weight: 600; font-size: 12px; }
+        .sec-score-box { text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 15px; }
+        .score-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
+        .recommendation { color: var(--danger); font-size: 13px; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+
         /* RESPONSIVE & MOBILE FIX */
         .bottom-nav { display: none; }
         
@@ -286,12 +295,7 @@
                     <i class="fa-solid fa-shield-halved" style="color:var(--success)"></i> Kiểm tra tài khoản
                 </button>
             </div>
-            <div id="security-panel" class="card" style="display:none; background:#F0FDF4; border:1px solid #BBF7D0;">
-                <h3 style="color:#166534">Quét bảo mật</h3>
-                <div class="security-progress"><div class="progress-bar" id="sec-bar" style="height:4px; background:var(--success); width:0%; transition:1s"></div></div>
-                <div id="sec-steps"></div>
-            </div>
-
+            
             <div class="card">
                 <h3>Bảo mật 2 Lớp (2FA)</h3>
                 <div id="2fa-status-area" style="margin-top:15px">
@@ -371,6 +375,23 @@
         <p style="font-size:13px; color:#666">Lưu lại các mã này để đăng nhập khi mất điện thoại. Mỗi mã chỉ dùng 1 lần.</p>
         <div id="backup-codes-list" class="backup-codes-grid"></div>
         <button class="btn-primary" style="margin-top:20px" onclick="app.closeModal()">Đóng</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-security_check">
+    <div class="modal-box">
+        <h3><i class="fa-solid fa-user-shield" style="color:var(--primary)"></i> Quét Bảo Mật</h3>
+        <p style="font-size:13px; color:#666; margin-bottom:15px">Hệ thống đang phân tích dữ liệu thực tế...</p>
+        <div class="security-progress" style="background:#eee; height:6px; border-radius:3px; overflow:hidden; margin-bottom:15px">
+            <div class="progress-bar" id="sec-check-bar" style="height:100%; background:var(--primary); width:0%; transition: width 0.3s"></div>
+        </div>
+        <div id="sec-check-list"></div>
+        <div id="sec-result" style="display:none" class="sec-score-box">
+            <div class="score-circle" id="sec-final-score">0/100</div>
+            <div style="font-weight:600; margin-bottom:5px" id="sec-final-text">Đánh giá an toàn</div>
+            <div id="sec-recommendations"></div>
+            <button class="btn-primary" style="margin-top:15px" onclick="app.closeModal()">Hoàn tất</button>
+        </div>
     </div>
 </div>
 
@@ -603,6 +624,139 @@
             this.openModal('backup_codes');
         },
 
+        // --- SECURITY CHECK (REAL) ---
+        runSecurityCheck() {
+            this.openModal('security_check');
+            const list = document.getElementById('sec-check-list');
+            const bar = document.getElementById('sec-check-bar');
+            const res = document.getElementById('sec-result');
+            const scoreDisplay = document.getElementById('sec-final-score');
+            const recDiv = document.getElementById('sec-recommendations');
+            
+            // Reset UI
+            list.innerHTML = '';
+            bar.style.width = '0%';
+            list.style.display = 'block';
+            res.style.display = 'none';
+            
+            // Dữ liệu kiểm tra thực tế
+            const checks = [
+                { 
+                    name: "Kết nối mã hóa (HTTPS)", 
+                    icon: "fa-lock", 
+                    check: () => window.location.protocol === 'https:', 
+                    msgOk: "An toàn", msgFail: "Không bảo mật" 
+                },
+                { 
+                    name: "Xác thực Email", 
+                    icon: "fa-envelope-circle-check", 
+                    check: () => this.currentUser.emailVerified, 
+                    msgOk: "Đã xác minh", msgFail: "Chưa xác minh" 
+                },
+                { 
+                    name: "Số điện thoại bảo vệ", 
+                    icon: "fa-phone", 
+                    check: () => (this.userData.phone && this.userData.phone.length > 8), 
+                    msgOk: "Đã cập nhật", msgFail: "Chưa thêm SĐT" 
+                },
+                { 
+                    name: "Bảo mật 2 lớp (2FA)", 
+                    icon: "fa-shield-halved", 
+                    check: () => this.userData.is2FAEnabled === true, 
+                    msgOk: "Đang bật", msgFail: "Đang tắt (Nguy hiểm)" 
+                },
+                { 
+                    name: "Thiết bị đăng nhập", 
+                    icon: "fa-laptop-medical", 
+                    check: () => (this.userData.devices || []).length <= 3, 
+                    msgOk: "Bình thường", msgFail: "Nhiều thiết bị lạ" 
+                }
+            ];
+
+            let score = 0;
+            let step = 0;
+            let issues = [];
+
+            // Chạy từng bước với hiệu ứng delay
+            const runStep = () => {
+                if (step >= checks.length) {
+                    // Hoàn tất
+                    bar.style.width = '100%';
+                    setTimeout(() => {
+                        list.style.display = 'none'; // Ẩn list khi xong để hiện kết quả to
+                        res.style.display = 'block';
+                        
+                        // Tính điểm (Mỗi mục 20 điểm)
+                        // Animation nhảy số điểm
+                        let currentScore = 0;
+                        const scoreInterval = setInterval(() => {
+                            if(currentScore >= score) {
+                                currentScore = score;
+                                clearInterval(scoreInterval);
+                            }
+                            scoreDisplay.innerText = currentScore + "/100";
+                            // Đổi màu theo điểm
+                            if(currentScore < 50) scoreDisplay.style.background = '#EF476F'; // Đỏ
+                            else if(currentScore < 80) scoreDisplay.style.background = '#FFD166'; // Vàng
+                            else scoreDisplay.style.background = 'linear-gradient(135deg, #06D6A0 0%, #11998e 100%)'; // Xanh
+                            
+                            currentScore++;
+                        }, 20);
+
+                        // Hiện khuyến nghị
+                        recDiv.innerHTML = "";
+                        if (issues.length === 0) {
+                            recDiv.innerHTML = '<div style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> Tài khoản của bạn rất an toàn!</div>';
+                        } else {
+                            issues.forEach(iss => {
+                                recDiv.innerHTML += `<div class="recommendation"><i class="fa-solid fa-triangle-exclamation"></i> ${iss}</div>`;
+                            });
+                        }
+
+                    }, 500);
+                    return;
+                }
+
+                const item = checks[step];
+                const isSafe = item.check();
+                
+                // Cập nhật điểm
+                if(isSafe) score += 20; 
+                else {
+                    if(item.name === "Bảo mật 2 lớp (2FA)") issues.push("Hãy bật 2FA ngay");
+                    if(item.name === "Xác thực Email") issues.push("Hãy xác thực Email");
+                    if(item.name === "Số điện thoại bảo vệ") issues.push("Cập nhật SĐT để khôi phục");
+                }
+
+                // Render dòng đang chạy
+                const rowId = `check-step-${step}`;
+                list.innerHTML += `
+                <div class="sec-step-item" id="${rowId}">
+                    <div class="sec-step-label"><i class="fa-solid ${item.icon}" style="color:var(--primary)"></i> ${item.name}</div>
+                    <div class="sec-step-status" style="color:#888"><i class="fa-solid fa-spinner fa-spin"></i> Checking...</div>
+                </div>`;
+
+                // Giả lập delay 600ms cho mỗi bước quét
+                bar.style.width = ((step + 1) / checks.length * 100) + '%';
+                
+                setTimeout(() => {
+                    const row = document.getElementById(rowId);
+                    const statusDiv = row.querySelector('.sec-step-status');
+                    if(isSafe) {
+                        statusDiv.innerHTML = `<i class="fa-solid fa-check" style="margin-right:5px"></i> ${item.msgOk}`;
+                        statusDiv.style.color = 'var(--success)';
+                    } else {
+                        statusDiv.innerHTML = `<i class="fa-solid fa-xmark" style="margin-right:5px"></i> ${item.msgFail}`;
+                        statusDiv.style.color = 'var(--danger)';
+                    }
+                    step++;
+                    runStep();
+                }, 600);
+            };
+
+            runStep();
+        },
+
         // --- WALLET & BANK DELETE ---
         renderWallet() {
             const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); 
@@ -698,7 +852,6 @@
         
         async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
         async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth,this.currentUser.email); this.showPopup('success','Đã gửi email'); } },
-        runSecurityCheck() { const p=document.getElementById('security-panel'),b=document.getElementById('sec-bar'),l=document.getElementById('sec-steps'); p.style.display='block';l.innerHTML='';b.style.width='0%'; const s=[{m:"Check IP...",i:"fa-network-wired"},{m:"Check DB...",i:"fa-database"},{m:"Check Log...",i:"fa-history"},{m:"Check Pass...",i:"fa-key"}]; let i=0; const t=setInterval(()=>{if(i>=s.length){clearInterval(t);b.style.width='100%';setTimeout(()=>{this.showPopup('success','An toàn');p.style.display='none'},800);return}l.innerHTML+=`<div class="check-step active"><i class="fa-solid ${s[i].i}"></i> ${s[i].m} <span style="color:green;margin-left:auto">OK</span></div>`;b.style.width=((i+1)*25)+'%';i++},800); },
         logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },

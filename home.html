@@ -93,7 +93,8 @@
         .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; transition: 0.3s; }
         .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
         .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
-        
+        .btn-danger { background: #FFE5E5; color: var(--danger); border: none; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+
         /* 2FA LOCK SCREEN */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .auth-overlay.active { display: flex; }
@@ -303,7 +304,7 @@
                             <i class="fa-solid fa-circle-check"></i> Đang bật 2FA
                         </div>
                         <button class="btn-outline" onclick="app.viewBackupCodes()"><i class="fa-solid fa-file-code"></i> Xem mã dự phòng</button>
-                        <button class="btn-danger" style="margin-top:10px; width:100%" onclick="app.disable2FA()">Tắt 2FA</button>
+                        <button class="btn-danger" style="margin-top:10px; width:100%; padding: 12px; font-size: 14px; font-weight: 600; border-radius: 12px;" onclick="app.disable2FA()">Tắt 2FA</button>
                     </div>
                 </div>
             </div>

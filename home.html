@@ -14,7 +14,7 @@
     
     <style>
         /* --- CORE STYLES --- */
-        :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
+        :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --warning: #FFD166; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         
         * { -webkit-tap-highlight-color: transparent !important; outline: none !important; }
@@ -109,6 +109,16 @@
         .score-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
         .recommendation { color: var(--danger); font-size: 13px; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
+        /* CHART STYLES (NEW) */
+        .bar-chart-3-col { display: flex; justify-content: space-around; align-items: flex-end; height: 200px; padding-top: 30px; }
+        .b3-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 30%; position: relative; }
+        .b3-bar { width: 40px; border-radius: 10px 10px 0 0; transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); min-height: 5px; position: relative; }
+        .b3-val { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+        .b3-label { font-size: 13px; color: #888; margin-top: 10px; font-weight: 600; }
+        #chart-bar-inc { background: var(--success); box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3); }
+        #chart-bar-exp { background: var(--danger); box-shadow: 0 4px 10px rgba(239, 71, 111, 0.3); }
+        #chart-bar-fund { background: var(--warning); box-shadow: 0 4px 10px rgba(255, 209, 102, 0.3); }
+
         /* RESPONSIVE & MOBILE FIX */
         .bottom-nav { display: none; }
         
@@ -150,14 +160,6 @@
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
-
-        /* UTILS */
-        .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding-top: 20px; }
-        .bar-col { width: 12%; background: #EEF4FF; border-radius: 8px; transition: height 1s; height: 0; }
-        .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #F8F9FA; border-radius: 12px; margin-bottom: 10px; }
-        .role-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
-        .role-admin { background: #E3F2FD; color: var(--primary); }
     </style>
 </head>
 <body>
@@ -274,9 +276,23 @@
         <div id="report" class="view-section">
             <h2>Báo cáo chi tiêu</h2>
             <div class="card" style="margin-top:20px;">
-                <h3 style="margin-bottom:15px;">Biểu đồ tuần này</h3>
-                <div class="bar-chart" id="chart-week">
-                    <div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div>
+                <h3 style="margin-bottom:15px;">Tổng quan tài chính</h3>
+                <div class="bar-chart-3-col">
+                    <div class="b3-col">
+                        <div class="b3-val" id="val-inc">0đ</div>
+                        <div class="b3-bar" id="chart-bar-inc" style="height: 0%;"></div>
+                        <div class="b3-label">Thu Nhập</div>
+                    </div>
+                    <div class="b3-col">
+                        <div class="b3-val" id="val-exp">0đ</div>
+                        <div class="b3-bar" id="chart-bar-exp" style="height: 0%;"></div>
+                        <div class="b3-label">Chi Tiêu</div>
+                    </div>
+                    <div class="b3-col">
+                        <div class="b3-val" id="val-fund">0đ</div>
+                        <div class="b3-bar" id="chart-bar-fund" style="height: 0%;"></div>
+                        <div class="b3-label">Góp Quỹ</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -438,6 +454,7 @@
         currentUser: null, userData: null, currentGroup: null, groupTransactions: [], tmpType: 'exp',
         transferTarget: null, generatedOTP: null, 
         currentDeviceId: null, temp2FASecret: null,
+        report: { inc: 0, exp: 0, fund: 0 }, // For Chart Data
 
         init() {
             // Check or Create Device ID
@@ -460,6 +477,7 @@
 
                         this.renderProfile(); this.renderWallet(); this.listenGroup();
                         this.initDeviceHeartbeat();
+                        this.listenUserFund(); // Listen for fund contributions
                     }
                     this.listenTransactions();
                 } else { window.location.href = 'dangnhap.html'; }
@@ -493,17 +511,11 @@
                 lastSeen: Date.now()
             };
 
-            // Update user devices. We need to replace the old entry for this device ID
-            // Simple way: Read array, update local, write back. 
-            // Better way for real app: Subcollection 'devices'. Here we stick to array as requested.
             const ref = doc(db, "users", this.currentUser.uid);
             try {
-                // Fetch fresh data to avoid race condition overwrite
                 const snap = await getDoc(ref);
                 let devices = snap.data().devices || [];
-                // Remove current device if exists
                 devices = devices.filter(d => d.id !== this.currentDeviceId);
-                // Add updated
                 devices.push(devInfo);
                 await updateDoc(ref, { devices: devices });
                 this.renderDeviceList(devices);
@@ -513,7 +525,6 @@
         renderDeviceList(devices) {
             const list = document.getElementById('device-list');
             list.innerHTML = '';
-            // Sort by lastSeen desc
             devices.sort((a,b) => b.lastSeen - a.lastSeen);
             
             devices.forEach(d => {
@@ -549,7 +560,6 @@
                 secret: this.temp2FASecret
             });
             const uri = totp.toString();
-            
             this.openModal('setup_2fa');
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById("qrcode"), { text: uri, width: 150, height: 150 });
@@ -562,65 +572,45 @@
             const delta = totp.validate({ token: token, window: 1 });
 
             if (delta !== null) {
-                // Generate Backup Codes
                 const codes = Array.from({length: 10}, () => Math.random().toString(36).substr(2, 8).toUpperCase());
-                
                 await updateDoc(doc(db, "users", this.currentUser.uid), {
-                    is2FAEnabled: true,
-                    twoFASecret: this.temp2FASecret.base32,
-                    backupCodes: codes
+                    is2FAEnabled: true, twoFASecret: this.temp2FASecret.base32, backupCodes: codes
                 });
-                this.userData.is2FAEnabled = true;
-                this.userData.backupCodes = codes;
-                this.closeModal();
-                this.renderProfile();
+                this.userData.is2FAEnabled = true; this.userData.backupCodes = codes;
+                this.closeModal(); this.renderProfile();
                 this.showPopup('success', 'Đã bật 2FA thành công!');
-                this.viewBackupCodes(); // Show codes immediately
-            } else {
-                this.showPopup('error', 'Mã xác thực sai');
-            }
+                this.viewBackupCodes();
+            } else { this.showPopup('error', 'Mã xác thực sai'); }
         },
 
         verifyLogin2FA() {
             const token = document.getElementById('auth-otp-check').value;
-            // In real app, verify on Server. Here verify client side for demo
             if(!this.userData.twoFASecret) return;
-            
             const totp = new OTPAuth.TOTP({ secret: OTPAuth.Secret.fromBase32(this.userData.twoFASecret) });
             const delta = totp.validate({ token: token, window: 1 });
 
-            if (delta !== null) {
-                document.getElementById('auth-check-overlay').classList.remove('active');
-            } else {
-                // Check backup code
+            if (delta !== null) { document.getElementById('auth-check-overlay').classList.remove('active'); } 
+            else {
                 if(this.userData.backupCodes && this.userData.backupCodes.includes(token)) {
                     document.getElementById('auth-check-overlay').classList.remove('active');
                     alert("Bạn đang dùng mã dự phòng. Hãy tạo mã mới nếu sắp hết.");
-                } else {
-                    alert("Mã OTP sai!");
-                }
+                } else { alert("Mã OTP sai!"); }
             }
         },
 
         async disable2FA() {
-            if(confirm("Bạn có chắc muốn tắt 2FA? Tài khoản sẽ kém bảo mật hơn.")) {
+            if(confirm("Bạn có chắc muốn tắt 2FA?")) {
                 await updateDoc(doc(db, "users", this.currentUser.uid), {
-                    is2FAEnabled: false,
-                    twoFASecret: null,
-                    backupCodes: null
+                    is2FAEnabled: false, twoFASecret: null, backupCodes: null
                 });
-                this.userData.is2FAEnabled = false;
-                this.renderProfile();
+                this.userData.is2FAEnabled = false; this.renderProfile();
                 this.showPopup('success', 'Đã tắt 2FA');
             }
         },
 
         viewBackupCodes() {
-            const list = document.getElementById('backup-codes-list');
-            list.innerHTML = '';
-            (this.userData.backupCodes || []).forEach(c => {
-                list.innerHTML += `<div class="backup-code">${c}</div>`;
-            });
+            const list = document.getElementById('backup-codes-list'); list.innerHTML = '';
+            (this.userData.backupCodes || []).forEach(c => { list.innerHTML += `<div class="backup-code">${c}</div>`; });
             this.openModal('backup_codes');
         },
 
@@ -633,94 +623,40 @@
             const scoreDisplay = document.getElementById('sec-final-score');
             const recDiv = document.getElementById('sec-recommendations');
             
-            // Reset UI
-            list.innerHTML = '';
-            bar.style.width = '0%';
-            list.style.display = 'block';
-            res.style.display = 'none';
+            list.innerHTML = ''; bar.style.width = '0%'; list.style.display = 'block'; res.style.display = 'none';
             
-            // Dữ liệu kiểm tra thực tế
             const checks = [
-                { 
-                    name: "Kết nối mã hóa (HTTPS)", 
-                    icon: "fa-lock", 
-                    check: () => window.location.protocol === 'https:', 
-                    msgOk: "An toàn", msgFail: "Không bảo mật" 
-                },
-                { 
-                    name: "Xác thực Email", 
-                    icon: "fa-envelope-circle-check", 
-                    check: () => this.currentUser.emailVerified, 
-                    msgOk: "Đã xác minh", msgFail: "Chưa xác minh" 
-                },
-                { 
-                    name: "Số điện thoại bảo vệ", 
-                    icon: "fa-phone", 
-                    check: () => (this.userData.phone && this.userData.phone.length > 8), 
-                    msgOk: "Đã cập nhật", msgFail: "Chưa thêm SĐT" 
-                },
-                { 
-                    name: "Bảo mật 2 lớp (2FA)", 
-                    icon: "fa-shield-halved", 
-                    check: () => this.userData.is2FAEnabled === true, 
-                    msgOk: "Đang bật", msgFail: "Đang tắt (Nguy hiểm)" 
-                },
-                { 
-                    name: "Thiết bị đăng nhập", 
-                    icon: "fa-laptop-medical", 
-                    check: () => (this.userData.devices || []).length <= 3, 
-                    msgOk: "Bình thường", msgFail: "Nhiều thiết bị lạ" 
-                }
+                { name: "Kết nối mã hóa (HTTPS)", icon: "fa-lock", check: () => window.location.protocol === 'https:', msgOk: "An toàn", msgFail: "Không bảo mật" },
+                { name: "Xác thực Email", icon: "fa-envelope-circle-check", check: () => this.currentUser.emailVerified, msgOk: "Đã xác minh", msgFail: "Chưa xác minh" },
+                { name: "Số điện thoại bảo vệ", icon: "fa-phone", check: () => (this.userData.phone && this.userData.phone.length > 8), msgOk: "Đã cập nhật", msgFail: "Chưa thêm SĐT" },
+                { name: "Bảo mật 2 lớp (2FA)", icon: "fa-shield-halved", check: () => this.userData.is2FAEnabled === true, msgOk: "Đang bật", msgFail: "Đang tắt (Nguy hiểm)" },
+                { name: "Thiết bị đăng nhập", icon: "fa-laptop-medical", check: () => (this.userData.devices || []).length <= 3, msgOk: "Bình thường", msgFail: "Nhiều thiết bị lạ" }
             ];
 
-            let score = 0;
-            let step = 0;
-            let issues = [];
+            let score = 0; let step = 0; let issues = [];
 
-            // Chạy từng bước với hiệu ứng delay
             const runStep = () => {
                 if (step >= checks.length) {
-                    // Hoàn tất
                     bar.style.width = '100%';
                     setTimeout(() => {
-                        list.style.display = 'none'; // Ẩn list khi xong để hiện kết quả to
-                        res.style.display = 'block';
-                        
-                        // Tính điểm (Mỗi mục 20 điểm)
-                        // Animation nhảy số điểm
+                        list.style.display = 'none'; res.style.display = 'block';
                         let currentScore = 0;
                         const scoreInterval = setInterval(() => {
-                            if(currentScore >= score) {
-                                currentScore = score;
-                                clearInterval(scoreInterval);
-                            }
+                            if(currentScore >= score) { currentScore = score; clearInterval(scoreInterval); }
                             scoreDisplay.innerText = currentScore + "/100";
-                            // Đổi màu theo điểm
-                            if(currentScore < 50) scoreDisplay.style.background = '#EF476F'; // Đỏ
-                            else if(currentScore < 80) scoreDisplay.style.background = '#FFD166'; // Vàng
-                            else scoreDisplay.style.background = 'linear-gradient(135deg, #06D6A0 0%, #11998e 100%)'; // Xanh
-                            
+                            if(currentScore < 50) scoreDisplay.style.background = '#EF476F'; 
+                            else if(currentScore < 80) scoreDisplay.style.background = '#FFD166'; 
+                            else scoreDisplay.style.background = 'linear-gradient(135deg, #06D6A0 0%, #11998e 100%)';
                             currentScore++;
                         }, 20);
-
-                        // Hiện khuyến nghị
                         recDiv.innerHTML = "";
-                        if (issues.length === 0) {
-                            recDiv.innerHTML = '<div style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> Tài khoản của bạn rất an toàn!</div>';
-                        } else {
-                            issues.forEach(iss => {
-                                recDiv.innerHTML += `<div class="recommendation"><i class="fa-solid fa-triangle-exclamation"></i> ${iss}</div>`;
-                            });
-                        }
-
+                        if (issues.length === 0) recDiv.innerHTML = '<div style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> Tài khoản của bạn rất an toàn!</div>';
+                        else issues.forEach(iss => { recDiv.innerHTML += `<div class="recommendation"><i class="fa-solid fa-triangle-exclamation"></i> ${iss}</div>`; });
                     }, 500);
                     return;
                 }
 
-                const item = checks[step];
-                const isSafe = item.check();
-                
-                // Cập nhật điểm
+                const item = checks[step]; const isSafe = item.check();
                 if(isSafe) score += 20; 
                 else {
                     if(item.name === "Bảo mật 2 lớp (2FA)") issues.push("Hãy bật 2FA ngay");
@@ -728,51 +664,26 @@
                     if(item.name === "Số điện thoại bảo vệ") issues.push("Cập nhật SĐT để khôi phục");
                 }
 
-                // Render dòng đang chạy
                 const rowId = `check-step-${step}`;
-                list.innerHTML += `
-                <div class="sec-step-item" id="${rowId}">
-                    <div class="sec-step-label"><i class="fa-solid ${item.icon}" style="color:var(--primary)"></i> ${item.name}</div>
-                    <div class="sec-step-status" style="color:#888"><i class="fa-solid fa-spinner fa-spin"></i> Checking...</div>
-                </div>`;
-
-                // Giả lập delay 600ms cho mỗi bước quét
+                list.innerHTML += `<div class="sec-step-item" id="${rowId}"><div class="sec-step-label"><i class="fa-solid ${item.icon}" style="color:var(--primary)"></i> ${item.name}</div><div class="sec-step-status" style="color:#888"><i class="fa-solid fa-spinner fa-spin"></i> Checking...</div></div>`;
                 bar.style.width = ((step + 1) / checks.length * 100) + '%';
                 
                 setTimeout(() => {
-                    const row = document.getElementById(rowId);
-                    const statusDiv = row.querySelector('.sec-step-status');
-                    if(isSafe) {
-                        statusDiv.innerHTML = `<i class="fa-solid fa-check" style="margin-right:5px"></i> ${item.msgOk}`;
-                        statusDiv.style.color = 'var(--success)';
-                    } else {
-                        statusDiv.innerHTML = `<i class="fa-solid fa-xmark" style="margin-right:5px"></i> ${item.msgFail}`;
-                        statusDiv.style.color = 'var(--danger)';
-                    }
-                    step++;
-                    runStep();
+                    const statusDiv = document.getElementById(rowId).querySelector('.sec-step-status');
+                    if(isSafe) { statusDiv.innerHTML = `<i class="fa-solid fa-check" style="margin-right:5px"></i> ${item.msgOk}`; statusDiv.style.color = 'var(--success)'; } 
+                    else { statusDiv.innerHTML = `<i class="fa-solid fa-xmark" style="margin-right:5px"></i> ${item.msgFail}`; statusDiv.style.color = 'var(--danger)'; }
+                    step++; runStep();
                 }, 600);
             };
-
             runStep();
         },
 
         // --- WALLET & BANK DELETE ---
         renderWallet() {
             const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); 
-            // Clear existing cards but keep add button
-            const existingCards = list.querySelectorAll('.bank-card:not(.add-new)');
-            existingCards.forEach(c => c.remove());
-
+            const existingCards = list.querySelectorAll('.bank-card:not(.add-new)'); existingCards.forEach(c => c.remove());
             (this.userData.linkedBanks||[]).forEach((b, index) => {
-                const cardHtml = `
-                <div class="bank-card">
-                    <div class="bank-delete" onclick="event.stopPropagation(); app.removeBank(${index})"><i class="fa-solid fa-xmark"></i></div>
-                    <div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div>
-                    <div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div>
-                    <div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div>
-                </div>`;
-                // Insert before the add button
+                const cardHtml = `<div class="bank-card"><div class="bank-delete" onclick="event.stopPropagation(); app.removeBank(${index})"><i class="fa-solid fa-xmark"></i></div><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`;
                 btn.insertAdjacentHTML('beforebegin', cardHtml);
             });
         },
@@ -781,17 +692,9 @@
             if(!confirm("Bạn có chắc muốn xóa thẻ này?")) return;
             const bankToRemove = this.userData.linkedBanks[index];
             try {
-                await updateDoc(doc(db, "users", this.currentUser.uid), {
-                    linkedBanks: arrayRemove(bankToRemove)
-                });
-                // Update local data
-                this.userData.linkedBanks.splice(index, 1);
-                this.renderWallet();
-                this.showPopup('success', 'Đã xóa thẻ');
-            } catch(e) {
-                console.error(e);
-                this.showPopup('error', 'Lỗi xóa thẻ');
-            }
+                await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayRemove(bankToRemove) });
+                this.userData.linkedBanks.splice(index, 1); this.renderWallet(); this.showPopup('success', 'Đã xóa thẻ');
+            } catch(e) { console.error(e); this.showPopup('error', 'Lỗi xóa thẻ'); }
         },
 
         async linkBank() {
@@ -802,33 +705,64 @@
             this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong');
         },
 
-        // --- CORE FUNCTIONS (Updated Blue Tick) ---
         renderProfile() {
             const d = this.userData;
-            // Blue Tick Logic
             const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : '';
-            
-            document.getElementById('home-name').innerHTML = d.name + blueTick; 
-            document.getElementById('pf-name').innerHTML = d.name + blueTick;
-            
+            document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick;
             document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email;
             const ph = document.getElementById('pf-phone-text'); 
-            if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; }
-            else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; }
+            if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; }
             document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN');
             if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
-
-            // 2FA UI Toggle
-            if(d.is2FAEnabled) {
-                document.getElementById('2fa-off').style.display='none';
-                document.getElementById('2fa-on').style.display='block';
-            } else {
-                document.getElementById('2fa-off').style.display='block';
-                document.getElementById('2fa-on').style.display='none';
-            }
+            if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; }
         },
 
-        // --- KEEPING EXISTING FUNCTIONS ---
+        // --- NEW CHART LOGIC ---
+        listenUserFund() {
+            onSnapshot(query(collection(db, "group_transactions"), where("uid", "==", this.currentUser.uid)), (snap) => {
+                let total = 0; snap.forEach(d => total += d.data().amount);
+                this.report.fund = total; this.updateReportChart();
+            });
+        },
+
+        updateReportChart() {
+            const { inc, exp, fund } = this.report;
+            const max = Math.max(inc, exp, fund, 100000); // Minimum scale
+            
+            document.getElementById('chart-bar-inc').style.height = (inc / max * 100) + '%';
+            document.getElementById('val-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + 'đ';
+            
+            document.getElementById('chart-bar-exp').style.height = (exp / max * 100) + '%';
+            document.getElementById('val-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + 'đ';
+            
+            document.getElementById('chart-bar-fund').style.height = (fund / max * 100) + '%';
+            document.getElementById('val-fund').innerText = new Intl.NumberFormat('vi-VN').format(fund) + 'đ';
+        },
+
+        listenTransactions() { 
+            onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { 
+                const list = document.getElementById('recent-list'); list.innerHTML=''; 
+                let inc=0, exp=0, txs=[]; 
+                snap.forEach(d=>{
+                    const t=d.data(); txs.push(t); 
+                    if(t.type=='inc') inc+=t.amount; else exp+=t.amount;
+                }); 
+                txs.sort((a,b)=>b.timestamp-a.timestamp); 
+                if(txs.length===0) list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; 
+                else txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); 
+                
+                const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; 
+                document.getElementById('total-balance').innerText=fmt(bal)+' đ'; 
+                document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%'; 
+                document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText;
+
+                // Update Chart Data
+                this.report.inc = inc; this.report.exp = exp;
+                this.updateReportChart();
+            }); 
+        },
+
+        // --- EXISTING UTILS ---
         listenGroup() { if(this.userData.groupId) { document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block'; onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}}); } },
         async createGroup() { const name = document.getElementById('group-name-inp').value; if(!name) return this.showPopup('error', 'Thiếu tên'); try { const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] }); await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id }); this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000); } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async inviteMember() { const email = document.getElementById('invite-email').value; const q = query(collection(db, "users"), where("email", "==", email)); const snap = await getDocs(q); if(snap.empty) return this.showPopup('error', 'Không tìm thấy'); const target = snap.docs[0]; if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác'); try { let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}]; await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems}); await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id}); this.closeModal(); this.showPopup('success', 'Đã mời'); } catch(e) { this.showPopup('error', 'Lỗi'); } },
@@ -837,19 +771,11 @@
         loadGroupHistory() { onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => { const div = document.getElementById('group-history'); div.innerHTML=''; let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp); this.groupTransactions = txs; txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); }); },
         togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; } },
         async savePhone(btn) { const val = document.getElementById('pf-phone-input').value.trim(); if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi'); try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); } },
-        
-        // --- TRANSACTIONS ---
-        listenTransactions() { onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { const list = document.getElementById('recent-list'); list.innerHTML=''; let inc=0, exp=0, txs=[]; snap.forEach(d=>{const t=d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount;}); txs.sort((a,b)=>b.timestamp-a.timestamp); if(txs.length===0) { list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b=>b.style.height='0%'); } else { txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); document.querySelectorAll('.bar-col').forEach(b=>b.style.height=Math.floor(Math.random()*80+10)+'%'); } const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; document.getElementById('total-balance').innerText=fmt(bal)+' đ'; document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%'; document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText; }); },
         async addTransaction() { const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value; if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); } },
-        
-        // --- TRANSFER ---
         async checkUser(inp) { const val = inp.value.trim(); const nameArea = document.getElementById('tf-name'); this.transferTarget = null; nameArea.innerText = ''; if(!val) return; if(val === this.userData.username || val === this.userData.email) { nameArea.innerText = "Không thể tự chuyển cho chính mình"; return; } let q = query(collection(db, "users"), where("username", "==", val)); let snap = await getDocs(q); if(snap.empty) { q = query(collection(db, "users"), where("email", "==", val)); snap = await getDocs(q); } if(!snap.empty) { const target = snap.docs[0]; this.transferTarget = { id: target.id, ...target.data() }; nameArea.innerText = "Người nhận: " + this.transferTarget.name; } else { nameArea.innerText = "Không tìm thấy người dùng này"; } },
         preTransfer() { const amt = Number(document.getElementById('tf-amt').value); if(!this.transferTarget) return this.showPopup('error', 'Chưa chọn người nhận hợp lệ'); if(!amt || amt <= 0) return this.showPopup('error', 'Số tiền không hợp lệ'); this.generatedOTP = Math.floor(10000000 + Math.random() * 90000000); document.getElementById('otp-section').style.display = 'block'; document.getElementById('otp-display').innerText = this.generatedOTP; document.getElementById('btn-pre-tf').style.display = 'none'; },
         async confirmTransfer() { const userOtp = Number(document.getElementById('tf-otp-inp').value); const amt = Number(document.getElementById('tf-amt').value); const note = document.getElementById('tf-note').value || "Chuyển tiền"; if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); await addDoc(collection(db, "transactions"), { uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); this.showPopup('success', 'Chuyển tiền thành công!'); document.getElementById('tf-dest').value = ''; document.getElementById('tf-amt').value = ''; document.getElementById('tf-note').value = ''; document.getElementById('otp-section').style.display = 'none'; document.getElementById('btn-pre-tf').style.display = 'block'; document.getElementById('tf-name').innerText = ''; this.transferTarget = null; } catch(e) { console.error(e); this.showPopup('error', 'Lỗi chuyển tiền'); } },
-        
-        // --- OCR ---
         processBill(input) { const file = input.files[0]; if(!file) return; this.showPopup('info', 'Đang quét Bill...', 'Vui lòng đợi giây lát'); Tesseract.recognize(file, 'vie', { logger: m => console.log(m) }).then(({ data: { text } }) => { this.closePopup(); const numbers = text.match(/\d{1,3}(?:[.,]\d{3})*(?:\.\d+)?/g); let maxAmount = 0; if (numbers) { numbers.forEach(num => { let cleanNum = parseFloat(num.replace(/[.,]/g, '')); if (cleanNum > 1000 && cleanNum < 1000000000) { if(cleanNum > maxAmount) maxAmount = cleanNum; } }); } this.openModal('add_trans'); if(maxAmount > 0) document.getElementById('inp-amt').value = maxAmount; document.getElementById('inp-desc').value = "Quét Bill: " + file.name; this.setType('exp', document.querySelector('#modal-add_trans button')); this.showPopup('success', 'Quét hoàn tất', 'Vui lòng kiểm tra lại số tiền'); }).catch(err => { this.closePopup(); this.showPopup('error', 'Không đọc được Bill'); }); input.value = ''; },
-        
         async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
         async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth,this.currentUser.email); this.showPopup('success','Đã gửi email'); } },
         logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },

@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- CORE STYLES (Đồng bộ với Dangnhap/Dangky) --- */
         :root {
             --primary: #4361EE;
             --bg: #F0F4F8;
             --text: #2B2D42;
             --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
+            --shadow: 0 20px 60px rgba(67, 97, 238, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
@@ -23,25 +25,36 @@
         }
 
         .auth-container {
-            background: white; width: 100%; max-width: 420px;
+            background: white; width: 100%; max-width: 450px;
             padding: 40px; border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(67, 97, 238, 0.1); text-align: center;
+            box-shadow: var(--shadow); text-align: center;
+            position: relative; overflow: hidden;
         }
 
-        .icon-lock {
-            width: 80px; height: 80px; background: #EEF4FF; border-radius: 50%;
+        /* Decoration Circle */
+        .auth-container::before {
+            content: ''; position: absolute; top: -50px; right: -50px;
+            width: 150px; height: 150px; background: rgba(67, 97, 238, 0.05);
+            border-radius: 50%; z-index: 0;
+        }
+
+        .content-wrapper { position: relative; z-index: 1; }
+
+        .icon-wrapper {
+            width: 70px; height: 70px; background: #EEF4FF; border-radius: 50%;
             display: inline-flex; align-items: center; justify-content: center;
-            font-size: 30px; color: var(--primary); margin-bottom: 20px;
+            font-size: 28px; color: var(--primary); margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.15);
         }
 
-        h2 { color: var(--text); margin-bottom: 10px; font-size: 24px; }
-        p.sub-text { color: #888; font-size: 14px; margin-bottom: 30px; line-height: 1.5; }
+        h2 { color: var(--text); margin-bottom: 10px; font-size: 24px; font-weight: 700; }
+        p.sub-text { color: #888; font-size: 14px; margin-bottom: 30px; line-height: 1.6; }
 
         .form-group { margin-bottom: 20px; text-align: left; }
         .form-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: block; color: #555; margin-left: 5px; }
         
         .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
+        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; transition: 0.3s; }
         
         input { 
             width: 100%; padding: 14px 14px 14px 45px; 
@@ -49,6 +62,7 @@
             font-size: 15px; outline: none; transition: 0.3s; color: var(--text); background: #f9f9f9;
         }
         input:focus { border-color: var(--primary); background: white; }
+        input:focus + i { color: var(--primary); }
 
         button { 
             width: 100%; padding: 16px; background: var(--gradient); color: white; 
@@ -59,108 +73,142 @@
         button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
         .link { margin-top: 25px; font-size: 14px; color: #666; }
-        .link a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        .link a:hover { text-decoration: underline; }
+        .link a { color: var(--text); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .link a:hover { color: var(--primary); }
 
-        .error-msg {
-            background: #FFF5F5; color: #EF476F; padding: 10px; border-radius: 10px; 
-            font-size: 13px; margin-bottom: 20px; display: none; border: 1px solid #FFCDD2;
+        /* Notification Boxes */
+        .msg-box {
+            padding: 12px 15px; border-radius: 12px; font-size: 13px; 
+            margin-bottom: 20px; text-align: left; display: none; line-height: 1.5;
+            animation: fadeIn 0.3s ease;
         }
-        .success-msg {
-            background: #E8F5E9; color: #2E7D32; padding: 15px; border-radius: 10px; 
-            font-size: 14px; margin-bottom: 20px; display: none; border: 1px solid #C8E6C9;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .error-msg { background: #FFF5F5; color: #EF476F; border: 1px solid #FFCDD2; }
+        .success-msg { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+        .success-msg i { margin-right: 5px; color: #2E7D32; }
     </style>
 </head>
 <body>
 
     <div class="auth-container">
-        <div class="icon-lock"><i class="fa-solid fa-key"></i></div>
-        <h2>Khôi phục mật khẩu</h2>
-        <p class="sub-text">Nhập email bạn đã dùng để đăng ký Ví Flow. Chúng tôi sẽ gửi liên kết đặt lại mật khẩu cho bạn.</p>
+        <div class="content-wrapper">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-lock-open"></i>
+            </div>
+            
+            <h2>Quên mật khẩu?</h2>
+            <p class="sub-text">Đừng lo lắng! Hãy nhập email bạn đã đăng ký, Ví Flow sẽ gửi hướng dẫn khôi phục cho bạn.</p>
 
-        <div id="error-box" class="error-msg"></div>
-        <div id="success-box" class="success-msg">
-            <i class="fa-solid fa-check-circle"></i> Đã gửi email! Vui lòng kiểm tra hộp thư (cả mục Spam) để đặt lại mật khẩu.
-        </div>
-
-        <div id="recovery-form">
-            <div class="form-group">
-                <label class="form-label">Email đăng ký</label>
-                <div class="input-wrapper">
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" id="email" placeholder="Nhập email của bạn">
-                </div>
+            <div id="error-box" class="msg-box error-msg"></div>
+            
+            <div id="success-box" class="msg-box success-msg">
+                <i class="fa-solid fa-check-circle"></i> 
+                Email đã được gửi! Vui lòng kiểm tra hộp thư đến (và cả mục Spam) để đặt lại mật khẩu.
             </div>
 
-            <button id="btn-submit">Gửi liên kết</button>
-        </div>
-        
-        <div class="link">
-            <a href="dangnhap.html"><i class="fa-solid fa-arrow-left"></i> Quay lại Đăng nhập</a>
+            <div id="recovery-form">
+                <div class="form-group">
+                    <label class="form-label">Email đăng ký</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" placeholder="ví dụ: bo@gmail.com">
+                        <i class="fa-regular fa-envelope"></i>
+                    </div>
+                </div>
+
+                <button id="btn-submit">Gửi liên kết khôi phục</button>
+            </div>
+            
+            <div class="link">
+                <a href="dangnhap.html"><i class="fa-solid fa-arrow-left"></i> Quay lại Đăng nhập</a>
+            </div>
         </div>
     </div>
 
     <script type="module">
-        import { auth, db } from './config.js';
+        import { auth } from './config.js';
         import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const btn = document.getElementById('btn-submit');
+        const emailInput = document.getElementById('email');
         const errBox = document.getElementById('error-box');
         const successBox = document.getElementById('success-box');
         const formDiv = document.getElementById('recovery-form');
 
         btn.addEventListener('click', async () => {
-            const email = document.getElementById('email').value.trim();
+            const email = emailInput.value.trim();
 
+            // 1. Validate cơ bản
             if(!email) {
                 showError('Vui lòng nhập địa chỉ email!');
+                emailInput.focus();
+                return;
+            }
+            if(!email.includes('@')) {
+                showError('Địa chỉ email không hợp lệ!');
+                emailInput.focus();
                 return;
             }
 
+            // 2. Hiệu ứng Loading
             btn.innerText = 'Đang kiểm tra...';
             btn.disabled = true;
             errBox.style.display = 'none';
 
             try {
-                // 1. Kiểm tra xem Email có trong Database không (Tránh spam)
-                // Lưu ý: Đảm bảo bạn đã set Rules Firestore cho phép đọc public hoặc dùng logic backend nếu cần bảo mật cao.
-                // Ở đây mình query vào collection "users" tìm field "email".
-                const usersRef = collection(db, "users");
-                const q = query(usersRef, where("email", "==", email));
-                const querySnapshot = await getDocs(q);
-
-                if (querySnapshot.empty) {
-                    // Không tìm thấy user trong DB
-                    showError('Email này chưa được đăng ký tài khoản Ví Flow.');
-                    btn.disabled = false;
-                    btn.innerText = 'Gửi liên kết';
-                } else {
-                    // 2. Có tồn tại -> Gửi mail reset
-                    await sendPasswordResetEmail(auth, email);
-                    
-                    // 3. Hiển thị thông báo thành công
-                    formDiv.style.display = 'none'; // Ẩn form đi
-                    successBox.style.display = 'block';
-                }
+                // 3. Gọi hàm Firebase
+                // Hàm này sẽ tự động kiểm tra xem Email có tồn tại trong Auth không.
+                // Nếu KHÔNG -> ném lỗi auth/user-not-found
+                await sendPasswordResetEmail(auth, email);
+                
+                // 4. Xử lý thành công
+                formDiv.style.display = 'none'; // Ẩn form đi cho gọn
+                document.querySelector('.sub-text').style.display = 'none'; // Ẩn dòng text hướng dẫn
+                successBox.style.display = 'block'; // Hiện thông báo xanh
 
             } catch (error) {
-                console.error(error);
+                console.error("Lỗi khôi phục:", error);
                 let msg = 'Đã có lỗi xảy ra. Vui lòng thử lại sau.';
-                if(error.code === 'auth/invalid-email') msg = 'Địa chỉ email không hợp lệ.';
-                if(error.code === 'auth/user-not-found') msg = 'Email này không tồn tại trong hệ thống Auth.';
+                
+                // Xử lý các mã lỗi Firebase thường gặp
+                if(error.code === 'auth/user-not-found') {
+                    msg = 'Email này chưa được đăng ký tài khoản Ví Flow.';
+                } else if(error.code === 'auth/invalid-email') {
+                    msg = 'Địa chỉ email không đúng định dạng.';
+                } else if(error.code === 'auth/too-many-requests') {
+                    msg = 'Bạn đã gửi yêu cầu quá nhiều lần. Hãy đợi một lát.';
+                } else if(error.code === 'auth/network-request-failed') {
+                    msg = 'Lỗi kết nối mạng. Vui lòng kiểm tra wifi/4g.';
+                }
                 
                 showError(msg);
+                btn.innerText = 'Gửi liên kết khôi phục';
                 btn.disabled = false;
-                btn.innerText = 'Gửi liên kết';
             }
         });
 
+        // Hàm hiển thị lỗi
         function showError(msg) {
             errBox.innerText = msg;
             errBox.style.display = 'block';
+            // Rung nhẹ form để gây chú ý (Optional animation logic)
+            const container = document.querySelector('.auth-container');
+            container.style.animation = 'shake 0.3s';
+            setTimeout(() => container.style.animation = '', 300);
         }
+
+        // Thêm CSS Shake animation động
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shake {
+                0% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                50% { transform: translateX(5px); }
+                75% { transform: translateX(-5px); }
+                100% { transform: translateX(0); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

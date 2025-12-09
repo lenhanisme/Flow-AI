@@ -13,14 +13,12 @@
         :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         
-        /* --- FIX UI: LOẠI BỎ VIỀN XANH/HIGHLIGHT KHI CLICK --- */
+        /* FIX UI: Bỏ highlight mặc định */
         * { -webkit-tap-highlight-color: transparent !important; outline: none !important; }
         *:focus { outline: none !important; box-shadow: none !important; }
         input:focus, select:focus { border-color: var(--primary) !important; }
 
-        /* FIX SCROLL */
         body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
-        
         a { text-decoration: none; color: inherit; }
         
         /* LAYOUT */
@@ -35,27 +33,26 @@
         .logo { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
         .nav-links { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         
-        /* --- SỬA CSS SIDEBAR MENU (MỚI) --- */
+        /* --- CSS NÚT SIDEBAR (Đã sửa lỗi hiển thị) --- */
         .nav-btn { 
             display: flex; align-items: center; gap: 15px; 
             padding: 15px 20px; 
             border-radius: 15px; 
             color: var(--text-light); 
             cursor: pointer; 
-            transition: 0.3s; 
+            transition: 0.2s; 
             font-weight: 500; 
             user-select: none; 
         }
-        /* Khi Active hoặc Hover: BỎ NỀN MÀU, chỉ đổi màu chữ và to icon */
+        /* Khi Active/Hover: Trong suốt nền, chỉ đổi màu chữ & to icon */
         .nav-btn:hover, .nav-btn.active { 
             background: transparent; 
             color: var(--primary); 
             font-weight: 700; 
         }
         .nav-btn.active i { 
-            color: var(--primary); 
             transform: scale(1.2); 
-            transition: 0.3s;
+            color: var(--primary);
         }
         
         .main-content { 
@@ -64,9 +61,9 @@
         }
         
         .mobile-header { display: none; }
-        .view-section { display: none; animation: slideIn 0.4s ease; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
+        .view-section { display: none; animation: slideIn 0.3s ease; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
         .view-section.active { display: block; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* COMPONENTS */
         .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
@@ -137,7 +134,7 @@
             .b-nav-item.active i { transform: translateY(-3px); }
         }
 
-        /* MODAL (Standard) */
+        /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
@@ -154,8 +151,6 @@
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
-
-        /* OTP Input */
         .otp-display-box { font-size: 24px; letter-spacing: 5px; font-weight: bold; color: var(--primary); text-align: center; margin: 10px 0; padding: 10px; background: #EEF4FF; border-radius: 10px; border: 1px dashed var(--primary); }
     </style>
 </head>
@@ -165,11 +160,11 @@
     <nav class="sidebar">
         <div class="logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
         <div class="nav-links">
-            <div class="nav-btn active" onclick="app.nav('home')"><i class="fa-solid fa-house"></i> Tổng quan</div>
-            <div class="nav-btn" onclick="app.nav('wallet')"><i class="fa-solid fa-wallet"></i> Ví của tôi</div>
-            <div class="nav-btn" onclick="app.nav('groups')"><i class="fa-solid fa-users"></i> Quỹ Nhóm</div>
-            <div class="nav-btn" onclick="app.nav('report')"><i class="fa-solid fa-chart-pie"></i> Báo cáo</div>
-            <div class="nav-btn" onclick="app.nav('profile')"><i class="fa-solid fa-user"></i> Hồ sơ</div>
+            <div class="nav-btn active" onclick="app.nav('home', this)"><i class="fa-solid fa-house"></i> Tổng quan</div>
+            <div class="nav-btn" onclick="app.nav('wallet', this)"><i class="fa-solid fa-wallet"></i> Ví của tôi</div>
+            <div class="nav-btn" onclick="app.nav('groups', this)"><i class="fa-solid fa-users"></i> Quỹ Nhóm</div>
+            <div class="nav-btn" onclick="app.nav('report', this)"><i class="fa-solid fa-chart-pie"></i> Báo cáo</div>
+            <div class="nav-btn" onclick="app.nav('profile', this)"><i class="fa-solid fa-user"></i> Hồ sơ</div>
             <div class="nav-btn" onclick="app.logout()" style="margin-top:auto; color:var(--danger)"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</div>
         </div>
     </nav>
@@ -189,13 +184,10 @@
                     </div>
                     <div class="actions-row">
                         <div class="act-btn" onclick="app.openModal('add_trans')"><i class="fa-solid fa-plus"></i><span>Thêm GD</span></div>
-                        
                         <div class="act-btn" onclick="app.openModal('transfer')"><i class="fa-solid fa-money-bill-transfer"></i><span>Chuyển tiền</span></div>
-                        
                         <div class="act-btn" onclick="document.getElementById('bill-scan-inp').click()"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
                         <input type="file" id="bill-scan-inp" hidden accept="image/*" onchange="app.processBill(this)">
-
-                        <div class="act-btn" onclick="app.nav('groups')"><i class="fa-solid fa-users-viewfinder"></i><span>Quỹ Nhóm</span></div>
+                        <div class="act-btn" onclick="app.nav('groups', null)"><i class="fa-solid fa-users-viewfinder"></i><span>Quỹ Nhóm</span></div>
                     </div>
                     <div class="card">
                         <h3>Giao dịch gần đây</h3>
@@ -322,10 +314,10 @@
     </main>
 
     <nav class="bottom-nav">
-        <button class="b-nav-item active" onclick="app.nav('home')"><i class="fa-solid fa-house"></i>Home</button>
-        <button class="b-nav-item" onclick="app.nav('wallet')"><i class="fa-solid fa-wallet"></i>Ví</button>
-        <button class="b-nav-item" onclick="app.nav('groups')"><i class="fa-solid fa-users"></i>Nhóm</button>
-        <button class="b-nav-item" onclick="app.nav('profile')"><i class="fa-solid fa-user"></i>Hồ sơ</button>
+        <button class="b-nav-item active" onclick="app.nav('home', this)"><i class="fa-solid fa-house"></i>Home</button>
+        <button class="b-nav-item" onclick="app.nav('wallet', this)"><i class="fa-solid fa-wallet"></i>Ví</button>
+        <button class="b-nav-item" onclick="app.nav('groups', this)"><i class="fa-solid fa-users"></i>Nhóm</button>
+        <button class="b-nav-item" onclick="app.nav('profile', this)"><i class="fa-solid fa-user"></i>Hồ sơ</button>
     </nav>
 </div>
 
@@ -350,14 +342,12 @@
         <div id="tf-name" style="color:var(--success); font-weight:600; font-size:14px; margin-bottom:10px; min-height:20px; text-align:left"></div>
         <input type="number" id="tf-amt" class="form-input" placeholder="Số tiền chuyển">
         <input type="text" id="tf-note" class="form-input" placeholder="Lời nhắn">
-        
         <div id="otp-section" style="display:none; border-top:1px dashed #ccc; padding-top:15px; margin-top:10px">
             <p style="font-size:13px; color:#555; text-align:center">Mã OTP xác nhận của bạn:</p>
             <div id="otp-display" class="otp-display-box"></div>
             <input type="number" id="tf-otp-inp" class="form-input" placeholder="Nhập 8 số OTP ở trên">
             <button class="btn-primary" onclick="app.confirmTransfer()">Xác nhận chuyển</button>
         </div>
-
         <button id="btn-pre-tf" class="btn-primary" onclick="app.preTransfer()">Tiếp tục</button>
         <button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
     </div>
@@ -365,11 +355,7 @@
 
 <div class="modal-overlay" id="modal-link_bank">
     <div class="modal-box"><h3>Liên kết Ngân hàng</h3>
-        <select id="bank-select" class="form-input">
-            <option value="">-- Chọn ngân hàng --</option>
-            <optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option></optgroup>
-            <optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
-        </select>
+        <select id="bank-select" class="form-input"><option value="">-- Chọn ngân hàng --</option><optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option></optgroup><optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup></select>
         <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết ngay</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
     </div>
 </div>
@@ -379,7 +365,6 @@
     import { onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    // --- CẤU HÌNH API AI (ĐÃ GẮN KEY) ---
     const GEMINI_API_KEY = 'AIzaSyCwWAU0nvRpM3WFBPEPoubgCPImaWQuBHo'; 
 
     window.app = {
@@ -410,253 +395,88 @@
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
 
-        // --- XỬ LÝ CHUYỂN TIỀN (GIỮ NGUYÊN) ---
-        async checkUser(inp) {
-            const val = inp.value.trim();
-            const nameArea = document.getElementById('tf-name');
-            this.transferTarget = null; nameArea.innerText = '';
+        // --- HÀM NAV ĐÃ ĐƯỢC SỬA LOGIC ---
+        nav(id, el) {
+            // 1. Ẩn tất cả view
+            document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
+            // 2. Hiện view cần tới
+            document.getElementById(id).classList.add('active');
             
-            if(!val) return;
-            if(this.userData && (val === this.userData.username || val === this.userData.email)) {
-                nameArea.innerText = "Không thể tự chuyển cho chính mình"; return;
-            }
-
-            let q = query(collection(db, "users"), where("username", "==", val));
-            let snap = await getDocs(q);
-            if(snap.empty) {
-                q = query(collection(db, "users"), where("email", "==", val));
-                snap = await getDocs(q);
-            }
-
-            if(!snap.empty) {
-                const target = snap.docs[0];
-                this.transferTarget = { id: target.id, ...target.data() };
-                nameArea.innerText = "Người nhận: " + this.transferTarget.name;
-            } else {
-                nameArea.innerText = "Không tìm thấy người dùng này";
-            }
+            // 3. Tắt active tất cả các nút (cả Sidebar và Mobile Nav)
+            document.querySelectorAll('.nav-btn, .b-nav-item').forEach(e => e.classList.remove('active'));
+            
+            // 4. Bật active cho nút vừa bấm (nếu có truyền el vào)
+            if(el) el.classList.add('active');
         },
 
+        // --- CÁC HÀM KHÁC GIỮ NGUYÊN ---
+        async checkUser(inp) {
+            const val = inp.value.trim(); const nameArea = document.getElementById('tf-name'); this.transferTarget = null; nameArea.innerText = '';
+            if(!val) return;
+            if(this.userData && (val === this.userData.username || val === this.userData.email)) { nameArea.innerText = "Không thể tự chuyển cho chính mình"; return; }
+            let q = query(collection(db, "users"), where("username", "==", val)); let snap = await getDocs(q);
+            if(snap.empty) { q = query(collection(db, "users"), where("email", "==", val)); snap = await getDocs(q); }
+            if(!snap.empty) { const target = snap.docs[0]; this.transferTarget = { id: target.id, ...target.data() }; nameArea.innerText = "Người nhận: " + this.transferTarget.name; } 
+            else { nameArea.innerText = "Không tìm thấy người dùng này"; }
+        },
         preTransfer() {
             const amt = Number(document.getElementById('tf-amt').value);
             if(!this.transferTarget) return this.showPopup('error', 'Chưa chọn người nhận hợp lệ');
             if(!amt || amt <= 0) return this.showPopup('error', 'Số tiền không hợp lệ');
-            
             this.generatedOTP = Math.floor(10000000 + Math.random() * 90000000);
-            document.getElementById('otp-section').style.display = 'block';
-            document.getElementById('otp-display').innerText = this.generatedOTP;
-            document.getElementById('btn-pre-tf').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block'; document.getElementById('otp-display').innerText = this.generatedOTP; document.getElementById('btn-pre-tf').style.display = 'none';
         },
-
         async confirmTransfer() {
-            const userOtp = Number(document.getElementById('tf-otp-inp').value);
-            const amt = Number(document.getElementById('tf-amt').value);
-            const note = document.getElementById('tf-note').value || "Chuyển tiền";
-
+            const userOtp = Number(document.getElementById('tf-otp-inp').value); const amt = Number(document.getElementById('tf-amt').value); const note = document.getElementById('tf-note').value || "Chuyển tiền";
             if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP');
-            
             try {
-                await addDoc(collection(db, "transactions"), { 
-                    uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, 
-                    type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() 
-                });
-                await addDoc(collection(db, "transactions"), { 
-                    uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, 
-                    type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() 
-                });
-
-                this.closeModal();
-                this.showPopup('success', 'Chuyển tiền thành công!');
-                document.getElementById('tf-dest').value = '';
-                document.getElementById('tf-amt').value = '';
-                document.getElementById('tf-note').value = '';
-                document.getElementById('otp-section').style.display = 'none';
-                document.getElementById('btn-pre-tf').style.display = 'block';
-                document.getElementById('tf-name').innerText = '';
-                this.transferTarget = null;
-            } catch(e) {
-                console.error(e);
-                this.showPopup('error', 'Lỗi chuyển tiền');
-            }
+                await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() });
+                await addDoc(collection(db, "transactions"), { uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() });
+                this.closeModal(); this.showPopup('success', 'Chuyển tiền thành công!');
+                document.getElementById('tf-dest').value = ''; document.getElementById('tf-amt').value = ''; document.getElementById('tf-note').value = ''; document.getElementById('otp-section').style.display = 'none'; document.getElementById('btn-pre-tf').style.display = 'block'; document.getElementById('tf-name').innerText = ''; this.transferTarget = null;
+            } catch(e) { this.showPopup('error', 'Lỗi chuyển tiền'); }
         },
-
-        // --- XỬ LÝ QUÉT BILL BẰNG AI GEMINI (ĐÃ GẮN KEY) ---
         async processBill(input) {
-            const file = input.files[0];
-            if(!file) return;
-
+            const file = input.files[0]; if(!file) return;
             this.showPopup('info', 'AI đang phân tích...', 'Đang gửi ảnh lên AI server...');
-
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
+            const reader = new FileReader(); reader.readAsDataURL(file);
             reader.onload = async () => {
                 const base64Image = reader.result.split(',')[1];
-
                 try {
                     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [
-                                    { text: "Hãy đóng vai một máy đọc hóa đơn. Phân tích ảnh này và trả về kết quả CHỈ LÀ MỘT JSON thuần túy (không có markdown ```json) với định dạng: { \"total_amount\": số_tiền_bằng_số, \"merchant_name\": \"tên_cửa_hàng_hoặc_nội_dung_chính\" }. Nếu không tìm thấy số tiền, để 0. Bỏ qua các dấu chấm phẩy trong số tiền." },
-                                    { inline_data: { mime_type: file.type, data: base64Image } }
-                                ]
-                            }]
-                        })
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [ { text: "Hãy đóng vai một máy đọc hóa đơn. Phân tích ảnh này và trả về kết quả CHỈ LÀ MỘT JSON thuần túy (không có markdown ```json) với định dạng: { \"total_amount\": số_tiền_bằng_số, \"merchant_name\": \"tên_cửa_hàng_hoặc_nội_dung_chính\" }. Nếu không tìm thấy số tiền, để 0. Bỏ qua các dấu chấm phẩy trong số tiền." }, { inline_data: { mime_type: file.type, data: base64Image } } ] }] })
                     });
-
                     const data = await response.json();
-                    
                     if (data.candidates && data.candidates[0].content) {
                         const rawText = data.candidates[0].content.parts[0].text;
-                        console.log("AI Reponse:", rawText);
-
-                        const jsonStr = rawText.replace(/```json|```/g, '').trim();
-                        const result = JSON.parse(jsonStr);
-
-                        this.closePopup();
-                        this.openModal('add_trans');
-
-                        document.getElementById('inp-amt').value = result.total_amount;
-                        document.getElementById('inp-desc').value = result.merchant_name || ("Hóa đơn: " + file.name);
-                        this.setType('exp', document.querySelector('#modal-add_trans button'));
-                        
+                        const result = JSON.parse(rawText.replace(/```json|```/g, '').trim());
+                        this.closePopup(); this.openModal('add_trans');
+                        document.getElementById('inp-amt').value = result.total_amount; document.getElementById('inp-desc').value = result.merchant_name || ("Hóa đơn: " + file.name); this.setType('exp', document.querySelector('#modal-add_trans button'));
                         this.showPopup('success', 'AI đã đọc xong!', `Tìm thấy: ${result.merchant_name} - ${new Intl.NumberFormat('vi-VN').format(result.total_amount)}đ`);
-                    } else {
-                        throw new Error("AI không trả về kết quả");
-                    }
-
-                } catch (error) {
-                    console.error(error);
-                    this.closePopup();
-                    this.showPopup('error', 'Lỗi AI', 'Không thể phân tích hóa đơn này.');
-                }
-            };
-            
-            input.value = ''; 
+                    } else { throw new Error("AI không trả về kết quả"); }
+                } catch (error) { this.closePopup(); this.showPopup('error', 'Lỗi AI', 'Không thể phân tích hóa đơn này.'); }
+            }; input.value = ''; 
         },
-
-        // --- CÁC FUNCTION CŨ ---
-        listenGroup() {
-            if(this.userData.groupId) {
-                document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block';
-                onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}});
-            }
-        },
-        async createGroup() {
-            const name = document.getElementById('group-name-inp').value;
-            if(!name) return this.showPopup('error', 'Thiếu tên');
-            try {
-                const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] });
-                await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id });
-                this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000);
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
-        async inviteMember() {
-            const email = document.getElementById('invite-email').value;
-            const q = query(collection(db, "users"), where("email", "==", email));
-            const snap = await getDocs(q);
-            if(snap.empty) return this.showPopup('error', 'Không tìm thấy');
-            const target = snap.docs[0];
-            if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác');
-            try {
-                let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}];
-                await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems});
-                await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id});
-                this.closeModal(); this.showPopup('success', 'Đã mời');
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
-        async contributeFund() {
-            const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value;
-            if(!amt) return;
-            try {
-                await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() });
-                await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt });
-                this.closeModal(); this.showPopup('success', 'Đã đóng');
-            } catch(e) {}
-        },
-        renderGroupUI() {
-            document.getElementById('group-name-display').innerText = this.currentGroup.name;
-            document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ';
-            document.getElementById('member-count').innerText = this.currentGroup.members.length;
-            const list = document.getElementById('group-members'); list.innerHTML = '';
-            this.currentGroup.members.forEach(m => {
-                let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>';
-                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`;
-            });
-            this.loadGroupHistory();
-        },
-        loadGroupHistory() {
-            onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => {
-                const div = document.getElementById('group-history'); div.innerHTML='';
-                let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp);
-                this.groupTransactions = txs;
-                txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-            });
-        },
-        filterGroupTrans() {
-            const k = document.getElementById('filter-user').value.toLowerCase(), div = document.getElementById('group-history'); div.innerHTML='';
-            this.groupTransactions.filter(t=>t.userName.toLowerCase().includes(k)).forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-        },
-        togglePhoneEdit(isEdit) {
-            const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input');
-            if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; }
-        },
-        async savePhone(btn) {
-            const val = document.getElementById('pf-phone-input').value.trim();
-            if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi');
-            try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); }
-        },
-        renderProfile() {
-            const d = this.userData;
-            document.getElementById('home-name').innerText = d.name; document.getElementById('pf-name').innerText = d.name;
-            document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email;
-            const ph = document.getElementById('pf-phone-text'); 
-            if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; }
-            else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; }
-            document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN');
-            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
-        },
-        renderWallet() {
-            const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); list.innerHTML='';
-            (this.userData.linkedBanks||[]).forEach(b => list.innerHTML+=`<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`);
-            list.appendChild(btn);
-        },
-        async linkBank() {
-            const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value);
-            if(!name || !num) return this.showPopup('error', 'Thiếu thông tin');
-            const newBank = { name, number: num, balance: bal || 0 };
-            await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) });
-            this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong');
-        },
-        listenTransactions() {
-            onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => {
-                const list = document.getElementById('recent-list'); list.innerHTML='';
-                let inc=0, exp=0, txs=[]; snap.forEach(d=>{const t=d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount;});
-                txs.sort((a,b)=>b.timestamp-a.timestamp);
-                if(txs.length===0) { list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b=>b.style.height='0%'); }
-                else {
-                    txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-                    document.querySelectorAll('.bar-col').forEach(b=>b.style.height=Math.floor(Math.random()*80+10)+'%');
-                }
-                const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format;
-                document.getElementById('total-balance').innerText=fmt(bal)+' đ';
-                document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%';
-                document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText;
-            });
-        },
-        async addTransaction() {
-            const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value;
-            if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu');
-            try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
+        listenGroup() { if(this.userData.groupId) { document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block'; onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}}); } },
+        async createGroup() { const name = document.getElementById('group-name-inp').value; if(!name) return this.showPopup('error', 'Thiếu tên'); try { const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] }); await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id }); this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000); } catch(e) { this.showPopup('error', 'Lỗi'); } },
+        async inviteMember() { const email = document.getElementById('invite-email').value; const q = query(collection(db, "users"), where("email", "==", email)); const snap = await getDocs(q); if(snap.empty) return this.showPopup('error', 'Không tìm thấy'); const target = snap.docs[0]; if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác'); try { let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}]; await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems}); await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id}); this.closeModal(); this.showPopup('success', 'Đã mời'); } catch(e) { this.showPopup('error', 'Lỗi'); } },
+        async contributeFund() { const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value; if(!amt) return; try { await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() }); await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt }); this.closeModal(); this.showPopup('success', 'Đã đóng'); } catch(e) {} },
+        renderGroupUI() { document.getElementById('group-name-display').innerText = this.currentGroup.name; document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ'; document.getElementById('member-count').innerText = this.currentGroup.members.length; const list = document.getElementById('group-members'); list.innerHTML = ''; this.currentGroup.members.forEach(m => { let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>'; list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`; }); this.loadGroupHistory(); },
+        loadGroupHistory() { onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => { const div = document.getElementById('group-history'); div.innerHTML=''; let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp); this.groupTransactions = txs; txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); }); },
+        filterGroupTrans() { const k = document.getElementById('filter-user').value.toLowerCase(), div = document.getElementById('group-history'); div.innerHTML=''; this.groupTransactions.filter(t=>t.userName.toLowerCase().includes(k)).forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); },
+        togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; } },
+        async savePhone(btn) { const val = document.getElementById('pf-phone-input').value.trim(); if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi'); try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); } },
+        renderProfile() { const d = this.userData; document.getElementById('home-name').innerText = d.name; document.getElementById('pf-name').innerText = d.name; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; },
+        renderWallet() { const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); list.innerHTML=''; (this.userData.linkedBanks||[]).forEach(b => list.innerHTML+=`<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`); list.appendChild(btn); },
+        async linkBank() { const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value); if(!name || !num) return this.showPopup('error', 'Thiếu thông tin'); const newBank = { name, number: num, balance: bal || 0 }; await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) }); this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong'); },
+        listenTransactions() { onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { const list = document.getElementById('recent-list'); list.innerHTML=''; let inc=0, exp=0, txs=[]; snap.forEach(d=>{const t=d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount;}); txs.sort((a,b)=>b.timestamp-a.timestamp); if(txs.length===0) { list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b=>b.style.height='0%'); } else { txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); document.querySelectorAll('.bar-col').forEach(b=>b.style.height=Math.floor(Math.random()*80+10)+'%'); } const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; document.getElementById('total-balance').innerText=fmt(bal)+' đ'; document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%'; document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText; }); },
+        async addTransaction() { const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value; if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
         async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth,this.currentUser.email); this.showPopup('success','Đã gửi email'); } },
         renderDeviceInfo() { fetch('[https://api.ipify.org?format=json').then(r=](https://api.ipify.org?format=json').then(r=)>r.json()).then(d=>{ document.getElementById('device-list').innerHTML=`<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i><div><div style="font-weight:600">Web Browser</div><div style="color:#888;font-size:11px">IP: ${d.ip}</div></div></div><div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div></div>`; }); },
         runSecurityCheck() { const p=document.getElementById('security-panel'),b=document.getElementById('sec-bar'),l=document.getElementById('sec-steps'); p.style.display='block';l.innerHTML='';b.style.width='0%'; const s=[{m:"Check IP...",i:"fa-network-wired"},{m:"Check DB...",i:"fa-database"},{m:"Check Log...",i:"fa-history"},{m:"Check Pass...",i:"fa-key"}]; let i=0; const t=setInterval(()=>{if(i>=s.length){clearInterval(t);b.style.width='100%';setTimeout(()=>{this.showPopup('success','An toàn');p.style.display='none'},800);return}l.innerHTML+=`<div class="check-step active"><i class="fa-solid ${s[i].i}"></i> ${s[i].m} <span style="color:green;margin-left:auto">OK</span></div>`;b.style.width=((i+1)*25)+'%';i++},800); },
         logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },
-        nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },
         setType(type, btn) { this.tmpType=type; btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.background='#eee';b.style.color='#333'}); btn.style.background=type==='exp'?'#EF476F':'#06D6A0'; btn.style.color='white'; }

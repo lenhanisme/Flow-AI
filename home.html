@@ -129,6 +129,35 @@
         #qr-reader { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 10px; min-height: 250px; background: #000; }
         #qr-reader video { object-fit: cover; border-radius: 15px; width: 100%; height: 100%; }
 
+        /* --- FLOW AI CHATBOT STYLES --- */
+        .flow-ai-fab { position: fixed; bottom: 100px; right: 20px; width: 55px; height: 55px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4); cursor: pointer; z-index: 1500; transition: 0.3s; animation: float 3s ease-in-out infinite; }
+        .flow-ai-fab:hover { transform: scale(1.1); }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        .chat-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid #eee; }
+        .chat-window.open { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .chat-header { background: var(--gradient); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+        .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #F8F9FA; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 15px; font-size: 13px; line-height: 1.4; word-wrap: break-word; }
+        .msg-bot { background: white; border: 1px solid #eee; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+        
+        .chat-options { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+        .chat-opt-btn { font-size: 11px; background: white; border: 1px solid var(--primary); color: var(--primary); padding: 5px 10px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
+        .chat-opt-btn:hover { background: var(--primary); color: white; }
+
+        /* SUCCESS OVERLAY */
+        #transfer-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 3000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .success-icon { width: 80px; height: 80px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #10b981; margin-bottom: 20px; animation: pop 0.5s ease; }
+        @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        
+        /* TOAST NOTIFICATION */
+        .toast-notify { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: white; padding: 15px 20px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; z-index: 4000; transition: 0.5s; font-size: 13px; font-weight: 600; border: 1px solid #eee; min-width: 300px; }
+        .toast-notify.show { transform: translateX(-50%) translateY(0); }
+        .toast-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
+
         /* RESPONSIVE & MOBILE FIX */
         .bottom-nav { display: none; }
         
@@ -188,7 +217,7 @@
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
 
-        /* FIX: SCAN MODAL Z-INDEX HIGH */
+        /* FIX: SCAN MODAL Z-INDEX TO BE ON TOP OF OTHER MODALS */
         #modal-scan-qr { z-index: 2000 !important; }
     </style>
 </head>
@@ -202,6 +231,39 @@
         <input type="number" id="auth-otp-check" class="form-input" placeholder="Nhập 6 số..." style="text-align:center; font-size:20px; letter-spacing:5px;">
         <button class="btn-primary" onclick="app.verifyLogin2FA()">Xác thực</button>
         <button class="btn-outline" onclick="app.logout()">Đăng xuất</button>
+    </div>
+</div>
+
+<div id="toast" class="toast-notify">
+    <div class="toast-icon" id="toast-icon" style="background:#06D6A0"><i class="fa-solid fa-check"></i></div>
+    <div style="flex:1">
+        <div style="font-size:11px; color:#888" id="toast-title">Thông báo</div>
+        <div id="toast-msg">Nội dung thông báo</div>
+    </div>
+</div>
+
+<div id="transfer-success">
+    <div class="success-icon"><i class="fa-solid fa-check"></i></div>
+    <h2>Chuyển tiền thành công!</h2>
+    <h1 style="color:var(--primary); margin: 10px 0" id="success-amount">0 đ</h1>
+    <p style="color:#666; margin-bottom:30px">Đã chuyển tới: <strong id="success-receiver">...</strong></p>
+    <button class="btn-primary" style="width:200px" onclick="document.getElementById('transfer-success').style.display='none'">Về trang chủ</button>
+</div>
+
+<div class="flow-ai-fab" onclick="app.toggleChat()"><i class="fa-solid fa-robot"></i></div>
+<div class="chat-window" id="flow-ai-window">
+    <div class="chat-header">
+        <span><i class="fa-solid fa-robot"></i> FlowAI Support</span>
+        <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="app.toggleChat()"></i>
+    </div>
+    <div class="chat-body" id="chat-messages">
+        <div class="chat-msg msg-bot">Xin chào! Tôi là FlowAI. Tôi có thể giúp gì cho bạn?</div>
+        <div class="chat-options">
+            <div class="chat-opt-btn" onclick="app.askAI('reset_pass')">Quên mật khẩu</div>
+            <div class="chat-opt-btn" onclick="app.askAI('transfer')">Cách chuyển tiền</div>
+            <div class="chat-opt-btn" onclick="app.askAI('security')">Bảo mật 2FA</div>
+            <div class="chat-opt-btn" onclick="app.askAI('contact')">Liên hệ CSKH</div>
+        </div>
     </div>
 </div>
 
@@ -533,12 +595,15 @@
                     const userDoc = await getDoc(userRef);
                     if (userDoc.exists()) {
                         this.userData = userDoc.data();
+                        
+                        // CHECK 2FA
                         if(this.userData.is2FAEnabled) {
                             document.getElementById('auth-check-overlay').classList.add('active');
                         }
+
                         this.renderProfile(); this.renderWallet(); this.listenGroup();
                         this.initDeviceHeartbeat();
-                        this.listenUserFund(); 
+                        this.listenUserFund(); // Listen for fund contributions
                     }
                     this.listenTransactions();
                 } else { window.location.href = 'dangnhap.html'; }
@@ -554,6 +619,32 @@
             else icon.innerHTML='<i class="fa-solid fa-circle-info" style="color:var(--primary)"></i>';
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
+        
+        // --- FLOW AI ---
+        toggleChat() {
+            const w = document.getElementById('flow-ai-window');
+            if(w.style.display === 'flex') w.style.display = 'none'; else { w.style.display = 'flex'; w.classList.add('open'); }
+        },
+        askAI(topic) {
+            const chat = document.getElementById('chat-messages');
+            let q = "", a = "";
+            if(topic === 'reset_pass') { q="Quên mật khẩu"; a="Bạn vào Hồ sơ -> Đổi mật khẩu. Nếu không đăng nhập được, hãy bấm 'Quên mật khẩu' ở trang đăng nhập."; }
+            if(topic === 'transfer') { q="Cách chuyển tiền"; a="Bấm vào nút 'Chuyển tiền', nhập Username hoặc Email người nhận (hoặc quét QR), nhập số tiền và xác nhận OTP."; }
+            if(topic === 'security') { q="Bảo mật 2FA"; a="Vào Hồ sơ -> Bật 2FA. Bạn cần tải app Google Authenticator để quét mã và lấy mã OTP mỗi lần đăng nhập."; }
+            if(topic === 'contact') { q="Liên hệ CSKH"; a="Email hỗ trợ: support@viflow.vn. Hotline: 1900 1234 (8h-17h)."; }
+            
+            chat.innerHTML += `<div class="chat-msg msg-user">${q}</div>`;
+            setTimeout(() => { chat.innerHTML += `<div class="chat-msg msg-bot">${a}</div>`; chat.scrollTop = chat.scrollHeight; }, 500);
+        },
+
+        // --- NOTIFICATIONS ---
+        showToast(title, msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        },
 
         // --- QR SCANNING & MY QR ---
         showMyQR() {
@@ -561,66 +652,26 @@
             document.getElementById('my-qr-container').innerHTML = '';
             document.getElementById('my-qr-name').innerText = this.userData.name;
             document.getElementById('my-qr-email').innerText = this.userData.email;
-            
-            // Format: FLOW|UID|EMAIL
             const qrData = `FLOW|${this.currentUser.uid}|${this.userData.email}`;
-            new QRCode(document.getElementById("my-qr-container"), {
-                text: qrData,
-                width: 180,
-                height: 180,
-                colorDark : "#4361EE",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+            new QRCode(document.getElementById("my-qr-container"), { text: qrData, width: 180, height: 180, colorDark : "#4361EE", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
         },
-
         startScanTransfer() {
             this.openModal('scan-qr');
-            
-            // FIX: Sử dụng Html5Qrcode để tự động mở camera sau
             const html5QrCode = new Html5Qrcode("qr-reader");
             this.html5QrcodeScanner = html5QrCode;
-
             const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-                // Check format
                 if (decodedText.startsWith('FLOW|')) {
-                    const parts = decodedText.split('|');
-                    const targetEmail = parts[2];
-                    
+                    const parts = decodedText.split('|'); const targetEmail = parts[2];
                     this.closeScanner();
-                    
-                    // Fill input and check user
-                    const inp = document.getElementById('tf-dest');
-                    inp.value = targetEmail;
-                    this.checkUser(inp);
+                    const inp = document.getElementById('tf-dest'); inp.value = targetEmail; this.checkUser(inp);
                     this.showPopup('success', 'Đã quét QR', 'Thông tin người nhận đã được điền.');
-                } else {
-                    alert("QR không hợp lệ!");
-                }
+                } else { alert("QR không hợp lệ!"); }
             };
-
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-            
-            // Bắt buộc dùng camera sau (environment)
-            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
-            .catch(err => {
-                console.log("Error starting scanner", err);
-                this.showPopup('error', 'Lỗi Camera', 'Vui lòng cấp quyền camera');
-            });
+            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback).catch(err => { console.log("Error starting scanner", err); this.showPopup('error', 'Lỗi Camera', 'Vui lòng cấp quyền camera'); });
         },
-
         closeScanner() {
-            if(this.html5QrcodeScanner) {
-                this.html5QrcodeScanner.stop().then(_ => {
-                    this.html5QrcodeScanner.clear();
-                    this.closeModal();
-                }).catch(error => {
-                    console.error("Failed to stop scanner", error);
-                    this.closeModal();
-                });
-            } else {
-                this.closeModal();
-            }
+            if(this.html5QrcodeScanner) { this.html5QrcodeScanner.stop().then(_ => { this.html5QrcodeScanner.clear(); this.closeModal(); }).catch(error => { console.error("Failed to stop scanner", error); this.closeModal(); }); } else { this.closeModal(); }
         },
 
         // --- EXISTING LOGIC ---
@@ -685,7 +736,36 @@
         renderProfile() { const d = this.userData; const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; } },
         listenUserFund() { onSnapshot(query(collection(db, "group_transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { let total = 0; snap.forEach(d => total += d.data().amount); this.report.fund = total; this.updateReportChart(); }); },
         updateReportChart() { const { inc, exp, fund } = this.report; const max = Math.max(inc, exp, fund, 100000); document.getElementById('chart-bar-inc').style.height = (inc / max * 100) + '%'; document.getElementById('val-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + 'đ'; document.getElementById('chart-bar-exp').style.height = (exp / max * 100) + '%'; document.getElementById('val-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + 'đ'; document.getElementById('chart-bar-fund').style.height = (fund / max * 100) + '%'; document.getElementById('val-fund').innerText = new Intl.NumberFormat('vi-VN').format(fund) + 'đ'; },
-        listenTransactions() { onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { const list = document.getElementById('recent-list'); list.innerHTML=''; let inc=0, exp=0, txs=[]; snap.forEach(d=>{ const t=d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount; }); txs.sort((a,b)=>b.timestamp-a.timestamp); if(txs.length===0) list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; else txs.forEach(t => list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; document.getElementById('total-balance').innerText=fmt(bal)+' đ'; document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%'; document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText; this.report.inc = inc; this.report.exp = exp; this.updateReportChart(); }); },
+        
+        listenTransactions() { 
+            onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { 
+                const list = document.getElementById('recent-list'); list.innerHTML=''; 
+                let inc=0, exp=0, txs=[]; 
+                snap.forEach(d=>{
+                    const t=d.data(); txs.push(t); 
+                    if(t.type=='inc') inc+=t.amount; else exp+=t.amount;
+                }); 
+                txs.sort((a,b)=>b.timestamp-a.timestamp); 
+                
+                if(txs.length===0) list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; 
+                else txs.forEach(t => {
+                    // Logic màu sắc mũi tên
+                    const isInc = t.type === 'inc';
+                    const color = isInc ? 'var(--success)' : 'var(--danger)';
+                    const icon = isInc ? 'fa-arrow-down' : 'fa-arrow-up'; 
+                    const sign = isInc ? '+' : '-';
+                    
+                    list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${color}"><i class="fa-solid ${icon}" style="color:white"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${color}">${sign}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
+                }); 
+                
+                const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; 
+                document.getElementById('total-balance').innerText=fmt(bal)+' đ'; 
+                document.getElementById('budget-percent').innerText = bal>0 ? Math.min((exp/5000000)*100,100).toFixed(0)+'%' : '0%'; 
+                document.getElementById('budget-bar').style.width = document.getElementById('budget-percent').innerText; 
+                this.report.inc = inc; this.report.exp = exp; this.updateReportChart(); 
+            }); 
+        },
+
         listenGroup() { if(this.userData.groupId) { document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block'; onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}}); } },
         async createGroup() { const name = document.getElementById('group-name-inp').value; if(!name) return this.showPopup('error', 'Thiếu tên'); try { const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] }); await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id }); this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000); } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async inviteMember() { const email = document.getElementById('invite-email').value; const q = query(collection(db, "users"), where("email", "==", email)); const snap = await getDocs(q); if(snap.empty) return this.showPopup('error', 'Không tìm thấy'); const target = snap.docs[0]; if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác'); try { let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}]; await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems}); await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id}); this.closeModal(); this.showPopup('success', 'Đã mời'); } catch(e) { this.showPopup('error', 'Lỗi'); } },
@@ -697,10 +777,46 @@
         async addTransaction() { const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value; if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async checkUser(inp) { const val = inp.value.trim(); const nameArea = document.getElementById('tf-name'); this.transferTarget = null; nameArea.innerText = ''; if(!val) return; if(val === this.userData.username || val === this.userData.email) { nameArea.innerText = "Không thể tự chuyển cho chính mình"; return; } let q = query(collection(db, "users"), where("username", "==", val)); let snap = await getDocs(q); if(snap.empty) { q = query(collection(db, "users"), where("email", "==", val)); snap = await getDocs(q); } if(!snap.empty) { const target = snap.docs[0]; this.transferTarget = { id: target.id, ...target.data() }; nameArea.innerText = "Người nhận: " + this.transferTarget.name; } else { nameArea.innerText = "Không tìm thấy người dùng này"; } },
         preTransfer() { const amt = Number(document.getElementById('tf-amt').value); if(!this.transferTarget) return this.showPopup('error', 'Chưa chọn người nhận hợp lệ'); if(!amt || amt <= 0) return this.showPopup('error', 'Số tiền không hợp lệ'); this.generatedOTP = Math.floor(10000000 + Math.random() * 90000000); document.getElementById('otp-section').style.display = 'block'; document.getElementById('otp-display').innerText = this.generatedOTP; document.getElementById('btn-pre-tf').style.display = 'none'; },
-        async confirmTransfer() { const userOtp = Number(document.getElementById('tf-otp-inp').value); const amt = Number(document.getElementById('tf-amt').value); const note = document.getElementById('tf-note').value || "Chuyển tiền"; if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); await addDoc(collection(db, "transactions"), { uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); this.showPopup('success', 'Chuyển tiền thành công!'); document.getElementById('tf-dest').value = ''; document.getElementById('tf-amt').value = ''; document.getElementById('tf-note').value = ''; document.getElementById('otp-section').style.display = 'none'; document.getElementById('btn-pre-tf').style.display = 'block'; document.getElementById('tf-name').innerText = ''; this.transferTarget = null; } catch(e) { console.error(e); this.showPopup('error', 'Lỗi chuyển tiền'); } },
+        
+        async confirmTransfer() { 
+            const userOtp = Number(document.getElementById('tf-otp-inp').value); 
+            const amt = Number(document.getElementById('tf-amt').value); 
+            const note = document.getElementById('tf-note').value || "Chuyển tiền"; 
+            if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP'); 
+            
+            try { 
+                await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); 
+                await addDoc(collection(db, "transactions"), { uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); 
+                
+                this.closeModal(); 
+                
+                // Show Success Screen
+                document.getElementById('transfer-success').style.display = 'flex';
+                document.getElementById('success-amount').innerText = '-' + new Intl.NumberFormat('vi-VN').format(amt) + ' đ';
+                document.getElementById('success-receiver').innerText = this.transferTarget.name;
+
+                // Show Notification
+                this.showToast('Biến động số dư', `Tài khoản -${new Intl.NumberFormat('vi-VN').format(amt)} đ. GD: ${this.transferTarget.name}`);
+
+                // Reset Form
+                document.getElementById('tf-dest').value = ''; document.getElementById('tf-amt').value = ''; document.getElementById('tf-note').value = ''; document.getElementById('otp-section').style.display = 'none'; document.getElementById('btn-pre-tf').style.display = 'block'; document.getElementById('tf-name').innerText = ''; this.transferTarget = null; 
+            } catch(e) { console.error(e); this.showPopup('error', 'Lỗi chuyển tiền'); } 
+        },
+        
         processBill(input) { const file = input.files[0]; if(!file) return; this.showPopup('info', 'Đang quét Bill...', 'Vui lòng đợi giây lát'); Tesseract.recognize(file, 'vie', { logger: m => console.log(m) }).then(({ data: { text } }) => { this.closePopup(); const numbers = text.match(/\d{1,3}(?:[.,]\d{3})*(?:\.\d+)?/g); let maxAmount = 0; if (numbers) { numbers.forEach(num => { let cleanNum = parseFloat(num.replace(/[.,]/g, '')); if (cleanNum > 1000 && cleanNum < 1000000000) { if(cleanNum > maxAmount) maxAmount = cleanNum; } }); } this.openModal('add_trans'); if(maxAmount > 0) document.getElementById('inp-amt').value = maxAmount; document.getElementById('inp-desc').value = "Quét Bill: " + file.name; this.setType('exp', document.querySelector('#modal-add_trans button')); this.showPopup('success', 'Quét hoàn tất', 'Vui lòng kiểm tra lại số tiền'); }).catch(err => { this.closePopup(); this.showPopup('error', 'Không đọc được Bill'); }); input.value = ''; },
         async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
-        async sendPasswordReset() { if(confirm("Gửi mail đổi pass?")) { await sendPasswordResetEmail(auth,this.currentUser.email); this.showPopup('success','Đã gửi email'); } },
+        async sendPasswordReset() { 
+            console.log("Attempting to send email to:", this.currentUser.email);
+            if(confirm("Gửi mail đổi pass?")) { 
+                try {
+                    await sendPasswordResetEmail(auth, this.currentUser.email); 
+                    this.showPopup('success', 'Đã gửi email', 'Vui lòng kiểm tra hộp thư đến (và mục spam).'); 
+                } catch(e) {
+                    console.error("Firebase Email Error:", e);
+                    this.showPopup('error', 'Lỗi gửi email', e.message);
+                }
+            } 
+        },
         logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },

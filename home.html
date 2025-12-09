@@ -7,13 +7,19 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
     
     <style>
         /* --- CORE STYLES --- */
         :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         
-        /* FIX SCROLL: Bỏ hidden, cho phép cuộn tự nhiên */
+        /* --- FIX UI: LOẠI BỎ VIỀN XANH/HIGHLIGHT KHI CLICK --- */
+        * { -webkit-tap-highlight-color: transparent !important; outline: none !important; }
+        *:focus { outline: none !important; box-shadow: none !important; }
+        input:focus, select:focus { border-color: var(--primary) !important; }
+
+        /* FIX SCROLL */
         body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
         
         a { text-decoration: none; color: inherit; }
@@ -27,16 +33,15 @@
             position: fixed; height: 100vh; top: 0; left: 0; z-index: 10; transition: 0.3s; 
         }
         
-        .logo { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
         .nav-links { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .nav-btn { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 15px; color: var(--text-light); cursor: pointer; transition: 0.3s; font-weight: 500; }
+        .nav-btn { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 15px; color: var(--text-light); cursor: pointer; transition: 0.3s; font-weight: 500; user-select: none; }
         .nav-btn:hover, .nav-btn.active { background: #EEF4FF; color: var(--primary); font-weight: 600; }
         .nav-btn.active i { color: var(--primary); }
         
-        /* FIX MAIN CONTENT: Thêm margin-left để tránh sidebar */
         .main-content { 
             flex: 1; padding: 30px; margin-left: var(--sidebar-width); 
-            min-height: 100vh; /* Đảm bảo content đủ dài */
+            min-height: 100vh; 
         }
         
         .mobile-header { display: none; }
@@ -53,7 +58,7 @@
         .balance-val { font-size: 40px; font-weight: 700; margin: 10px 0 20px; }
         
         .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); user-select: none; }
         .act-btn:hover { transform: translateY(-5px); border-color: var(--accent); }
         .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
         .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
@@ -76,7 +81,7 @@
         .device-icon { font-size: 18px; color: var(--primary); margin-right: 10px; }
         
         /* FORM */
-        .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; transition: 0.3s; }
         .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
         .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
         .btn-danger { background: #FFE5E5; color: var(--danger); border: none; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
@@ -86,12 +91,9 @@
         
         @media (max-width: 900px) { 
             .sidebar { display: none; } 
-            
-            /* FIX SCROLL: Reset margin & padding cho mobile */
             .main-content { margin-left: 0; padding: 15px 15px 100px 15px; width: 100%; } 
-            
             .grid-2 { grid-template-columns: 1fr; } 
-            .app-layout { display: block; } /* Chuyển sang block để scroll dọc */
+            .app-layout { display: block; } 
             
             .mobile-header { 
                 display: flex; align-items: center; justify-content: space-between; 
@@ -109,7 +111,7 @@
             .b-nav-item { 
                 display: flex; flex-direction: column; align-items: center; justify-content: center;
                 color: #aaa; font-size: 12px; gap: 6px; border:none; background:none; 
-                width: 25%; height: 100%; cursor: pointer;
+                width: 25%; height: 100%; cursor: pointer; user-select: none;
             } 
             .b-nav-item i { font-size: 26px; transition: 0.2s; margin-bottom: 2px; }
             .b-nav-item.active { color: var(--primary); font-weight: 600; }
@@ -133,6 +135,9 @@
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
+
+        /* OTP Input */
+        .otp-display-box { font-size: 24px; letter-spacing: 5px; font-weight: bold; color: var(--primary); text-align: center; margin: 10px 0; padding: 10px; background: #EEF4FF; border-radius: 10px; border: 1px dashed var(--primary); }
     </style>
 </head>
 <body>
@@ -165,8 +170,12 @@
                     </div>
                     <div class="actions-row">
                         <div class="act-btn" onclick="app.openModal('add_trans')"><i class="fa-solid fa-plus"></i><span>Thêm GD</span></div>
-                        <div class="act-btn" onclick="app.showPopup('info', 'Voice đang bảo trì')"><i class="fa-solid fa-microphone"></i><span>Voice</span></div>
-                        <div class="act-btn" onclick="app.showPopup('info', 'Quét Bill đang bảo trì')"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
+                        
+                        <div class="act-btn" onclick="app.openModal('transfer')"><i class="fa-solid fa-money-bill-transfer"></i><span>Chuyển tiền</span></div>
+                        
+                        <div class="act-btn" onclick="document.getElementById('bill-scan-inp').click()"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
+                        <input type="file" id="bill-scan-inp" hidden accept="image/*" onchange="app.processBill(this)">
+
                         <div class="act-btn" onclick="app.nav('groups')"><i class="fa-solid fa-users-viewfinder"></i><span>Quỹ Nhóm</span></div>
                     </div>
                     <div class="card">
@@ -315,14 +324,32 @@
 <div class="modal-overlay" id="modal-invite_member"><div class="modal-box"><h3>Mời thành viên</h3><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Mời</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
 <div class="modal-overlay" id="modal-add_trans"><div class="modal-box"><h3>Thêm GD</h3><div style="display:flex;gap:10px;margin-bottom:15px"><button class="btn-primary" style="flex:1;background:#EF476F" onclick="app.setType('exp',this)">Chi tiêu</button><button class="btn-primary" style="flex:1;background:#eee;color:#333" onclick="app.setType('inc',this)">Thu nhập</button></div><input type="number" id="inp-amt" class="form-input" placeholder="Số tiền"><input type="text" id="inp-desc" class="form-input" placeholder="Nội dung"><button class="btn-primary" onclick="app.addTransaction()">Lưu</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
 
+<div class="modal-overlay" id="modal-transfer">
+    <div class="modal-box">
+        <h3>Chuyển tiền</h3>
+        <input type="text" id="tf-dest" class="form-input" placeholder="Nhập Username hoặc Email" onblur="app.checkUser(this)">
+        <div id="tf-name" style="color:var(--success); font-weight:600; font-size:14px; margin-bottom:10px; min-height:20px; text-align:left"></div>
+        <input type="number" id="tf-amt" class="form-input" placeholder="Số tiền chuyển">
+        <input type="text" id="tf-note" class="form-input" placeholder="Lời nhắn">
+        
+        <div id="otp-section" style="display:none; border-top:1px dashed #ccc; padding-top:15px; margin-top:10px">
+            <p style="font-size:13px; color:#555; text-align:center">Mã OTP xác nhận của bạn:</p>
+            <div id="otp-display" class="otp-display-box"></div>
+            <input type="number" id="tf-otp-inp" class="form-input" placeholder="Nhập 8 số OTP ở trên">
+            <button class="btn-primary" onclick="app.confirmTransfer()">Xác nhận chuyển</button>
+        </div>
+
+        <button id="btn-pre-tf" class="btn-primary" onclick="app.preTransfer()">Tiếp tục</button>
+        <button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
+    </div>
+</div>
+
 <div class="modal-overlay" id="modal-link_bank">
     <div class="modal-box"><h3>Liên kết Ngân hàng</h3>
         <select id="bank-select" class="form-input">
             <option value="">-- Chọn ngân hàng --</option>
-            <optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option><option value="VBSP">VBSP</option><option value="VDB">VDB</option><option value="CB">CB</option><option value="OceanBank">OceanBank</option><option value="GPBank">GPBank</option></optgroup>
-            <optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="HDBank">HDBank</option><option value="VIB">VIB</option><option value="SHB">SHB</option><option value="SeABank">SeABank</option><option value="MSB">MSB</option><option value="OCB">OCB</option><option value="Eximbank">Eximbank</option><option value="LPBank">LPBank</option><option value="Nam A Bank">Nam A Bank</option><option value="Bac A Bank">Bac A Bank</option><option value="Viet A Bank">Viet A Bank</option><option value="BVBank">BVBank</option><option value="NCB">NCB</option><option value="Kienlongbank">Kienlongbank</option><option value="PGBank">PGBank</option><option value="Saigonbank">Saigonbank</option><option value="VietBank">VietBank</option><option value="ABBank">ABBank</option><option value="PVcomBank">PVcomBank</option><option value="DongA Bank">DongA Bank</option><option value="BaoViet Bank">BaoViet Bank</option></optgroup>
-            <optgroup label="Ngân hàng Nước ngoài"><option value="Shinhan Bank">Shinhan Bank</option><option value="Woori Bank">Woori Bank</option><option value="UOB">UOB</option><option value="HSBC">HSBC</option><option value="Standard Chartered">Standard Chartered</option><option value="Public Bank">Public Bank</option><option value="Hong Leong Bank">Hong Leong</option><option value="CIMB">CIMB</option><option value="Kookmin Bank">KB Kookmin</option><option value="KEB Hana">KEB Hana</option><option value="Citibank">Citibank</option><option value="Indovina Bank">Indovina</option><option value="VRB">VRB</option><option value="ANZ">ANZ</option></optgroup>
-            <optgroup label="Ngân hàng số"><option value="Cake by VPBank">Cake</option><option value="Timo">Timo</option><option value="Vikki">Vikki</option><option value="TNEX">TNEX</option><option value="Viettel Money">Viettel Money</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
+            <optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option></optgroup>
+            <optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
         </select>
         <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết ngay</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
     </div>
@@ -335,6 +362,7 @@
 
     window.app = {
         currentUser: null, userData: null, currentGroup: null, groupTransactions: [], tmpType: 'exp',
+        transferTarget: null, generatedOTP: null,
 
         init() {
             onAuthStateChanged(auth, async (user) => {
@@ -360,6 +388,137 @@
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
 
+        // --- XỬ LÝ CHUYỂN TIỀN ---
+        async checkUser(inp) {
+            const val = inp.value.trim();
+            const nameArea = document.getElementById('tf-name');
+            this.transferTarget = null; nameArea.innerText = '';
+            
+            if(!val) return;
+            if(val === this.userData.username || val === this.userData.email) {
+                nameArea.innerText = "Không thể tự chuyển cho chính mình"; return;
+            }
+
+            // Tìm user theo username hoặc email
+            let q = query(collection(db, "users"), where("username", "==", val));
+            let snap = await getDocs(q);
+            if(snap.empty) {
+                q = query(collection(db, "users"), where("email", "==", val));
+                snap = await getDocs(q);
+            }
+
+            if(!snap.empty) {
+                const target = snap.docs[0];
+                this.transferTarget = { id: target.id, ...target.data() };
+                nameArea.innerText = "Người nhận: " + this.transferTarget.name;
+            } else {
+                nameArea.innerText = "Không tìm thấy người dùng này";
+            }
+        },
+
+        preTransfer() {
+            const amt = Number(document.getElementById('tf-amt').value);
+            if(!this.transferTarget) return this.showPopup('error', 'Chưa chọn người nhận hợp lệ');
+            if(!amt || amt <= 0) return this.showPopup('error', 'Số tiền không hợp lệ');
+            // Check số dư (đơn giản hóa: tính tổng thu - chi)
+            // Trong thực tế cần lấy balance chính xác từ db, ở đây tạm bỏ qua check balance nghiêm ngặt
+            
+            // Generate OTP 8 số
+            this.generatedOTP = Math.floor(10000000 + Math.random() * 90000000);
+            
+            // Show OTP UI
+            document.getElementById('otp-section').style.display = 'block';
+            document.getElementById('otp-display').innerText = this.generatedOTP;
+            document.getElementById('btn-pre-tf').style.display = 'none';
+        },
+
+        async confirmTransfer() {
+            const userOtp = Number(document.getElementById('tf-otp-inp').value);
+            const amt = Number(document.getElementById('tf-amt').value);
+            const note = document.getElementById('tf-note').value || "Chuyển tiền";
+
+            if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP');
+            
+            try {
+                // 1. Trừ tiền người gửi (Tạo giao dịch chi)
+                await addDoc(collection(db, "transactions"), { 
+                    uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, 
+                    type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() 
+                });
+
+                // 2. Cộng tiền người nhận (Tạo giao dịch thu cho họ)
+                await addDoc(collection(db, "transactions"), { 
+                    uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, 
+                    type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() 
+                });
+
+                this.closeModal();
+                this.showPopup('success', 'Chuyển tiền thành công!');
+                // Reset form
+                document.getElementById('tf-dest').value = '';
+                document.getElementById('tf-amt').value = '';
+                document.getElementById('tf-note').value = '';
+                document.getElementById('otp-section').style.display = 'none';
+                document.getElementById('btn-pre-tf').style.display = 'block';
+                document.getElementById('tf-name').innerText = '';
+                this.transferTarget = null;
+            } catch(e) {
+                console.error(e);
+                this.showPopup('error', 'Lỗi chuyển tiền');
+            }
+        },
+
+        // --- XỬ LÝ QUÉT BILL (OCR) ---
+        processBill(input) {
+            const file = input.files[0];
+            if(!file) return;
+
+            this.showPopup('info', 'Đang quét Bill...', 'Vui lòng đợi giây lát');
+            
+            Tesseract.recognize(
+                file,
+                'vie', // Ngôn ngữ tiếng Việt
+                { logger: m => console.log(m) }
+            ).then(({ data: { text } }) => {
+                this.closePopup();
+                console.log(text);
+                
+                // Cố gắng tìm số tiền lớn nhất trong văn bản quét được
+                // Regex tìm các chuỗi số có dạng 100.000 hoặc 100,000
+                const numbers = text.match(/\d{1,3}(?:[.,]\d{3})*(?:\.\d+)?/g);
+                let maxAmount = 0;
+                
+                if (numbers) {
+                    numbers.forEach(num => {
+                        // Xóa dấu chấm phẩy để parse số
+                        let cleanNum = parseFloat(num.replace(/[.,]/g, ''));
+                        // Lọc nhiễu: số tiền thường > 1000 và < 1 tỷ (ví dụ)
+                        if (cleanNum > 1000 && cleanNum < 1000000000) {
+                            if(cleanNum > maxAmount) maxAmount = cleanNum;
+                        }
+                    });
+                }
+
+                this.openModal('add_trans');
+                // Auto điền số tiền tìm được
+                if(maxAmount > 0) document.getElementById('inp-amt').value = maxAmount;
+                // Auto điền nội dung
+                document.getElementById('inp-desc').value = "Quét Bill: " + file.name;
+                
+                // Set mặc định là Chi tiêu
+                this.setType('exp', document.querySelector('#modal-add_trans button'));
+
+                this.showPopup('success', 'Quét hoàn tất', 'Vui lòng kiểm tra lại số tiền');
+            }).catch(err => {
+                this.closePopup();
+                this.showPopup('error', 'Không đọc được Bill');
+            });
+            
+            // Reset input để chọn lại file giống cũ được
+            input.value = '';
+        },
+
+        // --- CÁC FUNCTION CŨ (GIỮ NGUYÊN HOẶC SỬA NHẸ) ---
         listenGroup() {
             if(this.userData.groupId) {
                 document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block';
@@ -398,25 +557,14 @@
                 this.closeModal(); this.showPopup('success', 'Đã đóng');
             } catch(e) {}
         },
-        async kickMember(uid) {
-            if(!confirm("Mời ra khỏi nhóm?")) return;
-            const updated = this.currentGroup.members.map(m => m.uid===uid ? {...m, status:'pending_kick'} : m);
-            await updateDoc(doc(db, "groups", this.currentGroup.id), { members: updated });
-            this.showPopup('info', 'Đã treo thành viên');
-        },
-        async appealKick() { this.showPopup('success', 'Đã gửi khiếu nại'); },
         renderGroupUI() {
             document.getElementById('group-name-display').innerText = this.currentGroup.name;
             document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ';
             document.getElementById('member-count').innerText = this.currentGroup.members.length;
             const list = document.getElementById('group-members'); list.innerHTML = '';
-            const isAdmin = this.currentGroup.adminId === this.currentUser.uid;
             this.currentGroup.members.forEach(m => {
                 let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>';
-                let btn = '';
-                if(m.status === 'pending_kick') { badge = '<span class="role-badge status-suspended">Treo</span>'; if(m.uid===this.currentUser.uid) btn=`<button class="btn-danger" onclick="app.appealKick()">Khiếu nại</button>`; }
-                else if(isAdmin && m.uid!==this.currentUser.uid) btn = `<button class="btn-danger" onclick="app.kickMember('${m.uid}')"><i class="fa-solid fa-user-xmark"></i></button>`;
-                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div>${btn}</div>`;
+                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`;
             });
             this.loadGroupHistory();
         },

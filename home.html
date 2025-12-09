@@ -42,26 +42,13 @@
         .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .act-btn:hover { transform: translateY(-5px); border-color: var(--accent); }
         .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
-        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
         
-        /* WALLET STYLES */
-        .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
-        .bank-card.add-new { background: white; color: #888; border: 2px dashed #ccc; align-items: center; justify-content: center; cursor: pointer; }
-        .bank-logo { font-size: 14px; font-weight: 700; opacity: 0.9; text-transform: uppercase; background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 5px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-
-        /* PROFILE STYLES */
-        .profile-header { text-align: center; margin-bottom: 20px; position: relative; }
-        .avatar-wrapper { width: 100px; height: 100px; margin: 0 auto 15px; position: relative; cursor: pointer; }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .avatar-overlay { position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
-        .info-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f5f5f5; align-items: center; font-size: 14px; }
-        .info-label { color: #888; display: flex; align-items: center; gap: 8px; }
-        .info-val { font-weight: 600; color: var(--text-main); }
-        .info-val.readonly { color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
+        /* LISTS */
+        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
         .device-item { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; }
         .device-icon { font-size: 18px; color: var(--primary); margin-right: 10px; }
-        
-        /* GROUP STYLES (NEW) */
+
+        /* GROUP STYLES */
         .group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .member-list { display: flex; flex-direction: column; gap: 10px; }
         .member-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #F8F9FA; border-radius: 12px; }
@@ -70,40 +57,70 @@
         .role-admin { background: #E3F2FD; color: var(--primary); }
         .role-member { background: #eee; color: #666; }
         .status-suspended { background: #FFF3E0; color: var(--warning); }
-
-        /* CUSTOM POPUP (NEW) */
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; transform: scale(0.8); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .popup-overlay.active .popup-box { transform: scale(1); }
-        .popup-icon { font-size: 50px; margin-bottom: 15px; }
-        .popup-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-        .popup-desc { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.5; }
         
-        /* SECURITY CHECK UI */
-        .security-progress { width: 100%; height: 6px; background: #eee; border-radius: 10px; overflow: hidden; margin: 15px 0; }
-        .progress-bar { height: 100%; background: var(--success); width: 0%; transition: width 0.5s; }
-        .check-step { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; opacity: 0.5; }
-        .check-step.active { opacity: 1; font-weight: 600; }
-
-        /* FORM */
+        /* FORM & BUTTONS */
         .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; }
         .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
         .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
         .btn-danger { background: #FFE5E5; color: var(--danger); border: none; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
 
+        /* CUSTOM POPUP */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
+        .popup-overlay.active { opacity: 1; pointer-events: auto; }
+        .popup-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; transform: scale(0.8); transition: 0.3s; }
+        .popup-overlay.active .popup-box { transform: scale(1); }
+        .popup-icon { font-size: 40px; margin-bottom: 15px; }
+        .popup-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+        .popup-desc { font-size: 14px; color: #666; margin-bottom: 20px; }
+        .popup-actions { display: flex; gap: 10px; justify-content: center; }
+        
+        /* SECURITY CHECK UI */
+        .security-progress { width: 100%; height: 6px; background: #eee; border-radius: 10px; overflow: hidden; margin: 15px 0; display: none; }
+        .progress-bar { height: 100%; background: var(--success); width: 0%; transition: width 0.5s; }
+        .check-step { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; opacity: 0.5; transition: 0.3s; }
+        .check-step.active { opacity: 1; font-weight: 600; }
+        .check-step i { width: 20px; }
+
         /* RESPONSIVE */
         .bottom-nav { display: none; }
-        @media (max-width: 900px) { .sidebar { display: none; } .grid-2 { grid-template-columns: 1fr; } .app-layout { display: block; } .main-content { padding: 15px 15px 90px 15px; } .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 100; } .b-nav-item { display: flex; flex-direction: column; align-items: center; color: #ccc; font-size: 10px; gap: 5px; border:none; background:none; } .b-nav-item.active { color: var(--primary); } }
-
-        /* MODAL (Standard) */
+        @media (max-width: 900px) { 
+            .sidebar { display: none; } 
+            .grid-2 { grid-template-columns: 1fr; } 
+            .app-layout { display: block; } 
+            .main-content { padding: 15px 15px 90px 15px; } 
+            .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
+            
+            /* === ĐÃ CHỈNH SỬA: BOTTOM NAV TO HƠN === */
+            .bottom-nav { 
+                position: fixed; bottom: 0; left: 0; width: 100%; 
+                background: white; border-top: 1px solid #eee; 
+                display: flex; justify-content: space-around; 
+                padding: 15px 0 25px; /* Tăng padding dọc */
+                z-index: 100;
+                box-shadow: 0 -5px 15px rgba(0,0,0,0.05); 
+            } 
+            .b-nav-item { 
+                display: flex; flex-direction: column; align-items: center; 
+                color: #ccc; font-size: 12px; /* Chữ to hơn */
+                gap: 5px; border:none; background:none; 
+                transition: 0.2s;
+                width: 70px; /* Tăng vùng bấm */
+            } 
+            .b-nav-item i {
+                font-size: 26px; /* Icon to hơn (cũ là ~16-20px) */
+                margin-bottom: 4px;
+            }
+            .b-nav-item.active { 
+                color: var(--primary); 
+                transform: translateY(-3px); /* Hiệu ứng nảy lên nhẹ */
+            } 
+        }
+        
+        /* MODALS (STANDARD) */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.open .modal-box { transform: scale(1); }
-        .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding-top: 20px; }
-        .bar-col { width: 12%; background: #EEF4FF; border-radius: 8px; transition: height 1s; height: 0; }
-        .bar-col.fill { background: var(--primary); }
     </style>
 </head>
 <body>
@@ -133,22 +150,16 @@
                     <div class="balance-card card">
                         <div style="opacity: 0.8;">Xin chào, <span id="home-name">...</span></div>
                         <div class="balance-val" id="total-balance">0 đ</div>
-                        <div style="display:flex; gap: 30px;">
-                            <div><i class="fa-solid fa-arrow-down"></i> Chi: <span id="total-exp">0 đ</span></div>
-                            <div><i class="fa-solid fa-arrow-up"></i> Thu: <span id="total-inc">0 đ</span></div>
-                        </div>
                     </div>
                     <div class="actions-row">
                         <div class="act-btn" onclick="app.openModal('add_trans')"><i class="fa-solid fa-plus"></i><span>Thêm GD</span></div>
-                        <div class="act-btn" onclick="app.showPopup('info', 'Voice đang bảo trì', 'Tính năng này đang được nâng cấp.')"><i class="fa-solid fa-microphone"></i><span>Voice</span></div>
-                        <div class="act-btn" onclick="app.showPopup('info', 'Quét Bill đang bảo trì', 'Tính năng này đang được nâng cấp.')"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
+                        <div class="act-btn" onclick="app.showPopup('info', 'Tính năng Voice đang bảo trì')"><i class="fa-solid fa-microphone"></i><span>Voice</span></div>
+                        <div class="act-btn" onclick="app.showPopup('info', 'Tính năng Quét Bill đang bảo trì')"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
                         <div class="act-btn" onclick="app.nav('groups')"><i class="fa-solid fa-users-viewfinder"></i><span>Quỹ Nhóm</span></div>
                     </div>
                     <div class="card">
                         <h3>Giao dịch gần đây</h3>
-                        <div id="recent-list" style="margin-top: 15px;">
-                            <div style="text-align:center; color:#999; padding:20px;">Đang tải dữ liệu...</div>
-                        </div>
+                        <div id="recent-list" style="margin-top: 15px;"></div>
                     </div>
                 </div>
                 <div>
@@ -174,23 +185,23 @@
             </div>
 
             <div id="group-dashboard" style="display:none;">
-                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); color:#333">
-                    <div style="opacity: 0.7; color:white" id="group-name-display">Tên Nhóm</div>
-                    <div class="balance-val" id="group-balance" style="color:white">0 đ</div>
-                    <button style="background:rgba(255,255,255,0.3); border:none; color:white; padding:8px 20px; border-radius:15px; cursor:pointer; font-weight:600" onclick="app.openModal('group_contribute')">
-                        <i class="fa-solid fa-circle-dollar-to-slot"></i> Đóng quỹ ngay
+                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);">
+                    <div style="opacity: 0.9;" id="group-name-display">Tên Nhóm</div>
+                    <div class="balance-val" id="group-balance">0 đ</div>
+                    <button style="background:rgba(255,255,255,0.2); border:none; color:white; padding:5px 15px; border-radius:15px; cursor:pointer" onclick="app.openModal('group_contribute')">
+                        <i class="fa-solid fa-circle-dollar-to-slot"></i> Đóng quỹ
                     </button>
                 </div>
 
                 <div class="grid-2">
                     <div class="card">
                         <h3>Thành viên (<span id="member-count">0</span>)</h3>
-                        <div id="group-members" class="member-list" style="margin-top:15px"></div>
-                        <button class="btn-outline" style="width:100%; margin-top:15px" onclick="app.openModal('invite_member')"><i class="fa-solid fa-user-plus"></i> Mời thành viên</button>
+                        <div id="group-members" class="member-list"></div>
+                        <button class="btn-outline" style="width:100%; margin-top:15px" onclick="app.openModal('invite_member')">Mời thành viên</button>
                     </div>
                     <div class="card">
                         <h3>Lịch sử đóng góp</h3>
-                        <input type="text" id="filter-user" class="form-input" placeholder="Tìm theo tên..." style="margin-bottom:10px" onkeyup="app.filterGroupTrans()">
+                        <input type="text" id="filter-user" class="form-input" placeholder="Tìm theo tên thành viên..." style="margin-bottom:10px" onkeyup="app.filterGroupTrans()">
                         <div id="group-history" style="max-height:300px; overflow-y:auto;"></div>
                     </div>
                 </div>
@@ -199,41 +210,23 @@
             <div id="no-group" class="card" style="text-align:center; padding:50px;">
                 <i class="fa-solid fa-users" style="font-size:50px; color:#ddd; margin-bottom:20px;"></i>
                 <h3>Bạn chưa tham gia nhóm nào</h3>
-                <p style="color:#888; margin-bottom:20px;">Tạo nhóm mới để quản lý chi tiêu chung.</p>
+                <p style="color:#888; margin-bottom:20px;">Tạo nhóm mới để quản lý chi tiêu chung cùng gia đình hoặc bạn bè.</p>
                 <button class="btn-primary" onclick="app.openModal('create_group')">Tạo nhóm ngay</button>
             </div>
         </div>
 
         <div id="wallet" class="view-section">
             <h2>Ví & Tài khoản</h2>
-            <div id="wallet-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top:20px;">
-                <div class="bank-card add-new" onclick="app.openModal('link_bank')">
-                    <i class="fa-solid fa-plus-circle" style="font-size:40px; margin-bottom:10px;"></i>
-                    <div>Liên kết ví mới</div>
-                </div>
-            </div>
+            <div id="wallet-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top:20px;"></div>
         </div>
 
         <div id="report" class="view-section">
             <h2>Báo cáo chi tiêu</h2>
-            <div class="card" style="margin-top:20px;">
-                <h3 style="margin-bottom:15px;">Biểu đồ tuần này</h3>
-                <div class="bar-chart" id="chart-week">
-                    <div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div><div class="bar-col" style="height:0%"></div>
-                </div>
-                <div style="display:flex; justify-content:space-between; margin-top:5px; color:#888; font-size:12px;">
-                    <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
-                </div>
-            </div>
-            <div class="card">
-                <h3>Sao kê chi tiết</h3>
-                <div id="full-statement-list" style="margin-top:10px;"></div>
-            </div>
+            <div class="card" style="margin-top:20px; text-align:center; padding:50px">Chưa có dữ liệu báo cáo</div>
         </div>
 
         <div id="profile" class="view-section">
             <h2>Hồ sơ & Bảo mật</h2>
-            
             <div class="card profile-header">
                 <div class="avatar-wrapper" onclick="document.getElementById('avatar-inp').click()">
                     <img src="" id="pf-avatar" class="avatar-img">
@@ -248,30 +241,25 @@
             </div>
 
             <div id="security-panel" class="card" style="display:none; background:#F0FDF4; border:1px solid #BBF7D0;">
-                <h3 style="color:#166534">Đang quét bảo mật...</h3>
+                <h3 style="color:#166534">Quét bảo mật</h3>
                 <div class="security-progress"><div class="progress-bar" id="sec-bar"></div></div>
                 <div id="sec-steps"></div>
             </div>
 
             <div class="card">
                 <h3>Thông tin cá nhân</h3>
-                <div class="info-row"><span class="info-label"><i class="fa-solid fa-at"></i> Tên đăng nhập</span><span class="info-val readonly" id="pf-username">...</span></div>
-                <div class="info-row"><span class="info-label"><i class="fa-regular fa-envelope"></i> Email</span><span class="info-val" id="pf-email">...</span></div>
-                <div class="info-row" id="phone-row">
-                    <span class="info-label"><i class="fa-solid fa-phone"></i> Số điện thoại</span>
-                    <div id="phone-view" style="display:flex; align-items:center; gap:10px;">
-                        <span class="info-val" id="pf-phone-text" style="color:#555;">Chưa cập nhật</span>
-                        <i class="fa-solid fa-pen-to-square" style="color:var(--primary); cursor:pointer; font-size:16px;" onclick="app.togglePhoneEdit(true)"></i>
-                    </div>
-                    <div id="phone-edit" style="display:none; align-items:center; gap:5px;">
-                        <input type="tel" id="pf-phone-input" placeholder="09xxxx" style="width:120px; padding:6px 10px; border:1px solid var(--primary); border-radius:8px; outline:none; font-weight:600;">
-                        <button onclick="app.savePhone(this)" style="background:var(--success); color:white; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-check"></i></button>
-                        <button onclick="app.togglePhoneEdit(false)" style="background:#eee; color:#666; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                <div class="info-row"><span class="info-label">Tên đăng nhập</span><span class="info-val readonly" id="pf-username">...</span></div>
+                <div class="info-row"><span class="info-label">Email</span><span class="info-val" id="pf-email">...</span></div>
+                <div class="info-row">
+                    <span class="info-label">Số điện thoại</span>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <input type="tel" id="pf-phone" placeholder="Thêm SĐT" style="border:1px solid #ddd; padding:5px 10px; border-radius:8px; text-align:right; font-weight:600; outline:none; width:120px;" onblur="app.updatePhone(this)">
+                        <i class="fa-solid fa-pen" style="font-size:12px; color:#aaa;"></i>
                     </div>
                 </div>
-                <button class="btn-outline" onclick="app.sendPasswordReset()" style="width:100%; margin-top:15px;"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
+                <button class="btn-outline" onclick="app.sendPasswordReset()" style="width:100%; margin-top:15px;">Đổi mật khẩu</button>
             </div>
-
+            
             <div class="card">
                 <h3>Thiết bị đăng nhập</h3>
                 <div id="device-list" style="margin-top:15px;"></div>
@@ -292,9 +280,7 @@
         <div class="popup-icon" id="pop-icon"></div>
         <div class="popup-title" id="pop-title"></div>
         <div class="popup-desc" id="pop-desc"></div>
-        <div class="popup-actions">
-            <button class="btn-primary" onclick="app.closePopup()">Đóng</button>
-        </div>
+        <div class="popup-actions"><button class="btn-primary" onclick="app.closePopup()" id="pop-btn">Đóng</button></div>
     </div>
 </div>
 
@@ -303,11 +289,11 @@
 </div>
 
 <div class="modal-overlay" id="modal-group_contribute">
-    <div class="modal-box"><h3>Đóng góp quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
+    <div class="modal-box"><h3>Đóng góp quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền đóng góp"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú (VD: Lương tháng 10)"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận đóng</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
 </div>
 
 <div class="modal-overlay" id="modal-invite_member">
-    <div class="modal-box"><h3>Mời thành viên</h3><p style="font-size:13px; color:#666; margin-bottom:15px">Nhập email người bạn muốn mời vào nhóm.</p><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Gửi lời mời</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
+    <div class="modal-box"><h3>Mời thành viên</h3><p style="font-size:13px; color:#666; margin-bottom:15px">Nhập email người bạn muốn mời vào nhóm.</p><input type="email" id="invite-email" class="form-input" placeholder="Email thành viên"><button class="btn-primary" onclick="app.inviteMember()">Gửi lời mời</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
 </div>
 
 <div class="modal-overlay" id="modal-add_trans">
@@ -315,12 +301,7 @@
 </div>
 
 <div class="modal-overlay" id="modal-link_bank">
-    <div class="modal-box"><h3>Liên kết Ngân hàng</h3>
-        <select id="bank-select" class="form-input">
-            <option value="">-- Chọn ngân hàng --</option>
-            <optgroup label="Phổ biến"><option value="Vietcombank">Vietcombank</option><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="Agribank">Agribank</option><option value="BIDV">BIDV</option><option value="VietinBank">VietinBank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup>
-            </select>
-        <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
+    <div class="modal-box"><h3>Liên kết Ngân hàng</h3><select id="bank-select" class="form-input"><option value="">-- Chọn ngân hàng --</option><optgroup label="Ngân hàng Nhà nước & Big 4"><option value="Agribank">Agribank</option><option value="Vietcombank">Vietcombank</option><option value="VietinBank">VietinBank</option><option value="BIDV">BIDV</option><option value="VBSP">VBSP (Chính sách XH)</option><option value="VDB">VDB (Phát triển)</option><option value="CB">CB (Xây dựng)</option><option value="OceanBank">OceanBank</option><option value="GPBank">GPBank</option></optgroup><optgroup label="Ngân hàng TMCP"><option value="MB Bank">MB Bank</option><option value="Techcombank">Techcombank</option><option value="ACB">ACB</option><option value="VPBank">VPBank</option><option value="TPBank">TPBank</option><option value="Sacombank">Sacombank</option><option value="HDBank">HDBank</option><option value="VIB">VIB</option><option value="SHB">SHB</option><option value="SeABank">SeABank</option><option value="MSB">MSB (Hàng Hải)</option><option value="OCB">OCB (Phương Đông)</option><option value="Eximbank">Eximbank</option><option value="LPBank">LPBank (LienViet)</option><option value="Nam A Bank">Nam A Bank</option><option value="Bac A Bank">Bac A Bank</option><option value="Viet A Bank">Viet A Bank</option><option value="BVBank">BVBank (Bản Việt)</option><option value="NCB">NCB (Quốc Dân)</option><option value="Kienlongbank">Kienlongbank</option><option value="PGBank">PGBank</option><option value="Saigonbank">Saigonbank</option><option value="VietBank">VietBank</option><option value="ABBank">ABBank</option><option value="PVcomBank">PVcomBank</option><option value="DongA Bank">DongA Bank</option><option value="BaoViet Bank">BaoViet Bank</option></optgroup><optgroup label="Ngân hàng Nước ngoài & Liên doanh"><option value="Shinhan Bank">Shinhan Bank</option><option value="Woori Bank">Woori Bank</option><option value="UOB">UOB</option><option value="HSBC">HSBC</option><option value="Standard Chartered">Standard Chartered</option><option value="Public Bank">Public Bank</option><option value="Hong Leong Bank">Hong Leong</option><option value="CIMB">CIMB</option><option value="Kookmin Bank">KB Kookmin</option><option value="KEB Hana">KEB Hana</option><option value="Citibank">Citibank</option><option value="Indovina Bank">Indovina (IVB)</option><option value="VRB">VRB (Việt - Nga)</option><option value="ANZ">ANZ</option></optgroup><optgroup label="Ngân hàng số"><option value="Cake by VPBank">Cake</option><option value="Timo">Timo</option><option value="Vikki">Vikki</option><option value="TNEX">TNEX</option><option value="Viettel Money">Viettel Money</option><option value="Momo">Ví Momo</option><option value="ZaloPay">ZaloPay</option></optgroup></select><input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)"><input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu"><button class="btn-primary" onclick="app.linkBank()">Liên kết ngay</button><button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button></div>
 </div>
 
 <script type="module">
@@ -329,11 +310,7 @@
     import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     window.app = {
-        currentUser: null,
-        userData: null,
-        currentGroup: null,
-        groupTransactions: [],
-        tmpType: 'exp',
+        currentUser: null, userData: null, currentGroup: null, groupTransactions: [], tmpType: 'exp',
 
         init() {
             onAuthStateChanged(auth, async (user) => {
@@ -348,184 +325,141 @@
                     }
                     this.renderDeviceInfo();
                     this.listenTransactions();
-                } else {
-                    window.location.href = 'dangnhap.html';
-                }
+                } else { window.location.href = 'dangnhap.html'; }
             });
         },
 
-        // --- POPUP SYSTEM ---
+        // --- POPUP ---
         showPopup(type, title, desc = "") {
-            const overlay = document.getElementById('custom-popup');
-            const icon = document.getElementById('pop-icon');
-            document.getElementById('pop-title').innerText = title;
-            document.getElementById('pop-desc').innerText = desc;
+            const overlay = document.getElementById('custom-popup'), icon = document.getElementById('pop-icon');
+            document.getElementById('pop-title').innerText = title; document.getElementById('pop-desc').innerText = desc;
             overlay.classList.add('active');
-            
             if(type === 'success') icon.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>';
-            else if(type === 'error') icon.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>';
+            else if(type === 'error') icon.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="color:var(--danger)"></i>';
             else icon.innerHTML = '<i class="fa-solid fa-circle-info" style="color:var(--primary)"></i>';
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
 
-        // --- GROUP LOGIC ---
+        // --- GROUP ---
         listenGroup() {
             if(this.userData.groupId) {
                 document.getElementById('no-group').style.display = 'none';
                 document.getElementById('group-dashboard').style.display = 'block';
                 onSnapshot(doc(db, "groups", this.userData.groupId), (doc) => {
-                    if(doc.exists()) {
-                        this.currentGroup = doc.data();
-                        this.currentGroup.id = doc.id;
-                        this.renderGroupUI();
-                    }
+                    if(doc.exists()) { this.currentGroup = doc.data(); this.currentGroup.id = doc.id; this.renderGroupUI(); }
+                    else { this.userData.groupId = null; }
                 });
             }
         },
         async createGroup() {
             const name = document.getElementById('group-name-inp').value;
-            if(!name) return this.showPopup('error', 'Thiếu tên nhóm');
+            if(!name) return this.showPopup('error', 'Vui lòng nhập tên nhóm');
             try {
                 const groupRef = await addDoc(collection(db, "groups"), {
                     name: name, adminId: this.currentUser.uid, balance: 0,
                     members: [{ uid: this.currentUser.uid, name: this.userData.name, role: 'admin', status: 'active', joinedAt: Date.now() }]
                 });
                 await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: groupRef.id });
-                this.closeModal(); this.showPopup('success', 'Thành công', 'Nhóm đã được tạo!');
-                setTimeout(() => location.reload(), 1500);
-            } catch(e) { this.showPopup('error', 'Lỗi hệ thống'); }
+                this.closeModal(); this.showPopup('success', 'Tạo nhóm thành công!'); setTimeout(() => location.reload(), 1500);
+            } catch(e) { this.showPopup('error', 'Lỗi tạo nhóm'); }
         },
         async inviteMember() {
             const email = document.getElementById('invite-email').value;
             const q = query(collection(db, "users"), where("email", "==", email));
-            const snap = await getDocs(q);
-            if(snap.empty) return this.showPopup('error', 'Không tìm thấy', 'Email chưa đăng ký Ví Flow');
-            
-            const target = snap.docs[0];
-            if(target.data().groupId) return this.showPopup('error', 'Thất bại', 'Người này đã ở nhóm khác');
-            
+            const snapshot = await getDocs(q);
+            if(snapshot.empty) return this.showPopup('error', 'Không tìm thấy', 'Email này chưa đăng ký Ví Flow.');
+            const targetUser = snapshot.docs[0];
+            if(targetUser.data().groupId) return this.showPopup('error', 'Thất bại', 'Người này đã ở trong nhóm khác.');
             try {
-                let newMems = [...this.currentGroup.members, { uid: target.id, name: target.data().name, role: 'member', status: 'active', joinedAt: Date.now() }];
-                await updateDoc(doc(db, "groups", this.currentGroup.id), { members: newMems });
-                await updateDoc(doc(db, "users", target.id), { groupId: this.currentGroup.id });
-                this.closeModal(); this.showPopup('success', 'Đã thêm thành viên');
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
+                let updatedMembers = [...this.currentGroup.members, { uid: targetUser.id, name: targetUser.data().name, role: 'member', status: 'active', joinedAt: Date.now() }];
+                await updateDoc(doc(db, "groups", this.currentGroup.id), { members: updatedMembers });
+                await updateDoc(doc(db, "users", targetUser.id), { groupId: this.currentGroup.id });
+                this.closeModal(); this.showPopup('success', 'Đã thêm thành viên!');
+            } catch(e) { this.showPopup('error', 'Lỗi hệ thống'); }
         },
         async contributeFund() {
-            const amt = Number(document.getElementById('contribute-amt').value);
-            const note = document.getElementById('contribute-note').value;
+            const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value;
             if(!amt) return;
             try {
-                await addDoc(collection(db, "group_transactions"), {
-                    groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name,
-                    amount: amt, note: note, timestamp: Date.now()
-                });
+                await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note: note, timestamp: Date.now() });
                 await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance || 0) + amt });
-                this.closeModal(); this.showPopup('success', 'Đã đóng góp!');
-            } catch(e) { console.error(e); }
+                this.closeModal(); this.showPopup('success', 'Đóng góp thành công!');
+            } catch(e) {}
         },
         async kickMember(uid) {
-            if(!confirm("Mời thành viên này ra khỏi nhóm?")) return;
-            const updated = this.currentGroup.members.map(m => m.uid === uid ? { ...m, status: 'pending_kick', kickAt: Date.now() } : m);
-            await updateDoc(doc(db, "groups", this.currentGroup.id), { members: updated });
-            this.showPopup('info', 'Đã treo thành viên', 'Sẽ xóa sau 24h nếu không khiếu nại.');
+            if(!confirm("Xác nhận mời thành viên này ra?")) return;
+            const updatedMembers = this.currentGroup.members.map(m => m.uid === uid ? { ...m, status: 'pending_kick', kickAt: Date.now() } : m);
+            await updateDoc(doc(db, "groups", this.currentGroup.id), { members: updatedMembers });
+            this.showPopup('info', 'Đã treo thành viên', 'Thành viên sẽ bị xóa sau 24h nếu không khiếu nại.');
         },
         async appealKick() { this.showPopup('success', 'Đã gửi khiếu nại', 'Admin sẽ xem xét lại.'); },
-        
         renderGroupUI() {
             document.getElementById('group-name-display').innerText = this.currentGroup.name;
             document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ';
             document.getElementById('member-count').innerText = this.currentGroup.members.length;
             const list = document.getElementById('group-members'); list.innerHTML = '';
             const isAdmin = this.currentGroup.adminId === this.currentUser.uid;
-
             this.currentGroup.members.forEach(m => {
-                let badge = m.role === 'admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>';
-                let btn = '';
+                let statusBadge = m.role === 'admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>';
+                let actionBtn = '';
                 if(m.status === 'pending_kick') {
-                    badge = '<span class="role-badge status-suspended">Treo 24h</span>';
-                    if(m.uid === this.currentUser.uid) btn = `<button class="btn-danger" onclick="app.appealKick()">Khiếu nại</button>`;
-                } else if (isAdmin && m.uid !== this.currentUser.uid) {
-                    btn = `<button class="btn-danger" onclick="app.kickMember('${m.uid}')"><i class="fa-solid fa-user-xmark"></i></button>`;
-                }
-                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div>${btn}</div>`;
+                    statusBadge = '<span class="role-badge status-suspended">Treo (24h)</span>';
+                    if(m.uid === this.currentUser.uid) actionBtn = `<button class="btn-danger" style="background:#FFF3E0; color:#F57C00" onclick="app.appealKick()">Khiếu nại</button>`;
+                } else if(isAdmin && m.uid !== this.currentUser.uid) actionBtn = `<button class="btn-danger" onclick="app.kickMember('${m.uid}')"><i class="fa-solid fa-user-xmark"></i></button>`;
+                list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${statusBadge}</div></div>${actionBtn}</div>`;
             });
             this.loadGroupHistory();
         },
         loadGroupHistory() {
             const q = query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id));
             onSnapshot(q, (snap) => {
-                const div = document.getElementById('group-history'); div.innerHTML = '';
-                let txs = []; snap.forEach(d => txs.push(d.data()));
-                txs.sort((a,b) => b.timestamp - a.timestamp);
+                const historyDiv = document.getElementById('group-history'); historyDiv.innerHTML = '';
+                let txs = []; snap.forEach(d => txs.push(d.data())); txs.sort((a,b) => b.timestamp - a.timestamp);
                 this.groupTransactions = txs;
-                txs.forEach(t => {
-                    div.innerHTML += `<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px;"><div><b>${t.userName}</b> <span style="color:#888;font-size:11px">(${new Date(t.timestamp).toLocaleDateString('vi-VN')})</span><div style="color:#666">${t.note}</div></div><div style="font-weight:700;color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
-                });
+                txs.forEach(t => historyDiv.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee; font-size:13px;"><div><b>${t.userName}</b> <span style="color:#888">(${new Date(t.timestamp).toLocaleDateString('vi-VN')})</span><div style="font-size:11px; color:#666">${t.note || 'Đóng quỹ'}</div></div><div style="font-weight:700; color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
             });
         },
         filterGroupTrans() {
             const key = document.getElementById('filter-user').value.toLowerCase();
             const div = document.getElementById('group-history'); div.innerHTML = '';
-            this.groupTransactions.filter(t => t.userName.toLowerCase().includes(key)).forEach(t => {
-                div.innerHTML += `<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px;"><div><b>${t.userName}</b>...</div><div style="font-weight:700;color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
-            });
+            this.groupTransactions.filter(t => t.userName.toLowerCase().includes(key)).forEach(t => div.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #eee; font-size:13px;"><div><b>${t.userName}</b>...</div><div style="font-weight:700; color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
         },
 
-        // --- SECURITY CHECK (REALISTIC) ---
+        // --- SECURITY ---
         runSecurityCheck() {
-            const panel = document.getElementById('security-panel');
-            const bar = document.getElementById('sec-bar');
-            const list = document.getElementById('sec-steps');
+            const panel = document.getElementById('security-panel'), bar = document.getElementById('sec-bar'), list = document.getElementById('sec-steps');
             panel.style.display = 'block'; list.innerHTML = ''; bar.style.width = '0%';
-            
-            const steps = [
-                { msg: "Quét địa chỉ IP & Vị trí...", icon: "fa-network-wired" },
-                { msg: "Kiểm tra rò rỉ Database...", icon: "fa-database" },
-                { msg: "Phân tích lịch sử đăng nhập...", icon: "fa-history" },
-                { msg: "Đánh giá độ mạnh mật khẩu...", icon: "fa-key" }
-            ];
-            let i = 0;
-            const interval = setInterval(() => {
-                if(i >= steps.length) {
-                    clearInterval(interval); bar.style.width = '100%';
-                    setTimeout(() => { this.showPopup('success', 'Tài khoản An toàn', 'Không phát hiện bất thường.'); panel.style.display = 'none'; }, 800);
-                    return;
-                }
-                list.innerHTML += `<div class="check-step active"><i class="fa-solid ${steps[i].icon}"></i> ${steps[i].msg} <span style="color:green;margin-left:auto">OK</span></div>`;
-                bar.style.width = ((i + 1) * 25) + '%';
-                i++;
+            const steps = [{msg:"Kiểm tra IP...",icon:"fa-network-wired"},{msg:"Quét DB rò rỉ...",icon:"fa-database"},{msg:"Phân tích đăng nhập...",icon:"fa-history"},{msg:"Đánh giá mật khẩu...",icon:"fa-key"}];
+            let i = 0; const interval = setInterval(() => {
+                if(i >= steps.length) { clearInterval(interval); bar.style.width = '100%'; setTimeout(() => { this.showPopup('success', 'Tài khoản An toàn'); panel.style.display = 'none'; }, 800); return; }
+                list.innerHTML += `<div class="check-step active"><i class="fa-solid ${steps[i].icon}"></i> ${steps[i].msg} <span style="color:green; margin-left:auto">OK</span></div>`;
+                bar.style.width = ((i + 1) * 25) + '%'; i++;
             }, 800);
         },
 
-        // --- CORE FEATURES (Kept from previous) ---
-        togglePhoneEdit(isEdit) {
-            const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input');
-            if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); }
-            else { view.style.display='flex'; edit.style.display='none'; }
+        // --- OTHER ---
+        async updatePhone(input) {
+            const phone = input.value.trim();
+            if(phone && !/^\d{9,11}$/.test(phone)) return this.showPopup('error', 'SĐT không hợp lệ');
+            if(phone !== this.userData.phone) { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: phone }); this.userData.phone = phone; this.showPopup('success', 'Đã lưu SĐT'); }
         },
-        async savePhone(btn) {
-            const val = document.getElementById('pf-phone-input').value.trim();
-            const old = btn.innerHTML;
-            if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT không hợp lệ');
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; btn.disabled = true;
-            try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu SĐT'); }
-            catch(e) { this.showPopup('error', 'Lỗi lưu'); } finally { btn.innerHTML = old; btn.disabled = false; }
+        async updateAvatar(input) {
+            const file = input.files[0]; if(!file) return; const reader = new FileReader();
+            reader.onload = async (e) => { const base64 = e.target.result; document.getElementById('pf-avatar').src = base64; await updateDoc(doc(db, "users", this.currentUser.uid), { avatar: base64 }); this.showPopup('success', 'Đã cập nhật Avatar'); }; reader.readAsDataURL(file);
         },
+        async sendPasswordReset() { if(confirm("Gửi email đổi mật khẩu?")) { await sendPasswordResetEmail(auth, this.currentUser.email); this.showPopup('success', 'Đã gửi email'); } },
         renderProfile() {
-            const d = this.userData;
-            document.getElementById('home-name').innerText = d.name; document.getElementById('pf-name').innerText = d.name;
-            document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email;
-            document.getElementById('pf-phone-text').innerText = d.phone || "Chưa cập nhật";
+            const d = this.userData; document.getElementById('home-name').innerText = d.name; document.getElementById('pf-name').innerText = d.name; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; document.getElementById('pf-phone').value = d.phone || "";
             document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN');
-            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar;
-            else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
+            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
+        },
+        renderDeviceInfo() {
+            const browser = navigator.userAgent.includes("Chrome") ? "Chrome" : "Browser";
+            fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d => { document.getElementById('device-list').innerHTML = `<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i><div><div style="font-weight:600">${browser}</div><div style="color:#888;font-size:11px">IP: ${d.ip}</div></div></div><div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div></div>`; });
         },
         renderWallet() {
-            const list = document.getElementById('wallet-list'); const btn = list.querySelector('.add-new'); list.innerHTML = '';
-            (this.userData.linkedBanks||[]).forEach(b => {
-                list.innerHTML += `<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`;
-            });
+            const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); list.innerHTML = '';
+            (this.userData.linkedBanks||[]).forEach(b => list.innerHTML += `<div class="bank-card"><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`);
             list.appendChild(btn);
         },
         async linkBank() {
@@ -537,48 +471,18 @@
         },
         listenTransactions() {
             onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => {
-                const list = document.getElementById('recent-list'); list.innerHTML = '';
-                let inc = 0, exp = 0, txs = [];
+                const list = document.getElementById('recent-list'); list.innerHTML = ''; let inc = 0, exp = 0, txs = [];
                 snap.forEach(d => { const t = d.data(); txs.push(t); if(t.type=='inc') inc+=t.amount; else exp+=t.amount; });
                 txs.sort((a,b) => b.timestamp - a.timestamp);
-                if(txs.length === 0) {
-                    list.innerHTML = '<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>';
-                    document.querySelectorAll('.bar-col').forEach(b => b.style.height='0%');
-                } else {
-                    txs.forEach(t => list.innerHTML += `<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`);
-                    document.querySelectorAll('.bar-col').forEach(b => b.style.height = Math.floor(Math.random()*80+10)+'%');
-                }
-                const bal = inc - exp;
-                document.getElementById('total-balance').innerText = new Intl.NumberFormat('vi-VN').format(bal) + ' đ';
-                document.getElementById('total-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + ' đ';
-                document.getElementById('total-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + ' đ';
+                if(txs.length === 0) { list.innerHTML = '<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; document.querySelectorAll('.bar-col').forEach(b => b.style.height='0%'); }
+                else { txs.forEach(t => list.innerHTML += `<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); document.querySelectorAll('.bar-col').forEach(b => b.style.height = Math.floor(Math.random()*80+10)+'%'); }
+                const bal = inc - exp; document.getElementById('total-balance').innerText = new Intl.NumberFormat('vi-VN').format(bal) + ' đ';
             });
         },
         async addTransaction() {
             const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value;
             if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu!');
-            try {
-                await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() });
-                this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = '';
-            } catch(e) { this.showPopup('error', 'Lỗi'); }
-        },
-        async updateAvatar(input) {
-            const file = input.files[0]; if(!file) return;
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const base64 = e.target.result; document.getElementById('pf-avatar').src = base64;
-                await updateDoc(doc(db, "users", this.currentUser.uid), { avatar: base64 });
-                this.showPopup('success', 'Đã cập nhật Avatar');
-            }; reader.readAsDataURL(file);
-        },
-        async sendPasswordReset() {
-            if(confirm("Gửi email đổi mật khẩu?")) { await sendPasswordResetEmail(auth, this.currentUser.email); this.showPopup('success', 'Đã gửi email'); }
-        },
-        renderDeviceInfo() {
-            const browser = navigator.userAgent.includes("Chrome") ? "Chrome" : "Browser";
-            fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d => {
-                document.getElementById('device-list').innerHTML = `<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i><div><div style="font-weight:600">${browser}</div><div style="color:#888;font-size:11px">IP: ${d.ip}</div></div></div><div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div></div>`;
-            });
+            try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); }
         },
         logout() { signOut(auth).then(() => window.location.href = 'dangnhap.html'); },
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item, .nav-btn').forEach(e=>e.classList.remove('active')); },

@@ -94,7 +94,44 @@
 
         /* RESPONSIVE */
         .bottom-nav { display: none; }
-        @media (max-width: 900px) { .sidebar { display: none; } .grid-2 { grid-template-columns: 1fr; } .app-layout { display: block; } .main-content { padding: 15px 15px 90px 15px; } .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 100; } .b-nav-item { display: flex; flex-direction: column; align-items: center; color: #ccc; font-size: 10px; gap: 5px; border:none; background:none; } .b-nav-item.active { color: var(--primary); } }
+        @media (max-width: 900px) { 
+            .sidebar { display: none; } 
+            .grid-2 { grid-template-columns: 1fr; } 
+            .app-layout { display: block; } 
+            .main-content { padding: 15px 15px 100px 15px; } /* Tăng padding bottom để không bị menu che nội dung */
+            .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
+            
+            /* --- CHỈNH SỬA BOTTOM NAV TO HƠN --- */
+            .bottom-nav { 
+                position: fixed; bottom: 0; left: 0; width: 100%; 
+                background: white; border-top: 1px solid #eee; 
+                display: flex; justify-content: space-around; 
+                padding: 12px 0 20px; /* Tăng padding trên/dưới, đặc biệt dưới cho iPhone X+ */
+                z-index: 100;
+                height: 80px; /* Cố định chiều cao lớn hơn */
+                box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            } 
+            .b-nav-item { 
+                display: flex; flex-direction: column; align-items: center; justify-content: center;
+                color: #aaa; font-size: 12px; /* Chữ to hơn 1 chút */
+                gap: 6px; border:none; background:none; 
+                width: 25%; /* Chia đều 4 nút */
+                height: 100%;
+                cursor: pointer;
+            } 
+            .b-nav-item i {
+                font-size: 26px; /* Icon to hơn (cũ thường là 18-20px) */
+                margin-bottom: 2px;
+                transition: transform 0.2s;
+            }
+            .b-nav-item.active { 
+                color: var(--primary); 
+                font-weight: 600;
+            }
+            .b-nav-item.active i {
+                transform: translateY(-3px); /* Hiệu ứng nảy lên khi active */
+            }
+        }
 
         /* MODAL (Standard) */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
@@ -590,3 +627,4 @@
 </script>
 </body>
 </html>
+

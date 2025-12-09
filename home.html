@@ -9,21 +9,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CORE STYLES --- */
-        :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
+        /* --- CORE VARIABLES --- */
+        :root {
+            --primary: #4361EE;
+            --accent: #4CC9F0;
+            --bg-body: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-main: #2B2D42;
+            --text-light: #8D99AE;
+            --success: #06D6A0;
+            --danger: #EF476F;
+            --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
+            --radius: 20px;
+            --sidebar-width: 260px;
+            --shadow: 0 10px 30px rgba(67, 97, 238, 0.1);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; }
         a { text-decoration: none; color: inherit; }
-        
-        /* LAYOUT */
+
+        /* --- LAYOUT --- */
         .app-layout { display: flex; height: 100vh; width: 100vw; }
+        
+        /* SIDEBAR */
         .sidebar { width: var(--sidebar-width); background: var(--bg-card); padding: 30px; display: flex; flex-direction: column; border-right: 1px solid #eee; z-index: 10; transition: 0.3s; }
         .logo { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .nav-links { display: flex; flex-direction: column; gap: 10px; flex: 1; }
         .nav-btn { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 15px; color: var(--text-light); cursor: pointer; transition: 0.3s; font-weight: 500; }
         .nav-btn:hover, .nav-btn.active { background: #EEF4FF; color: var(--primary); font-weight: 600; }
         .nav-btn.active i { color: var(--primary); }
-        
+
+        /* MAIN CONTENT */
         .main-content { flex: 1; overflow-y: auto; padding: 30px; position: relative; }
         .mobile-header { display: none; }
         
@@ -35,52 +52,33 @@
         .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
         .card { background: var(--bg-card); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #f0f0f0; position: relative; }
         
+        /* Balance Card */
         .balance-card { background: var(--gradient); color: white; position: relative; overflow: hidden; }
-        .balance-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .balance-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; }
         .balance-val { font-size: 40px; font-weight: 700; margin: 10px 0 20px; }
         
+        /* Actions */
         .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02); }
         .act-btn:hover { transform: translateY(-5px); border-color: var(--accent); }
         .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
-        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
-        
-        /* WALLET STYLES */
-        .bank-card {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;
-            padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .bank-card.add-new {
-            background: white; color: #888; border: 2px dashed #ccc;
-            align-items: center; justify-content: center; cursor: pointer;
-        }
-        .bank-logo { font-size: 14px; font-weight: 700; opacity: 0.9; text-transform: uppercase; background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 5px; display: inline-block; }
 
-        /* PROFILE STYLES */
+        /* Wallet Cards */
+        .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; }
+        .bank-card.add-new { background: white; color: #888; border: 2px dashed #ccc; align-items: center; justify-content: center; cursor: pointer; }
+        .bank-logo { font-size: 14px; font-weight: 700; opacity: 0.9; text-transform: uppercase; background: rgba(0, 0, 0, 0.2); padding: 5px 10px; border-radius: 5px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+        /* Profile Elements */
         .profile-header { text-align: center; margin-bottom: 20px; position: relative; }
-        .avatar-wrapper { 
-            width: 100px; height: 100px; margin: 0 auto 15px; position: relative; cursor: pointer; 
-        }
-        .avatar-img { 
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .avatar-overlay {
-            position: absolute; bottom: 0; right: 0; background: var(--primary); color: white;
-            width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: 2px solid white;
-        }
-        
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f5f5f5; align-items: center; font-size: 14px; }
+        .avatar-wrapper { width: 100px; height: 100px; margin: 0 auto 15px; position: relative; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
+        .avatar-overlay { position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
+        .info-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f5f5f5; align-items: center; font-size: 14px; }
         .info-label { color: #888; }
         .info-val { font-weight: 600; color: var(--text-main); }
         .info-val.readonly { color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
 
-        .device-item { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; }
-        .device-icon { font-size: 18px; color: var(--primary); margin-right: 10px; }
-        
-        /* FORM ELEMENTS */
+        /* Forms */
         .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; }
         .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
         .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
@@ -92,20 +90,26 @@
             .grid-2 { grid-template-columns: 1fr; }
             .app-layout { display: block; }
             .main-content { padding: 15px 15px 90px 15px; }
-            .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+            .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
             .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 100; }
-            .b-nav-item { display: flex; flex-direction: column; align-items: center; color: #ccc; font-size: 10px; gap: 5px; border:none; background:none; }
+            .b-nav-item { display: flex; flex-direction: column; align-items: center; color: #ccc; font-size: 10px; gap: 5px; border: none; background: none; }
             .b-nav-item.active { color: var(--primary); }
         }
 
         /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
         .modal-overlay.open .modal-box { transform: scale(1); }
         
+        /* Device Item */
+        .device-item { background: #f9f9f9; padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; }
+        .device-icon { font-size: 18px; color: var(--primary); margin-right: 10px; }
+        
+        /* Transaction list */
+        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
         .bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 150px; padding-top: 20px; }
-        .bar-col { width: 12%; background: #EEF4FF; border-radius: 8px; transition: height 1s; height: 0; /* Default 0 */ }
+        .bar-col { width: 12%; background: #EEF4FF; border-radius: 8px; transition: height 1s; height: 0; }
         .bar-col.fill { background: var(--primary); }
     </style>
 </head>
@@ -212,7 +216,7 @@
                 </div>
                 <input type="file" id="avatar-inp" hidden accept="image/*" onchange="app.updateAvatar(this)">
                 
-                <h3 id="pf-name">User Name</h3>
+                <h3 id="pf-name">...</h3>
                 <p style="color:#888; font-size:13px">Thành viên từ: <span id="pf-joined">...</span></p>
                 
                 <button class="btn-primary" style="width:auto; padding:8px 20px; margin-top:10px; font-size:13px; background:#fff; color:var(--text-main); border:1px solid #ddd;" onclick="app.checkAccountHealth()">
@@ -232,15 +236,19 @@
                 </div>
                 <div class="info-row">
                     <span class="info-label">Số điện thoại</span>
-                    <input type="text" id="pf-phone" placeholder="Thêm số điện thoại" style="border:none; text-align:right; font-weight:600; outline:none; color:var(--primary)" onblur="app.updatePhone(this)">
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <input type="tel" id="pf-phone" placeholder="Nhập SĐT..." 
+                               style="border:1px solid #4361EE; background:#F8F9FA; padding:8px 12px; border-radius:8px; text-align:right; font-weight:600; outline:none; color:var(--text-main); width:140px;" 
+                               onblur="app.updatePhone(this)">
+                        <i class="fa-solid fa-pen" style="font-size:12px; color:#aaa;"></i>
+                    </div>
                 </div>
                 <button class="btn-outline" onclick="app.sendPasswordReset()"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
             </div>
 
             <div class="card">
                 <h3>Thiết bị đăng nhập</h3>
-                <div id="device-list" style="margin-top:15px;">
-                    </div>
+                <div id="device-list" style="margin-top:15px;"></div>
             </div>
         </div>
     </main>
@@ -270,46 +278,85 @@
 <div class="modal-overlay" id="modal-link_bank">
     <div class="modal-box">
         <h3>Liên kết Ngân hàng</h3>
-        <p style="font-size:13px; color:#666; margin-bottom:15px;">Chọn ngân hàng để theo dõi số dư (Demo)</p>
+        <p style="font-size:13px; color:#666; margin-bottom:15px;">Chọn ngân hàng để liên kết</p>
         
         <select id="bank-select" class="form-input">
             <option value="">-- Chọn ngân hàng --</option>
-            <option value="Vietcombank">Vietcombank</option>
-            <option value="MB Bank">MB Bank</option>
-            <option value="Techcombank">Techcombank</option>
-            <option value="Agribank">Agribank</option>
-            <option value="BIDV">BIDV</option>
-            <option value="VietinBank">VietinBank</option>
-            <option value="ACB">ACB</option>
-            <option value="VPBank">VPBank</option>
-            <option value="TPBank">TPBank</option>
-            <option value="HDBank">HDBank</option>
-            <option value="VIB">VIB</option>
-            <option value="Sacombank">Sacombank</option>
-            <option value="SHB">SHB</option>
-            <option value="OCB">OCB</option>
-            <option value="MSB">MSB (Maritime)</option>
-            <option value="Eximbank">Eximbank</option>
-            <option value="SeABank">SeABank</option>
-            <option value="LienVietPostBank">LPBank</option>
-            <option value="Kienlongbank">Kienlongbank</option>
-            <option value="Nam A Bank">Nam A Bank</option>
-            <option value="Bac A Bank">Bac A Bank</option>
-            <option value="Viet Capital Bank">Ban Viet</option>
-            <option value="NCB">NCB</option>
-            <option value="Shinhan Bank">Shinhan Bank</option>
-            <option value="HSBC">HSBC</option>
-            <option value="Standard Chartered">Standard Chartered</option>
-            <option value="UOB">UOB</option>
-            <option value="Woori Bank">Woori Bank</option>
-            <option value="CIMB">CIMB</option>
-            <option value="Public Bank">Public Bank</option>
-            <option value="Hong Leong Bank">Hong Leong</option>
+            
+            <optgroup label="Ngân hàng Nhà nước & Big 4">
+                <option value="Agribank">Agribank</option>
+                <option value="Vietcombank">Vietcombank</option>
+                <option value="VietinBank">VietinBank</option>
+                <option value="BIDV">BIDV</option>
+                <option value="Chính sách Xã hội (VBSP)">VBSP (Chính sách XH)</option>
+                <option value="VDB">VDB (Phát triển)</option>
+                <option value="CB">CB (Xây dựng)</option>
+                <option value="OceanBank">OceanBank</option>
+                <option value="GPBank">GPBank</option>
+            </optgroup>
+
+            <optgroup label="Ngân hàng TMCP">
+                <option value="MB Bank">MB Bank</option>
+                <option value="Techcombank">Techcombank</option>
+                <option value="ACB">ACB</option>
+                <option value="VPBank">VPBank</option>
+                <option value="TPBank">TPBank</option>
+                <option value="Sacombank">Sacombank</option>
+                <option value="HDBank">HDBank</option>
+                <option value="VIB">VIB</option>
+                <option value="SHB">SHB</option>
+                <option value="SeABank">SeABank</option>
+                <option value="MSB">MSB (Hàng Hải)</option>
+                <option value="OCB">OCB (Phương Đông)</option>
+                <option value="Eximbank">Eximbank</option>
+                <option value="LPBank">LPBank (LienViet)</option>
+                <option value="Nam A Bank">Nam A Bank</option>
+                <option value="Bac A Bank">Bac A Bank</option>
+                <option value="Viet A Bank">Viet A Bank</option>
+                <option value="BVBank">BVBank (Bản Việt)</option>
+                <option value="NCB">NCB (Quốc Dân)</option>
+                <option value="Kienlongbank">Kienlongbank</option>
+                <option value="PGBank">PGBank</option>
+                <option value="Saigonbank">Saigonbank</option>
+                <option value="VietBank">VietBank</option>
+                <option value="ABBank">ABBank</option>
+                <option value="PVcomBank">PVcomBank</option>
+                <option value="DongA Bank">DongA Bank</option>
+                <option value="BaoViet Bank">BaoViet Bank</option>
+            </optgroup>
+
+            <optgroup label="Ngân hàng Nước ngoài & Liên doanh">
+                <option value="Shinhan Bank">Shinhan Bank</option>
+                <option value="Woori Bank">Woori Bank</option>
+                <option value="UOB">UOB</option>
+                <option value="HSBC">HSBC</option>
+                <option value="Standard Chartered">Standard Chartered</option>
+                <option value="Public Bank">Public Bank</option>
+                <option value="Hong Leong Bank">Hong Leong</option>
+                <option value="CIMB">CIMB</option>
+                <option value="Kookmin Bank">KB Kookmin</option>
+                <option value="KEB Hana">KEB Hana</option>
+                <option value="Industrial Bank of Korea">IBK</option>
+                <option value="Citibank">Citibank</option>
+                <option value="Deutsche Bank">Deutsche Bank</option>
+                <option value="Indovina Bank">Indovina (IVB)</option>
+                <option value="VRB">VRB (Việt - Nga)</option>
+                <option value="ANZ">ANZ</option>
+            </optgroup>
+
+            <optgroup label="Ngân hàng số">
+                <option value="Cake by VPBank">Cake</option>
+                <option value="Timo">Timo</option>
+                <option value="Vikki">Vikki</option>
+                <option value="TNEX">TNEX</option>
+                <option value="Viettel Money">Viettel Money</option>
+                <option value="Momo">Ví Momo</option>
+                <option value="ZaloPay">ZaloPay</option>
+            </optgroup>
         </select>
 
         <input type="text" id="bank-num" class="form-input" placeholder="Số tài khoản (4 số cuối)">
         <input type="number" id="bank-bal" class="form-input" placeholder="Số dư ban đầu (VNĐ)">
-        
         <button class="btn-primary" onclick="app.linkBank()">Liên kết ngay</button>
         <button class="btn-primary" style="background:#eee; color:#333; margin-top:10px;" onclick="app.closeModal()">Hủy</button>
     </div>
@@ -318,7 +365,7 @@
 <script type="module">
     import { auth, db } from './config.js';
     import { onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     window.app = {
         currentUser: null,
@@ -329,18 +376,13 @@
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     this.currentUser = user;
-                    // Lấy dữ liệu user chi tiết
                     const userDoc = await getDoc(doc(db, "users", user.uid));
-                    
                     if (userDoc.exists()) {
                         this.userData = userDoc.data();
                         this.renderProfile();
-                        this.renderWallet(); // Load ví
+                        this.renderWallet();
                     }
-                    
-                    // Render Device Info (Fake nhưng thực tế)
                     this.renderDeviceInfo();
-
                     this.listenTransactions();
                 } else {
                     window.location.href = 'dangnhap.html';
@@ -348,125 +390,58 @@
             });
         },
 
-        // --- 1. PROFILE LOGIC ---
+        // --- 1. PROFILE UPDATE PHONE ---
+        async updatePhone(input) {
+            const phone = input.value.trim();
+            if(phone && !/^\d{9,11}$/.test(phone)) {
+                alert("Số điện thoại không hợp lệ!");
+                input.value = this.userData.phone || "";
+                return;
+            }
+            if(phone !== this.userData.phone) {
+                try {
+                    await updateDoc(doc(db, "users", this.currentUser.uid), { phone: phone });
+                    this.userData.phone = phone;
+                    alert("✅ Đã lưu số điện thoại thành công!");
+                } catch (e) {
+                    console.error(e);
+                    alert("Lỗi khi lưu số điện thoại!");
+                }
+            }
+        },
+
         renderProfile() {
             const d = this.userData;
             document.getElementById('home-name').innerText = d.name;
             document.getElementById('pf-name').innerText = d.name;
-            document.getElementById('pf-username').innerText = d.username || "Chưa thiết lập"; // Readonly
+            document.getElementById('pf-username').innerText = d.username || "Chưa thiết lập";
             document.getElementById('pf-email').innerText = d.email;
             document.getElementById('pf-phone').value = d.phone || "";
-            
-            // Format ngày tạo: DD/MM/YYYY
-            const date = new Date(d.createdAt);
-            const dateStr = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-            document.getElementById('pf-joined').innerText = dateStr;
 
-            // Avatar
+            const date = new Date(d.createdAt);
+            document.getElementById('pf-joined').innerText = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+
             if(d.avatar) {
                 document.getElementById('pf-avatar').src = d.avatar;
             } else {
-                // Avatar chữ cái
                 document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`;
             }
         },
 
-        async updateAvatar(input) {
-            const file = input.files[0];
-            if(!file) return;
-            
-            // Convert to Base64 (Lưu thẳng vào Firestore cho đơn giản, không cần Storage)
-            const reader = new FileReader();
-            reader.onload = async (e) => {
-                const base64 = e.target.result;
-                document.getElementById('pf-avatar').src = base64;
-                
-                // Save to DB
-                await updateDoc(doc(db, "users", this.currentUser.uid), {
-                    avatar: base64
-                });
-                alert("Đã cập nhật ảnh đại diện!");
-            };
-            reader.readAsDataURL(file);
-        },
-
-        async updatePhone(input) {
-            const phone = input.value.trim();
-            if(phone !== this.userData.phone) {
-                await updateDoc(doc(db, "users", this.currentUser.uid), { phone: phone });
-            }
-        },
-
-        async sendPasswordReset() {
-            if(confirm("Bạn có chắc muốn gửi email đổi mật khẩu?")) {
-                await sendPasswordResetEmail(auth, this.currentUser.email);
-                alert("Đã gửi email! Vui lòng kiểm tra hộp thư.");
-            }
-        },
-
-        renderDeviceInfo() {
-            // Lấy thông tin trình duyệt thật
-            const browserName = navigator.userAgent.includes("Chrome") ? "Google Chrome" : "Trình duyệt Web";
-            const os = navigator.platform;
-            
-            // Lấy IP (Dùng API miễn phí)
-            fetch('https://api.ipify.org?format=json')
-                .then(res => res.json())
-                .then(data => {
-                    const html = `
-                        <div class="device-item">
-                            <div style="display:flex;align-items:center">
-                                <i class="fa-solid fa-laptop device-icon"></i>
-                                <div>
-                                    <div style="font-weight:600">${browserName} (${os})</div>
-                                    <div style="color:#888;font-size:11px">IP: ${data.ip}</div>
-                                </div>
-                            </div>
-                            <div style="color:#06D6A0;font-weight:600;font-size:11px">Đang hoạt động</div>
-                        </div>
-                    `;
-                    document.getElementById('device-list').innerHTML = html;
-                })
-                .catch(() => {
-                    document.getElementById('device-list').innerHTML = "Không thể lấy thông tin thiết bị.";
-                });
-        },
-
-        checkAccountHealth() {
-            alert("Đang quét hệ thống bảo mật...");
-            setTimeout(() => {
-                alert("✅ Tài khoản An toàn!\n- Không phát hiện đăng nhập lạ.\n- Không có giao dịch rửa tiền.\n- Mật khẩu: Nên thay đổi 3 tháng/lần.");
-            }, 1500);
-        },
-
-        // --- 2. WALLET LOGIC (Liên kết ngân hàng) ---
+        // --- 2. WALLET (LINK BANK) ---
         renderWallet() {
             const list = document.getElementById('wallet-list');
             const banks = this.userData.linkedBanks || [];
-            
-            // Xóa các card cũ (trừ nút add)
             const addBtn = list.querySelector('.add-new');
             list.innerHTML = '';
-            
-            if(banks.length === 0) {
-                // Không có thẻ nào -> Chỉ hiện nút Add
-                // (Mặc định ví trống cho user mới)
-            } else {
+            if(banks.length > 0) {
                 banks.forEach(b => {
-                    const html = `
+                    list.innerHTML += `
                         <div class="bank-card">
-                            <div style="display:flex;justify-content:space-between;">
-                                <span class="bank-logo">${b.name}</span>
-                                <i class="fa-solid fa-wifi"></i>
-                            </div>
+                            <div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div>
                             <div style="font-size:20px; margin:20px 0; letter-spacing:2px;">**** ${b.number}</div>
-                            <div>
-                                <div style="font-size:12px;opacity:0.8">Số dư khả dụng</div>
-                                <div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div>
-                            </div>
-                        </div>
-                    `;
-                    list.innerHTML += html;
+                            <div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div>
+                        </div>`;
                 });
             }
             list.appendChild(addBtn);
@@ -476,92 +451,48 @@
             const name = document.getElementById('bank-select').value;
             const num = document.getElementById('bank-num').value;
             const bal = Number(document.getElementById('bank-bal').value);
-
-            if(!name || !num) return alert("Vui lòng chọn ngân hàng và nhập số tài khoản!");
-
+            if(!name || !num) return alert("Vui lòng nhập đầy đủ thông tin!");
             const newBank = { name: name, number: num, balance: bal || 0 };
-
-            // Lưu vào mảng linkedBanks trong Firestore user
-            await updateDoc(doc(db, "users", this.currentUser.uid), {
-                linkedBanks: arrayUnion(newBank)
-            });
-
-            // Reload lại
+            await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) });
             this.userData.linkedBanks = this.userData.linkedBanks ? [...this.userData.linkedBanks, newBank] : [newBank];
             this.renderWallet();
             this.closeModal();
             alert("Liên kết thành công!");
         },
 
-        // --- 3. TRANSACTIONS & CHARTS (Fix Zero Balance) ---
+        // --- 3. TRANSACTIONS ---
         listenTransactions() {
-            const q = query(
-                collection(db, "transactions"),
-                where("uid", "==", this.currentUser.uid)
-            );
-
+            const q = query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid));
             onSnapshot(q, (snapshot) => {
                 const list = document.getElementById('recent-list');
                 const fullList = document.getElementById('full-statement-list');
                 list.innerHTML = ''; fullList.innerHTML = '';
-                
-                let totalInc = 0;
-                let totalExp = 0;
-                let allTrans = [];
-
+                let totalInc = 0, totalExp = 0, allTrans = [];
                 snapshot.forEach((doc) => {
                     const t = doc.data();
                     allTrans.push(t);
-                    if(t.type === 'inc') totalInc += t.amount;
-                    else totalExp += t.amount;
+                    if(t.type === 'inc') totalInc += t.amount; else totalExp += t.amount;
                 });
-                
-                // Sắp xếp theo thời gian
                 allTrans.sort((a, b) => b.timestamp - a.timestamp);
-
-                // LOGIC QUAN TRỌNG: User mới -> 0đ -> Chart rỗng
+                
                 if(allTrans.length === 0) {
-                    list.innerHTML = '<div style="text-align:center; color:#999; margin-top:20px;">Chưa có giao dịch nào. Số dư 0đ.</div>';
-                    // Reset Chart về 0
-                    document.querySelectorAll('.bar-col').forEach(bar => bar.style.height = '0%');
+                    list.innerHTML = '<div style="text-align:center; color:#999; margin-top:20px;">Chưa có giao dịch. Số dư 0đ.</div>';
+                    document.querySelectorAll('.bar-col').forEach(b => b.style.height = '0%');
                 } else {
-                    // Có giao dịch -> Render
                     allTrans.forEach(t => {
-                        const html = `
-                            <div class="trans-item">
-                                <div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}">
-                                    <i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i>
-                                </div>
-                                <div style="flex:1;">
-                                    <div style="font-weight:600;">${t.desc}</div>
-                                    <div style="font-size:12px; color:#888;">${t.date}</div>
-                                </div>
-                                <div style="font-weight:700; color:${t.type=='inc'?'#06D6A0':'#EF476F'}">
-                                    ${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}
-                                </div>
-                            </div>
-                        `;
-                        list.innerHTML += html;
-                        fullList.innerHTML += html;
+                        const html = `<div class="trans-item"><div class="t-icon" style="background:${t.type=='inc'?'#06D6A0':'#EF476F'}"><i class="fa-solid ${t.type=='inc'?'fa-arrow-up':'fa-arrow-down'}"></i></div><div style="flex:1;"><div style="font-weight:600;">${t.desc}</div><div style="font-size:12px; color:#888;">${t.date}</div></div><div style="font-weight:700; color:${t.type=='inc'?'#06D6A0':'#EF476F'}">${t.type=='inc'?'+':'-'}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
+                        list.innerHTML += html; fullList.innerHTML += html;
                     });
-                    
-                    // Fake Chart Data (Cho sinh động)
-                    document.querySelectorAll('.bar-col').forEach(bar => {
-                        bar.style.height = Math.floor(Math.random() * 80 + 10) + '%';
-                    });
+                    // Random chart effect
+                    document.querySelectorAll('.bar-col').forEach(b => b.style.height = Math.floor(Math.random()*80+10) + '%');
                 }
-
-                // Update Tổng quan
                 const balance = totalInc - totalExp;
                 const fmt = new Intl.NumberFormat('vi-VN').format;
-                
                 document.getElementById('total-balance').innerText = fmt(balance) + ' đ';
                 document.getElementById('total-exp').innerText = fmt(totalExp) + ' đ';
                 document.getElementById('total-inc').innerText = fmt(totalInc) + ' đ';
-                
-                // Budget Bar
                 const budget = 5000000;
-                const percent = balance > 0 ? Math.min((totalExp / budget) * 100, 100).toFixed(0) : 0;
+                const percent = balance > 0 ? Math.min((totalExp/budget)*100, 100).toFixed(0) : 0;
                 document.getElementById('budget-percent').innerText = percent + '%';
                 document.getElementById('budget-bar').style.width = percent + '%';
             });
@@ -570,42 +501,52 @@
         async addTransaction() {
             const amt = Number(document.getElementById('inp-amt').value);
             const desc = document.getElementById('inp-desc').value;
-            const btn = document.getElementById('btn-save-trans');
-
             if(!amt || !desc) return alert('Nhập thiếu thông tin!');
-
-            btn.innerText = "Đang lưu...";
-            btn.disabled = true;
-
             try {
-                await addDoc(collection(db, "transactions"), {
-                    uid: this.currentUser.uid,
-                    amount: amt,
-                    desc: desc,
-                    type: this.tmpType,
-                    date: new Date().toLocaleDateString('vi-VN'),
-                    timestamp: Date.now()
-                });
-                this.closeModal();
-                document.getElementById('inp-amt').value = '';
-                document.getElementById('inp-desc').value = '';
-            } catch (e) {
-                console.error(e);
-                alert("Lỗi lưu dữ liệu!");
-            } finally {
-                btn.innerText = "Lưu";
-                btn.disabled = false;
-            }
+                await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() });
+                this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = '';
+            } catch(e) { console.error(e); alert("Lỗi khi lưu!"); }
         },
 
-        // UI HELPERS
+        // --- HELPERS ---
+        async updateAvatar(input) {
+            const file = input.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const base64 = e.target.result;
+                document.getElementById('pf-avatar').src = base64;
+                await updateDoc(doc(db, "users", this.currentUser.uid), { avatar: base64 });
+                alert("Đã cập nhật ảnh đại diện!");
+            };
+            reader.readAsDataURL(file);
+        },
+        async sendPasswordReset() {
+            if(confirm("Gửi email đổi mật khẩu?")) {
+                await sendPasswordResetEmail(auth, this.currentUser.email);
+                alert("Đã gửi! Kiểm tra email.");
+            }
+        },
+        renderDeviceInfo() {
+            const browserName = navigator.userAgent.includes("Chrome") ? "Google Chrome" : "Web Browser";
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('device-list').innerHTML = `
+                        <div class="device-item">
+                            <div style="display:flex;align-items:center"><i class="fa-solid fa-laptop device-icon"></i>
+                            <div><div style="font-weight:600">${browserName}</div><div style="color:#888;font-size:11px">IP: ${data.ip}</div></div></div>
+                            <div style="color:#06D6A0;font-weight:600;font-size:11px">Online</div>
+                        </div>`;
+                });
+        },
+        checkAccountHealth() { alert("✅ Tài khoản an toàn!"); },
         logout() { signOut(auth).then(() => window.location.href = 'dangnhap.html'); },
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item, .nav-btn').forEach(e=>e.classList.remove('active')); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },
         setType(type, btn) { this.tmpType = type; btn.parentElement.querySelectorAll('button').forEach(b => { b.style.background='#eee'; b.style.color='#333'; }); btn.style.background = type === 'exp' ? '#EF476F' : '#06D6A0'; btn.style.color = 'white'; }
     };
-
     window.onload = () => app.init();
 </script>
 </body>

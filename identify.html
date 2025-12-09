@@ -48,7 +48,8 @@
 
             <div id="error-box" class="msg-box error-msg"></div>
             <div id="success-box" class="msg-box success-msg">
-                <i class="fa-solid fa-check-circle"></i> Đã tìm thấy tài khoản! Link khôi phục đã được gửi vào email của bạn.
+                <i class="fa-solid fa-check-circle"></i> Đã gửi email khôi phục!<br>
+                Vui lòng kiểm tra hộp thư đến (và cả mục Spam/Junk) để lấy lại mật khẩu.
             </div>
 
             <div id="recovery-form">
@@ -82,35 +83,45 @@
 
             if(!email) { return showError('Vui lòng nhập địa chỉ email!'); }
             
+            // Regex kiểm tra format email cơ bản
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) { return showError('Định dạng email không hợp lệ!'); }
+
             btn.innerText = 'Đang kiểm tra hệ thống...';
             btn.disabled = true;
             errBox.style.display = 'none';
 
             try {
-                // BƯỚC 1: Query Database xem Email có tồn tại không
+                // BƯỚC 1: Query Database xem Email có tồn tại trong Firestore không
+                // Điều này giúp tránh gửi mail rác cho những email chưa từng đăng ký
                 const usersRef = collection(db, "users");
                 const q = query(usersRef, where("email", "==", email));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
-                    // Không tìm thấy trong DB -> Báo lỗi ngay (Không gửi mail)
                     showError('Email này KHÔNG tồn tại trong hệ thống Ví Flow!');
-                    btn.innerText = 'Kiểm tra & Gửi';
-                    btn.disabled = false;
+                    resetBtn();
                 } else {
-                    // BƯỚC 2: Có tồn tại -> Gửi mail reset
+                    // BƯỚC 2: Có tồn tại -> Gửi mail reset qua Firebase Auth
                     await sendPasswordResetEmail(auth, email);
                     
+                    // Ẩn form, hiện thông báo thành công
                     formDiv.style.display = 'none';
                     document.querySelector('.sub-text').style.display = 'none';
                     successBox.style.display = 'block';
                 }
 
             } catch (error) {
-                console.error(error);
-                showError('Lỗi kết nối hoặc Email không hợp lệ.');
-                btn.disabled = false;
-                btn.innerText = 'Kiểm tra & Gửi';
+                console.error("Firebase Error:", error);
+                
+                // Xử lý các lỗi cụ thể từ Firebase
+                let msg = 'Lỗi kết nối. Vui lòng thử lại sau.';
+                if (error.code === 'auth/user-not-found') msg = 'Email này chưa được đăng ký.';
+                if (error.code === 'auth/invalid-email') msg = 'Email không hợp lệ.';
+                if (error.code === 'auth/too-many-requests') msg = 'Quá nhiều yêu cầu. Vui lòng thử lại sau ít phút.';
+                
+                showError(msg);
+                resetBtn();
             }
         });
 
@@ -120,6 +131,11 @@
             const container = document.querySelector('.auth-container');
             container.style.animation = 'shake 0.3s';
             setTimeout(() => container.style.animation = '', 300);
+        }
+
+        function resetBtn() {
+            btn.disabled = false;
+            btn.innerText = 'Kiểm tra & Gửi';
         }
         
         // CSS Rung lắc khi lỗi

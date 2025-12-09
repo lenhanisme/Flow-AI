@@ -25,10 +25,22 @@
 
         body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
+
+        /* --- SPLASH SCREEN --- */
+        #app-loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease-out;
+        }
+        .loader-logo { font-size: 40px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #EEF4FF; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        .loader-text { margin-top: 15px; color: #888; font-size: 14px; font-weight: 500; }
         
         /* LAYOUT */
-        .app-layout { display: flex; min-height: 100vh; width: 100vw; }
-        
+        .app-layout { display: flex; min-height: 100vh; width: 100vw; opacity: 0; transition: 1s; }
+        .app-layout.loaded { opacity: 1; }
+
         .sidebar { 
             width: var(--sidebar-width); background: var(--bg-card); padding: 30px; 
             display: flex; flex-direction: column; border-right: 1px solid #eee; 
@@ -91,7 +103,7 @@
         .backup-codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .backup-code { background: #f0f0f0; padding: 8px; text-align: center; border-radius: 6px; font-family: monospace; letter-spacing: 2px; font-weight: bold; }
 
-        /* FORM & INPUT WITH ICON */
+        /* FORM & INPUT */
         .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; transition: 0.3s; }
         .input-group { position: relative; width: 100%; margin-bottom: 15px; }
         .input-group .form-input { margin-bottom: 0; padding-right: 40px; }
@@ -126,25 +138,30 @@
         #chart-bar-exp { background: var(--danger); box-shadow: 0 4px 10px rgba(239, 71, 111, 0.3); }
         #chart-bar-fund { background: var(--warning); box-shadow: 0 4px 10px rgba(255, 209, 102, 0.3); }
 
-        /* SCANNER STYLE - UPDATED */
+        /* FACEID UI */
+        .face-scan-container { position: relative; width: 250px; height: 250px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; background: #000; display:flex; align-items:center; justify-content:center; }
+        .face-scan-container video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .scan-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 4px solid rgba(67, 97, 238, 0.3); border-top-color: var(--primary); animation: spin 2s linear infinite; box-shadow: 0 0 20px rgba(67, 97, 238, 0.5); z-index: 10; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .face-instruction { text-align: center; margin-bottom: 20px; color: #555; font-size: 14px; }
+        #faceid-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; }
+
+        /* SCANNER STYLE */
         #qr-reader { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 10px; min-height: 250px; background: #000; }
         #qr-reader video { object-fit: cover; border-radius: 15px; width: 100%; height: 100%; }
 
-        /* --- FLOW AI CHATBOT STYLES --- */
+        /* FLOW AI CHATBOT */
         .flow-ai-fab { position: fixed; bottom: 100px; right: 20px; width: 55px; height: 55px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4); cursor: pointer; z-index: 1500; transition: 0.3s; animation: float 3s ease-in-out infinite; }
         .flow-ai-fab:hover { transform: scale(1.1); }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-
         .chat-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid #eee; }
         .chat-window.open { display: flex; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
         .chat-header { background: var(--gradient); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #F8F9FA; display: flex; flex-direction: column; gap: 10px; }
         .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 15px; font-size: 13px; line-height: 1.4; word-wrap: break-word; }
         .msg-bot { background: white; border: 1px solid #eee; align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        
         .chat-options { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
         .chat-opt-btn { font-size: 11px; background: white; border: 1px solid var(--primary); color: var(--primary); padding: 5px 10px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
         .chat-opt-btn:hover { background: var(--primary); color: white; }
@@ -154,20 +171,10 @@
         .success-icon { width: 80px; height: 80px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #10b981; margin-bottom: 20px; animation: pop 0.5s ease; }
         @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
         
-        /* TOAST NOTIFICATION */
+        /* TOAST */
         .toast-notify { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: white; padding: 15px 20px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; z-index: 4000; transition: 0.5s; font-size: 13px; font-weight: 600; border: 1px solid #eee; min-width: 300px; }
         .toast-notify.show { transform: translateX(-50%) translateY(0); }
         .toast-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
-
-        /* FACEID UI STYLES */
-        .face-scan-container { position: relative; width: 250px; height: 250px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; background: #000; display:flex; align-items:center; justify-content:center; }
-        .face-scan-container video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); } /* Mirror Effect */
-        .scan-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; border: 4px solid rgba(67, 97, 238, 0.3); border-top-color: var(--primary); animation: spin 2s linear infinite; box-shadow: 0 0 20px rgba(67, 97, 238, 0.5); z-index: 10; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .face-instruction { text-align: center; margin-bottom: 20px; color: #555; font-size: 14px; }
-        
-        /* FACEID LOCK OVERLAY (Full Screen) */
-        #faceid-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; }
 
         /* RESPONSIVE & MOBILE FIX */
         .bottom-nav { display: none; }
@@ -177,62 +184,26 @@
             .main-content { margin-left: 0; padding: 15px 15px 100px 15px; width: 100%; } 
             .grid-2 { grid-template-columns: 1fr; } 
             .app-layout { display: block; } 
-            
-            .mobile-header { 
-                display: flex; align-items: center; justify-content: space-between; 
-                padding: 15px 20px; background: white; position: sticky; top: 0; 
-                z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
-            } 
-            
-            .bottom-nav { 
-                position: fixed; bottom: 0; left: 0; width: 100%; 
-                background: white; border-top: 1px solid #eee; 
-                display: flex; justify-content: space-between; 
-                padding: 12px 10px 20px; 
-                z-index: 100;
-                height: 80px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
-                overflow: visible; 
-            } 
-            .b-nav-item { 
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-                color: #aaa; font-size: 12px; gap: 6px; border:none; background:none; 
-                flex: 1; height: 100%; cursor: pointer; user-select: none;
-            } 
+            .mobile-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: white; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); } 
+            .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-top: 1px solid #eee; display: flex; justify-content: space-between; padding: 12px 10px 20px; z-index: 100; height: 80px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); overflow: visible; } 
+            .b-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #aaa; font-size: 12px; gap: 6px; border:none; background:none; flex: 1; height: 100%; cursor: pointer; user-select: none; } 
             .b-nav-item i { font-size: 26px; transition: 0.2s; margin-bottom: 2px; }
             .b-nav-item.active { color: var(--primary); font-weight: 600; }
             .b-nav-item.active i { transform: translateY(-3px); }
-
-            /* NÚT GIỮA TO TRÒN */
-            .b-nav-middle {
-                width: 60px; height: 60px;
-                background: var(--gradient);
-                border-radius: 50%;
-                display: flex; align-items: center; justify-content: center;
-                color: white; font-size: 22px;
-                transform: translateY(-25px); 
-                box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
-                border: 5px solid white;
-                cursor: pointer;
-                flex-shrink: 0; 
-                margin: 0 10px;
-            }
+            .b-nav-middle { width: 60px; height: 60px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; transform: translateY(-25px); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4); border: 5px solid white; cursor: pointer; flex-shrink: 0; margin: 0 10px; }
         }
-
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
-        .modal-overlay.open { opacity: 1; pointer-events: auto; }
-        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
-        .modal-overlay.open .modal-box { transform: scale(1); }
-        
-        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
-        .popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
 
         /* FIX: SCAN MODAL Z-INDEX TO BE ON TOP OF OTHER MODALS */
         #modal-scan-qr { z-index: 2000 !important; }
     </style>
 </head>
 <body>
+
+<div id="app-loader">
+    <div class="loader-logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
+    <div class="spinner"></div>
+    <div class="loader-text">Đang tải dữ liệu & AI Model...</div>
+</div>
 
 <div id="faceid-lock-screen">
     <div class="face-scan-container" style="width: 200px; height: 200px;">
@@ -288,7 +259,7 @@
     </div>
 </div>
 
-<div class="app-layout">
+<div class="app-layout" id="main-layout">
     <nav class="sidebar">
         <div class="logo" onclick="window.location.href='home.html'"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
         <div class="nav-links">
@@ -420,17 +391,14 @@
                 <input type="file" id="avatar-inp" hidden accept="image/*" onchange="app.updateAvatar(this)">
                 <h3 id="pf-name" style="display: flex; justify-content: center; align-items: center;">...</h3>
                 <p style="color:#888; font-size:13px">Thành viên từ: <span id="pf-joined">...</span></p>
-                <div style="display:flex; gap:10px; justify-content:center; margin-top:10px; flex-wrap: wrap;">
+                <div id="profile-actions" style="display:flex; gap:10px; justify-content:center; margin-top:10px; flex-wrap: wrap;">
                     <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#fff; color:var(--text-main); border:1px solid #ddd;" onclick="app.runSecurityCheck()">
                         <i class="fa-solid fa-shield-halved" style="color:var(--success)"></i> Bảo mật
                     </button>
                     <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#EEF4FF; color:var(--primary); border:1px solid var(--primary);" onclick="app.showMyQR()">
                         <i class="fa-solid fa-qrcode"></i> Mã nhận tiền
                     </button>
-                    <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#111; color:white; border:none;" onclick="app.openSetupFaceID()">
-                        <i class="fa-solid fa-face-smile"></i> FaceID
-                    </button>
-                </div>
+                    </div>
             </div>
             
             <div class="card">
@@ -620,17 +588,25 @@
         report: { inc: 0, exp: 0, fund: 0 }, 
         html5QrcodeScanner: null, // Scanner Instance
 
-        init() {
+        async init() {
+            // SHOW SPLASH SCREEN
+            document.getElementById('app-loader').style.display = 'flex';
+
             let dId = localStorage.getItem('flow_device_id');
             if(!dId) { dId = 'dev_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('flow_device_id', dId); }
             this.currentDeviceId = dId;
             
-            // Load Face API models
-            Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models')
-            ]).then(() => console.log("Face models loaded"));
+            // PRELOAD AI MODELS
+            try {
+                await Promise.all([
+                    faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
+                    faceapi.nets.faceLandmark68Net.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
+                    faceapi.nets.faceRecognitionNet.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models')
+                ]);
+                console.log("Face models loaded");
+            } catch (e) {
+                console.warn("Error loading Face models (offline?)", e);
+            }
 
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
@@ -644,8 +620,9 @@
                         if(this.userData.is2FAEnabled) {
                             document.getElementById('auth-check-overlay').classList.add('active');
                         }
-                        // FACE ID CHECK
-                        if(this.userData.faceDescriptor) {
+                        
+                        // FACE ID CHECK (Chỉ chạy nếu chưa verify trong session)
+                        if(this.userData.faceDescriptor && !sessionStorage.getItem('faceIDVerified')) {
                             this.checkLoginFaceID();
                         }
 
@@ -654,6 +631,14 @@
                         this.listenUserFund(); 
                     }
                     this.listenTransactions();
+                    
+                    // HIDE SPLASH SCREEN & SHOW APP
+                    setTimeout(() => {
+                        document.getElementById('app-loader').style.opacity = '0';
+                        document.querySelector('.app-layout').classList.add('loaded');
+                        setTimeout(() => document.getElementById('app-loader').remove(), 500);
+                    }, 800);
+
                 } else { window.location.href = 'dangnhap.html'; }
             });
         },
@@ -718,9 +703,23 @@
                 video.srcObject = null;
                 
                 this.closeModal();
+                this.renderProfile(); // Update button to Delete
                 this.showPopup('success', 'FaceID Đã Lưu', 'Bạn có thể đăng nhập bằng khuôn mặt lần sau.');
             } else {
                 this.showPopup('error', 'Không tìm thấy khuôn mặt', 'Vui lòng giữ yên và đủ ánh sáng.');
+            }
+        },
+
+        async deleteFaceID() {
+            if(!confirm("Bạn có chắc muốn xóa dữ liệu FaceID?")) return;
+            try {
+                await updateDoc(doc(db, "users", this.currentUser.uid), { faceDescriptor: null });
+                this.userData.faceDescriptor = null;
+                sessionStorage.removeItem('faceIDVerified'); // Clear session check
+                this.renderProfile();
+                this.showPopup('success', 'Đã xóa FaceID', 'Bạn có thể thiết lập lại.');
+            } catch(e) {
+                this.showPopup('error', 'Lỗi', e.message);
             }
         },
 
@@ -749,6 +748,10 @@
                         if (match.distance < 0.4) { 
                             clearInterval(interval);
                             statusText.innerHTML = '<span style="color:var(--success)">Xác thực thành công!</span>';
+                            
+                            // MARK SESSION AS VERIFIED
+                            sessionStorage.setItem('faceIDVerified', 'true');
+                            
                             setTimeout(() => {
                                 lockScreen.style.display = 'none';
                                 // Stop camera
@@ -850,7 +853,38 @@
         renderWallet() { const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); const existingCards = list.querySelectorAll('.bank-card:not(.add-new)'); existingCards.forEach(c => c.remove()); (this.userData.linkedBanks||[]).forEach((b, index) => { const cardHtml = `<div class="bank-card"><div class="bank-delete" onclick="event.stopPropagation(); app.removeBank(${index})"><i class="fa-solid fa-xmark"></i></div><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`; btn.insertAdjacentHTML('beforebegin', cardHtml); }); },
         async removeBank(index) { if(!confirm("Bạn có chắc muốn xóa thẻ này?")) return; const bankToRemove = this.userData.linkedBanks[index]; try { await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayRemove(bankToRemove) }); this.userData.linkedBanks.splice(index, 1); this.renderWallet(); this.showPopup('success', 'Đã xóa thẻ'); } catch(e) { console.error(e); this.showPopup('error', 'Lỗi xóa thẻ'); } },
         async linkBank() { const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value); if(!name || !num) return this.showPopup('error', 'Thiếu thông tin'); const newBank = { name, number: num, balance: bal || 0 }; await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) }); this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong'); },
-        renderProfile() { const d = this.userData; const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; } },
+        renderProfile() { 
+            const d = this.userData; 
+            const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; 
+            document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; 
+            document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; 
+            const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } 
+            document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); 
+            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; 
+            if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; } 
+            
+            // DYNAMIC FACE ID BUTTON
+            const actionsDiv = document.getElementById('profile-actions');
+            // Xóa nút FaceID cũ nếu có để tránh duplicate
+            const oldBtn = actionsDiv.querySelector('.btn-faceid-dynamic');
+            if(oldBtn) oldBtn.remove();
+
+            if (d.faceDescriptor) {
+                // Đã có FaceID -> Hiện nút Xóa
+                actionsDiv.insertAdjacentHTML('beforeend', `
+                    <button class="btn-primary btn-faceid-dynamic" style="width:auto; padding:8px 20px; font-size:13px; background:#EF476F; color:white; border:none;" onclick="app.deleteFaceID()">
+                        <i class="fa-solid fa-face-frown"></i> Xóa FaceID
+                    </button>
+                `);
+            } else {
+                // Chưa có FaceID -> Hiện nút Setup
+                actionsDiv.insertAdjacentHTML('beforeend', `
+                    <button class="btn-primary btn-faceid-dynamic" style="width:auto; padding:8px 20px; font-size:13px; background:#111; color:white; border:none;" onclick="app.openSetupFaceID()">
+                        <i class="fa-solid fa-face-smile"></i> FaceID
+                    </button>
+                `);
+            }
+        },
         listenUserFund() { onSnapshot(query(collection(db, "group_transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { let total = 0; snap.forEach(d => total += d.data().amount); this.report.fund = total; this.updateReportChart(); }); },
         updateReportChart() { const { inc, exp, fund } = this.report; const max = Math.max(inc, exp, fund, 100000); document.getElementById('chart-bar-inc').style.height = (inc / max * 100) + '%'; document.getElementById('val-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + 'đ'; document.getElementById('chart-bar-exp').style.height = (exp / max * 100) + '%'; document.getElementById('val-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + 'đ'; document.getElementById('chart-bar-fund').style.height = (fund / max * 100) + '%'; document.getElementById('val-fund').innerText = new Intl.NumberFormat('vi-VN').format(fund) + 'đ'; },
         
@@ -934,7 +968,12 @@
                 }
             } 
         },
-        logout() { signOut(auth).then(()=>window.location.href='dangnhap.html'); },
+        
+        logout() { 
+            sessionStorage.removeItem('faceIDVerified'); // Xóa xác thực FaceID
+            signOut(auth).then(()=>window.location.href='dangnhap.html'); 
+        },
+        
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },

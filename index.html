@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ví Flow - Quản lý tài chính thông minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --accent: #4CC9F0;
+            --text: #2B2D42;
+            --bg: #F8F9FA;
+            --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; position: fixed; width: 100%; top: 0;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px);
+            z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 24px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 10px; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { font-weight: 500; transition: 0.3s; color: #555; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        .btn {
+            padding: 10px 24px; border-radius: 50px; font-weight: 600; transition: 0.3s; cursor: pointer; display: inline-block;
+        }
+        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn-fill { background: var(--gradient); color: white; border: none; box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3); }
+        .btn-fill:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4); }
+
+        /* HERO SECTION */
+        .hero {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 140px 5% 80px; min-height: 100vh;
+            background: radial-gradient(circle at 10% 20%, rgba(76, 201, 240, 0.1) 0%, transparent 40%);
+        }
+        .hero-text { flex: 1; max-width: 600px; }
+        .hero-text h1 { font-size: 56px; line-height: 1.2; margin-bottom: 20px; font-weight: 800; }
+        .hero-text span { color: var(--primary); }
+        .hero-text p { font-size: 18px; color: #666; margin-bottom: 30px; line-height: 1.6; }
+        .hero-btns { display: flex; gap: 15px; }
+
+        /* PHONE MOCKUP (CSS Only) */
+        .hero-img { flex: 1; display: flex; justify-content: center; position: relative; }
+        .phone {
+            width: 300px; height: 600px; background: #fff; border-radius: 40px;
+            border: 10px solid #2B2D42; position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        
+        .screen { padding: 20px; background: #F8F9FA; height: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .fake-card { background: var(--gradient); height: 140px; border-radius: 20px; width: 100%; }
+        .fake-row { display: flex; gap: 10px; }
+        .fake-btn { flex: 1; height: 60px; background: white; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .fake-list { flex: 1; background: white; border-radius: 20px; margin-top: 10px; padding: 15px; }
+        .fake-item { height: 40px; background: #f0f0f0; border-radius: 10px; margin-bottom: 10px; width: 100%; }
+
+        /* FEATURES */
+        .features { padding: 80px 5%; text-align: center; }
+        .features h2 { font-size: 36px; margin-bottom: 50px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .feature-card {
+            background: white; padding: 40px 20px; border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .f-icon {
+            width: 60px; height: 60px; background: #EEF4FF; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            font-size: 24px; color: var(--primary);
+        }
+
+        /* FOOTER */
+        footer { background: #fff; padding: 40px 5%; text-align: center; border-top: 1px solid #eee; margin-top: 50px; }
+        .socials { margin: 20px 0; font-size: 20px; color: #888; }
+        .socials i { margin: 0 10px; cursor: pointer; transition: 0.3s; }
+        .socials i:hover { color: var(--primary); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column-reverse; padding-top: 100px; text-align: center; }
+            .hero-btns { justify-content: center; }
+            .hero-img { margin-bottom: 50px; width: 100%; }
+            .nav-links { display: none; } /* Ẩn menu trên mobile cho gọn */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</a>
+        <div class="nav-links">
+            <a href="#features">Tính năng</a>
+            <a href="#about">Về chúng tôi</a>
+            <a href="#contact">Liên hệ</a>
+        </div>
+        <div id="auth-buttons">
+            <a href="dangnhap.html" class="btn btn-outline" style="margin-right: 10px;">Đăng nhập</a>
+            <a href="dangky.html" class="btn btn-fill">Bắt đầu ngay</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Quản lý tài chính <br><span>Thông minh & Dễ dàng</span></h1>
+            <p>
+                Ví Flow giúp bạn theo dõi thu chi, quét hóa đơn tự động và nhận lời khuyên tài chính từ AI. 
+                Đạt mục tiêu tự do tài chính ngay hôm nay.
+            </p>
+            <div class="hero-btns">
+                <a href="dangky.html" class="btn btn-fill" style="padding: 15px 40px; font-size: 18px;">Tạo tài khoản miễn phí</a>
+                <a href="#features" class="btn btn-outline" style="padding: 15px 30px;">Tìm hiểu thêm</a>
+            </div>
+            <div style="margin-top: 30px; display: flex; align-items: center; gap: 10px; font-size: 14px; color: #666; justify-content: center;">
+                <i class="fa-solid fa-check-circle" style="color: var(--success);"></i> An toàn 100%
+                <i class="fa-solid fa-check-circle" style="color: var(--success);"></i> Miễn phí trọn đời
+            </div>
+        </div>
+
+        <div class="hero-img">
+            <div class="phone">
+                <div style="width: 100px; height: 25px; background: #2B2D42; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; margin: 0 auto; position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 10;"></div>
+                <div class="screen">
+                    <div style="display:flex; justify-content:space-between; margin-top: 20px;">
+                        <div style="font-weight: 800; font-size: 18px;">Ví Flow</div>
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <div class="fake-card"></div>
+                    <div class="fake-row">
+                        <div class="fake-btn"></div>
+                        <div class="fake-btn"></div>
+                        <div class="fake-btn"></div>
+                    </div>
+                    <div class="fake-list">
+                        <div style="font-weight:700; margin-bottom:15px">Gần đây</div>
+                        <div class="fake-item" style="width: 80%"></div>
+                        <div class="fake-item" style="width: 90%"></div>
+                        <div class="fake-item" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2>Tại sao chọn Ví Flow?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="f-icon"><i class="fa-solid fa-robot"></i></div>
+                <h3>Trợ lý AI</h3>
+                <p>Chatbot thông minh phân tích thói quen và đưa ra lời khuyên tài chính cho riêng bạn.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon"><i class="fa-solid fa-microphone"></i></div>
+                <h3>Nhập liệu bằng Giọng nói</h3>
+                <p>Chỉ cần nói "Ăn trưa 50k", ứng dụng sẽ tự động ghi chép giao dịch ngay lập tức.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon"><i class="fa-solid fa-expand"></i></div>
+                <h3>Quét Hóa Đơn</h3>
+                <p>Sử dụng Camera để quét bill siêu thị, tự động trích xuất thông tin chi tiêu chính xác.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Bảo mật tuyệt đối</h3>
+                <p>Dữ liệu của bạn được mã hóa và lưu trữ an toàn ngay trên thiết bị.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="justify-content: center; margin-bottom: 20px;"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
+        <p>Giải pháp quản lý tài chính cá nhân toàn diện.</p>
+        <div class="socials">
+    <a href="https://fb.com/lenhanriel" target="_blank" title="Facebook">
+        <i class="fa-brands fa-facebook"></i>
+    </a>
+    
+    <a href="https://instagram.com/nh4n.vn" target="_blank" title="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+    
+    <a href="https://www.tiktok.com/@nh4nz" target="_blank" title="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+    
+    <a href="404.html" title="Github">
+        <i class="fa-brands fa-github"></i>
+    </a>
+</div>
+        <p style="font-size: 12px; color: #aaa;">&copy; 2025 Ví Flow. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Kiểm tra xem người dùng đã đăng nhập chưa
+        const user = localStorage.getItem('flow_current_user');
+        if (user) {
+            // Nếu đã đăng nhập, đổi nút thành "Vào Dashboard"
+            const authDiv = document.getElementById('auth-buttons');
+            const heroBtns = document.querySelector('.hero-btns');
+            
+            // Update Navbar
+            authDiv.innerHTML = `
+                <a href="home.html" class="btn btn-fill">
+                    <i class="fa-solid fa-rocket"></i> Vào Dashboard
+                </a>
+            `;
+
+            // Update Hero Button
+            heroBtns.innerHTML = `
+                <a href="home.html" class="btn btn-fill" style="padding: 15px 40px; font-size: 18px;">
+                    Tiếp tục sử dụng <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            `;
+        }
+    </script>
+</body>
+</html>

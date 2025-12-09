@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Không tìm thấy trang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361EE;
+            --accent: #4CC9F0;
+            --text: #2B2D42;
+            --bg: #F8F9FA;
+            --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        /* Số 404 to đùng */
+        .error-code {
+            font-size: 120px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Hiệu ứng bóng mờ */
+        .error-code::after {
+            content: '404';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 100%;
+            background: rgba(0,0,0,0.05);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: -1;
+            filter: blur(2px);
+        }
+
+        h2 { font-size: 24px; margin-bottom: 15px; color: #333; }
+        p { color: #666; margin-bottom: 30px; font-size: 16px; line-height: 1.6; }
+
+        /* Nút quay về */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3);
+            transition: 0.3s;
+        }
+        .btn-home:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.4);
+        }
+
+        /* Icon Robot bay bay */
+        .floating-icon {
+            font-size: 80px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="floating-icon">
+            <i class="fa-solid fa-robot"></i>
+        </div>
+        
+        <div class="error-code">404</div>
+        
+        <h2>Ối! Lạc đường rồi bạn ơi...</h2>
+        <p>
+            Trang bạn đang tìm kiếm không tồn tại rồi !! 
+            <br>Hãy quay lại trang chủ chính để tiếp tục quản lý dòng tiền nhé!
+        </p>
+
+        <a href="index.html" class="btn-home">
+            <i class="fa-solid fa-house"></i> Quay về Trang chủ
+        </a>
+    </div>
+
+</body>
+</html>

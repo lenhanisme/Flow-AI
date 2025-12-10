@@ -65,18 +65,7 @@
         .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
         .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
         
-        /* --- [FIXED] STYLE FOR TRANSACTION ICON --- */
-        .t-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-            font-size: 18px;
-        }
+        .t-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0; font-size: 18px; }
 
         /* WALLET STYLES */
         .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
@@ -86,21 +75,102 @@
         .bank-delete { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
         .bank-delete:hover { background: rgba(239, 71, 111, 0.8); }
 
-        /* PROFILE STYLES */
-        .profile-header { text-align: center; margin-bottom: 20px; position: relative; }
-        .avatar-wrapper { width: 100px; height: 100px; margin: 0 auto 15px; position: relative; cursor: pointer; }
-        .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .avatar-overlay { position: absolute; bottom: 0; right: 0; background: var(--primary); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
-        .info-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #f5f5f5; align-items: center; font-size: 14px; }
-        .info-label { color: #888; display: flex; align-items: center; gap: 8px; }
-        .info-val { font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 5px; }
-        .info-val.readonly { color: #999; background: #f0f0f0; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
+        /* --- NEW PROFILE UI STYLES (MOMO STYLE) --- */
+        .pf-bg-header {
+            background: linear-gradient(180deg, #FFE6F2 0%, #FFF0F5 60%, var(--bg-body) 100%);
+            padding: 20px 20px 10px 20px;
+            border-radius: 0 0 30px 30px;
+            margin: -30px -30px 20px -30px; /* Stretch to edges */
+            text-align: center;
+            position: relative;
+        }
         
-        .device-item { background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #eee; }
-        .device-icon { font-size: 20px; color: var(--primary); margin-right: 15px; width: 30px; text-align: center; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ccc; display: inline-block; margin-right: 5px; }
-        .status-dot.online { background: var(--success); box-shadow: 0 0 5px var(--success); }
+        .pf-top-actions {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.6);
+            padding: 5px 10px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; color: #333;
+            cursor: pointer; backdrop-filter: blur(5px);
+            display: flex; align-items: center; gap: 5px;
+        }
+
+        .pf-avatar-circle {
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .pf-user-name { font-size: 20px; font-weight: 800; color: #333; margin-top: 10px; }
+        .pf-user-phone { font-size: 14px; color: #666; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; margin-bottom: 15px; }
+        .pf-badge { background: #06D6A0; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 3px; }
+
+        .pf-promo-row {
+            display: flex; justify-content: space-between; gap: 10px;
+            background: white; border-radius: 15px;
+            padding: 10px;
+            max-width: 400px; margin: 0 auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .pf-promo-btn {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-weight: 600; font-size: 13px; color: #333; cursor: pointer;
+            padding: 5px; border-radius: 10px; transition: 0.2s;
+        }
+        .pf-promo-btn:active { background: #f0f0f0; }
+
+        .pf-quick-actions {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            background: white; border-radius: 20px; padding: 20px 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            margin-bottom: 20px; text-align: center;
+        }
+        .pf-q-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
+        .pf-q-item:hover { transform: translateY(-3px); }
+        .pf-q-icon { font-size: 22px; color: #666; margin-bottom: 2px; }
+        .pf-q-text { font-size: 11px; font-weight: 600; color: #333; text-align: center; }
+
+        .pf-section-title { font-size: 18px; font-weight: 700; color: #333; margin-bottom: 15px; margin-left: 5px; }
         
+        .pf-utilities-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
+            margin-bottom: 25px;
+        }
+        @media (min-width: 600px) { .pf-utilities-grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .pf-util-card {
+            background: white; padding: 15px; border-radius: 16px;
+            display: flex; flex-direction: column; gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); cursor: pointer; border: 1px solid transparent; transition: 0.2s;
+        }
+        .pf-util-card:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1); }
+        .pf-util-icon-box {
+            width: 40px; height: 40px; border-radius: 12px;
+            background: #EEF4FF; color: var(--primary);
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+        }
+        .pf-util-name { font-weight: 600; font-size: 13px; color: #333; }
+        
+        .pf-menu-list { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .pf-menu-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 20px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s;
+        }
+        .pf-menu-item:hover { background: #f9f9f9; }
+        .pf-menu-item:last-child { border-bottom: none; }
+        .pf-menu-left { display: flex; align-items: center; gap: 15px; font-size: 14px; font-weight: 500; color: #333; }
+        .pf-menu-icon { color: #888; width: 20px; text-align: center; }
+        .pf-menu-right { color: #ccc; font-size: 14px; }
+        
+        /* Mobile Profile Fix */
+        @media (max-width: 900px) {
+            .pf-bg-header { margin: -15px -15px 20px -15px; border-radius: 0 0 25px 25px; }
+        }
+
+        /* --- OLD STYLES CONTINUED --- */
         .backup-codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
         .backup-code { background: #f0f0f0; padding: 8px; text-align: center; border-radius: 6px; font-family: monospace; letter-spacing: 2px; font-weight: bold; }
 
@@ -139,7 +209,7 @@
         #chart-bar-exp { background: var(--danger); box-shadow: 0 4px 10px rgba(239, 71, 111, 0.3); }
         #chart-bar-fund { background: var(--warning); box-shadow: 0 4px 10px rgba(255, 209, 102, 0.3); }
 
-        /* SCANNER STYLE - UPDATED */
+        /* SCANNER STYLE */
         #qr-reader { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 10px; min-height: 250px; background: #000; }
         #qr-reader video { object-fit: cover; border-radius: 15px; width: 100%; height: 100%; }
 
@@ -172,84 +242,34 @@
         .toast-notify.show { transform: translateX(-50%) translateY(0); }
         .toast-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
 
-        /* --- FACEID UI STYLES - NEW UPDATED --- */
+        /* --- FACEID UI STYLES --- */
         .face-scan-container {
-            position: relative;
-            margin: 0 auto 20px;
-            overflow: hidden;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px dashed #666; /* Mặc định nét đứt khi chưa tìm thấy mặt */
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative; margin: 0 auto 20px; overflow: hidden; background: #000;
+            display: flex; align-items: center; justify-content: center;
+            border: 4px dashed #666; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        .face-scan-container video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scaleX(-1); /* Gương */
-            opacity: 0.6;
-            transition: opacity 0.3s;
-        }
+        .face-scan-container video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); opacity: 0.6; transition: opacity 0.3s; }
+        .face-scan-container.face-detected { border: 4px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
+        .face-scan-container.face-detected video { opacity: 1; }
 
-        /* Khi phát hiện mặt */
-        .face-scan-container.face-detected {
-            border: 4px solid var(--primary); /* Đổi sang viền liền màu xanh */
-            box-shadow: 0 0 20px var(--primary);
-        }
-        .face-scan-container.face-detected video {
-            opacity: 1;
-        }
-
-        /* PC VIEW: Khung vuông + Tia quét */
         @media (min-width: 901px) {
-            .face-scan-container {
-                width: 480px;
-                height: 360px;
-                border-radius: 20px; /* Vuông bo góc */
-            }
-            .scan-line {
-                position: absolute;
-                top: 0; left: 0; width: 100%; height: 5px;
-                background: var(--success);
-                box-shadow: 0 0 15px var(--success);
-                animation: scanMove 2s linear infinite;
-                opacity: 0; z-index: 10;
-            }
+            .face-scan-container { width: 480px; height: 360px; border-radius: 20px; }
+            .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--success); box-shadow: 0 0 15px var(--success); animation: scanMove 2s linear infinite; opacity: 0; z-index: 10; }
             .face-scan-container.face-detected .scan-line { opacity: 1; }
             @keyframes scanMove { 0% { top:0; opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { top:100%; opacity:0; } }
             .scan-ring { display: none; }
         }
 
-        /* MOBILE VIEW: Khung tròn + Vòng xoay */
         @media (max-width: 900px) {
-            .face-scan-container {
-                width: 260px;
-                height: 260px;
-                border-radius: 50%; /* Tròn */
-            }
-            .scan-ring {
-                position: absolute;
-                top: -4px; left: -4px; right: -4px; bottom: -4px;
-                border-radius: 50%;
-                border: 4px solid transparent;
-                border-top-color: var(--success);
-                border-left-color: var(--success);
-                animation: spin 2s linear infinite;
-                z-index: 10;
-                opacity: 0;
-            }
+            .face-scan-container { width: 260px; height: 260px; border-radius: 50%; }
+            .scan-ring { position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--success); border-left-color: var(--success); animation: spin 2s linear infinite; z-index: 10; opacity: 0; }
             .face-scan-container.face-detected .scan-ring { opacity: 1; }
             .scan-line { display: none; }
             @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         }
 
         .face-instruction { text-align: center; margin-bottom: 20px; color: #555; font-size: 14px; background: #f0f0f0; padding: 8px 15px; border-radius: 20px; display: inline-block; }
-        
-        /* FACEID LOCK OVERLAY (Full Screen) */
         #faceid-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; }
 
         /* RESPONSIVE & MOBILE FIX */
@@ -285,7 +305,6 @@
             .b-nav-item.active { color: var(--primary); font-weight: 600; }
             .b-nav-item.active i { transform: translateY(-3px); }
 
-            /* NÚT GIỮA TO TRÒN */
             .b-nav-middle {
                 width: 60px; height: 60px;
                 background: var(--gradient);
@@ -311,7 +330,6 @@
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
 
-        /* FIX: SCAN MODAL Z-INDEX TO BE ON TOP OF OTHER MODALS */
         #modal-scan-qr { z-index: 2000 !important; }
     </style>
 </head>
@@ -495,67 +513,118 @@
         </div>
 
         <div id="profile" class="view-section">
-            <h2>Hồ sơ & Bảo mật</h2>
-            <div class="card profile-header">
-                <div class="avatar-wrapper" onclick="document.getElementById('avatar-inp').click()">
-                    <img src="" id="pf-avatar" class="avatar-img">
-                    <div class="avatar-overlay"><i class="fa-solid fa-camera"></i></div>
+            <div class="pf-bg-header">
+                <div class="pf-top-actions" onclick="document.getElementById('avatar-inp').click()">
+                    <i class="fa-solid fa-palette"></i> Đổi ảnh nền
+                </div>
+                <div class="avatar-wrapper" style="margin-bottom:0" onclick="document.getElementById('avatar-inp').click()">
+                    <img src="" id="pf-avatar" class="pf-avatar-circle">
                 </div>
                 <input type="file" id="avatar-inp" hidden accept="image/*" onchange="app.updateAvatar(this)">
-                <h3 id="pf-name" style="display: flex; justify-content: center; align-items: center;">...</h3>
-                <p style="color:#888; font-size:13px">Thành viên từ: <span id="pf-joined">...</span></p>
-                <div style="display:flex; gap:10px; justify-content:center; margin-top:10px; flex-wrap: wrap;">
-                    <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#fff; color:var(--text-main); border:1px solid #ddd;" onclick="app.runSecurityCheck()">
-                        <i class="fa-solid fa-shield-halved" style="color:var(--success)"></i> Bảo mật
-                    </button>
-                    <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#EEF4FF; color:var(--primary); border:1px solid var(--primary);" onclick="app.showMyQR()">
-                        <i class="fa-solid fa-qrcode"></i> Mã nhận tiền
-                    </button>
-                    <button class="btn-primary" style="width:auto; padding:8px 20px; font-size:13px; background:#111; color:white; border:none;" onclick="app.openSetupFaceID()">
-                        <i class="fa-solid fa-face-smile"></i> FaceID
-                    </button>
+                
+                <h2 id="pf-name" class="pf-user-name">...</h2>
+                <div class="pf-user-phone">
+                    <span id="pf-phone-text">...</span>
+                    <span class="pf-badge"><i class="fa-solid fa-check"></i> Đã sinh trắc học</span>
                 </div>
-            </div>
-            
-            <div class="card">
-                <h3>Bảo mật 2 Lớp (2FA)</h3>
-                <div id="2fa-status-area" style="margin-top:15px">
-                    <div id="2fa-off" style="display:block">
-                        <p style="font-size:13px; color:#666; margin-bottom:10px">Bảo vệ tài khoản bằng Google Authenticator.</p>
-                        <button class="btn-primary" onclick="app.setup2FA()">Bật 2FA ngay</button>
-                    </div>
-                    <div id="2fa-on" style="display:none">
-                        <div style="display:flex; align-items:center; gap:10px; color:var(--success); font-weight:600; margin-bottom:10px">
-                            <i class="fa-solid fa-circle-check"></i> Đang bật 2FA
-                        </div>
-                        <button class="btn-outline" onclick="app.viewBackupCodes()"><i class="fa-solid fa-file-code"></i> Xem mã dự phòng</button>
-                        <button class="btn-danger" style="margin-top:10px; width:100%; padding: 12px; font-size: 14px; font-weight: 600; border-radius: 12px;" onclick="app.disable2FA()">Tắt 2FA</button>
-                    </div>
+
+                <div class="pf-promo-row">
+                    <div class="pf-promo-btn" onclick="app.showMyQR()"><i class="fa-solid fa-qrcode" style="color:var(--primary)"></i> Mã nhận tiền</div>
+                    <div style="width:1px; background:#eee;"></div>
+                    <div class="pf-promo-btn" style="color:#EF476F"><i class="fa-solid fa-gift"></i> Nhận Ngay 250K</div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Thông tin cá nhân</h3>
-                <div class="info-row"><span class="info-label"><i class="fa-solid fa-at"></i> Username</span><span class="info-val readonly" id="pf-username">...</span></div>
-                <div class="info-row"><span class="info-label"><i class="fa-regular fa-envelope"></i> Email</span><span class="info-val" id="pf-email">...</span></div>
-                <div class="info-row" id="phone-row">
-                    <span class="info-label"><i class="fa-solid fa-phone"></i> SĐT</span>
-                    <div id="phone-view" style="display:flex; align-items:center; gap:10px;">
-                        <span class="info-val" id="pf-phone-text" style="color:#555;">Chưa cập nhật</span>
-                        <i class="fa-solid fa-pen-to-square" style="color:var(--primary); cursor:pointer; font-size:16px;" onclick="app.togglePhoneEdit(true)"></i>
-                    </div>
-                    <div id="phone-edit" style="display:none; align-items:center; gap:5px;">
-                        <input type="tel" id="pf-phone-input" placeholder="09xxxx" style="width:120px; padding:6px 10px; border:1px solid var(--primary); border-radius:8px; outline:none; font-weight:600;">
-                        <button onclick="app.savePhone(this)" style="background:var(--success); color:white; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-check"></i></button>
-                        <button onclick="app.togglePhoneEdit(false)" style="background:#eee; color:#666; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
+            <div class="pf-quick-actions">
+                <div class="pf-q-item" onclick="app.nav('wallet')">
+                    <i class="fa-solid fa-wallet pf-q-icon" style="color:#666"></i>
+                    <div class="pf-q-text">Quản lý</div>
                 </div>
-                <button class="btn-outline" onclick="app.sendPasswordReset()" style="width:100%; margin-top:15px;"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
+                <div class="pf-q-item" onclick="app.openModal('link_bank')">
+                    <i class="fa-solid fa-money-check-dollar pf-q-icon" style="color:#666"></i>
+                    <div class="pf-q-text">Thanh toán</div>
+                </div>
+                <div class="pf-q-item" onclick="app.runSecurityCheck()">
+                    <i class="fa-solid fa-shield-halved pf-q-icon" style="color:#666"></i>
+                    <div class="pf-q-text">Bảo mật</div>
+                </div>
+                <div class="pf-q-item">
+                    <i class="fa-solid fa-bell pf-q-icon" style="color:#666"></i>
+                    <div class="pf-q-text">Thông báo</div>
+                </div>
+             </div>
+
+            <div class="pf-section-title">Tiện ích</div>
+            <div class="pf-utilities-grid">
+                <div class="pf-util-card" onclick="app.nav('report')">
+                    <div class="pf-util-icon-box"><i class="fa-solid fa-chart-pie"></i></div>
+                    <div class="pf-util-name">Trung Tâm Tài Chính</div>
+                    <div style="font-size:11px; color:#999">Xem báo cáo chi tiêu</div>
+                </div>
+                <div class="pf-util-card" onclick="app.runSecurityCheck()">
+                    <div class="pf-util-icon-box" style="background:#E0F7FA; color:#00BCD4"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="pf-util-name">Điểm Tin Cậy</div>
+                    <div style="font-size:11px; color:#999">Bảo vệ tài khoản</div>
+                </div>
+                <div class="pf-util-card" onclick="app.openSetupFaceID()">
+                    <div class="pf-util-icon-box" style="background:#FFF3E0; color:#FF9800"><i class="fa-solid fa-face-smile"></i></div>
+                    <div class="pf-util-name">FaceID</div>
+                    <div style="font-size:11px; color:#999">Thiết lập khuôn mặt</div>
+                </div>
+                <div class="pf-util-card" onclick="app.nav('groups')">
+                    <div class="pf-util-icon-box" style="background:#F3E5F5; color:#9C27B0"><i class="fa-solid fa-users"></i></div>
+                    <div class="pf-util-name">Quỹ Nhóm</div>
+                    <div style="font-size:11px; color:#999">Quản lý chi tiêu chung</div>
+                </div>
+                <div class="pf-util-card" onclick="app.setup2FA()">
+                    <div class="pf-util-icon-box" style="background:#E8F5E9; color:#4CAF50"><i class="fa-solid fa-key"></i></div>
+                    <div class="pf-util-name">2FA</div>
+                    <div style="font-size:11px; color:#999">Xác thực 2 lớp</div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Lịch sử đăng nhập</h3>
-                <div style="font-size:12px; color:#888; margin-bottom:10px">Cập nhật mỗi 10 giây</div>
-                <div id="device-list" style="margin-top:15px;"></div>
+
+            <div class="pf-menu-list">
+                <div class="pf-menu-item" onclick="app.toggleChat()">
+                    <div class="pf-menu-left"><i class="fa-solid fa-headset pf-menu-icon"></i> Trung tâm trợ giúp</div>
+                    <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+                <div class="pf-menu-item">
+                    <div class="pf-menu-left"><i class="fa-solid fa-bell pf-menu-icon"></i> Cài đặt thông báo</div>
+                    <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+                <div class="pf-menu-item" onclick="app.showPopup('info', 'Góp ý', 'Tính năng đang phát triển')">
+                    <div class="pf-menu-left"><i class="fa-regular fa-envelope pf-menu-icon"></i> Chia sẻ góp ý</div>
+                    <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+                
+                <div class="pf-menu-item" onclick="document.getElementById('general-info-expand').style.display = document.getElementById('general-info-expand').style.display=='none'?'block':'none'">
+                    <div class="pf-menu-left"><i class="fa-solid fa-circle-info pf-menu-icon"></i> Thông tin chung</div>
+                    <div class="pf-menu-right"><i class="fa-solid fa-angle-down"></i></div>
+                </div>
+                
+                <div id="general-info-expand" style="display:none; background:#f9f9f9; padding:15px; border-bottom:1px solid #eee">
+                    <div class="info-row"><span class="info-label">Username</span><span class="info-val" id="pf-username">...</span></div>
+                    <div class="info-row"><span class="info-label">Email</span><span class="info-val" id="pf-email">...</span></div>
+                    <div class="info-row"><span class="info-label">Ngày tham gia</span><span class="info-val" id="pf-joined">...</span></div>
+                    
+                    <div id="phone-edit" style="display:none; margin-top:10px">
+                         <input type="tel" id="pf-phone-input" placeholder="Cập nhật SĐT" class="form-input">
+                         <button onclick="app.savePhone(this)" class="btn-primary" style="padding:5px">Lưu SĐT</button>
+                         <button onclick="app.togglePhoneEdit(false)" class="btn-outline" style="padding:5px">Hủy</button>
+                    </div>
+                    <div id="phone-view" style="margin-top:10px"><button onclick="app.togglePhoneEdit(true)" class="btn-outline">Cập nhật SĐT</button></div>
+
+                    <div style="margin-top:15px">
+                        <div id="2fa-status-area">
+                            <div id="2fa-off"><span style="color:red">2FA đang tắt</span></div>
+                            <div id="2fa-on" style="display:none"><span style="color:green">2FA đang bật</span></div>
+                        </div>
+                    </div>
+
+                    <button class="btn-outline" onclick="app.sendPasswordReset()" style="margin-top:10px">Đổi mật khẩu</button>
+                    <div id="device-list" style="margin-top:10px"></div>
+                </div>
+
             </div>
         </div>
     </main>

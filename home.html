@@ -106,21 +106,7 @@
 
         .pf-user-name { font-size: 20px; font-weight: 800; color: #333; margin-top: 10px; }
         .pf-user-phone { font-size: 14px; color: #666; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; margin-bottom: 15px; }
-        
-        /* NEW KYC/BIOMETRIC STATUS BADGE STYLES */
-        .pf-badge { 
-            background: #8D99AE; 
-            color: white; 
-            padding: 2px 8px; 
-            border-radius: 10px; 
-            font-size: 10px; 
-            font-weight: 700; 
-            display: flex; 
-            align-items: center; 
-            gap: 3px; 
-            min-width: 120px;
-            justify-content: center;
-        }
+        .pf-badge { background: #06D6A0; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 3px; }
 
         .pf-promo-row {
             display: flex; justify-content: space-between; gap: 10px;
@@ -539,13 +525,13 @@
                 <h2 id="pf-name" class="pf-user-name">...</h2>
                 <div class="pf-user-phone">
                     <span id="pf-phone-text">...</span>
-                    <span class="pf-badge" id="pf-kyc-status"><i class="fa-solid fa-hourglass-half"></i> Đang tải...</span>
+                    <span class="pf-badge"><i class="fa-solid fa-check"></i> Đã sinh trắc học</span>
                 </div>
 
                 <div class="pf-promo-row">
                     <div class="pf-promo-btn" onclick="app.showMyQR()"><i class="fa-solid fa-qrcode" style="color:var(--primary)"></i> Mã nhận tiền</div>
                     <div style="width:1px; background:#eee;"></div>
-                    <div class="pf-promo-btn" style="color:#EF476F" onclick="app.openReferralModal()"><i class="fa-solid fa-gift"></i> Nhận Ngay 250K</div>
+                    <div class="pf-promo-btn" style="color:#EF476F"><i class="fa-solid fa-gift"></i> Nhận Ngay 250K</div>
                 </div>
             </div>
 
@@ -558,9 +544,9 @@
                     <i class="fa-solid fa-money-check-dollar pf-q-icon" style="color:#666"></i>
                     <div class="pf-q-text">Thanh toán</div>
                 </div>
-                <div class="pf-q-item" onclick="app.runCreditCheck()">
-                    <i class="fa-solid fa-star pf-q-icon" style="color:#FFD166"></i>
-                    <div class="pf-q-text">Điểm Tín Dụng</div>
+                <div class="pf-q-item" onclick="app.runSecurityCheck()">
+                    <i class="fa-solid fa-shield-halved pf-q-icon" style="color:#666"></i>
+                    <div class="pf-q-text">Bảo mật</div>
                 </div>
                 <div class="pf-q-item" onclick="app.showPopup('info', 'Thông báo', 'Hệ thống thông báo đang được nâng cấp')">
                     <i class="fa-solid fa-bell pf-q-icon" style="color:#666"></i>
@@ -575,10 +561,10 @@
                     <div class="pf-util-name">Trung Tâm Tài Chính</div>
                     <div style="font-size:11px; color:#999">Xem báo cáo chi tiêu</div>
                 </div>
-                <div class="pf-util-card" onclick="app.runCreditCheck()">
-                    <div class="pf-util-icon-box" style="background:#E0F7FA; color:#00BCD4"><i class="fa-solid fa-star-half-stroke"></i></div>
-                    <div class="pf-util-name">Điểm Tín Dụng</div>
-                    <div style="font-size:11px; color:#999">Kiểm tra uy tín tài khoản</div>
+                <div class="pf-util-card" onclick="app.runSecurityCheck()">
+                    <div class="pf-util-icon-box" style="background:#E0F7FA; color:#00BCD4"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="pf-util-name">Điểm Tin Cậy</div>
+                    <div style="font-size:11px; color:#999">Bảo vệ tài khoản</div>
                 </div>
                 <div class="pf-util-card" onclick="app.openSetupFaceID()">
                     <div class="pf-util-icon-box" style="background:#FFF3E0; color:#FF9800"><i class="fa-solid fa-face-smile"></i></div>
@@ -606,7 +592,7 @@
                     <div class="pf-menu-left"><i class="fa-solid fa-bell pf-menu-icon"></i> Cài đặt thông báo</div>
                     <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
                 </div>
-                <div class="pf-menu-item" onclick="app.openModal('feedback')">
+                <div class="pf-menu-item" onclick="app.showPopup('info', 'Góp ý', 'Cảm ơn bạn đã quan tâm. Tính năng gửi góp ý đang được phát triển.')">
                     <div class="pf-menu-left"><i class="fa-regular fa-envelope pf-menu-icon"></i> Chia sẻ góp ý</div>
                     <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
                 </div>
@@ -748,7 +734,7 @@
 
 <div class="modal-overlay" id="modal-security_check">
     <div class="modal-box">
-        <h3><i class="fa-solid fa-star-half-stroke" style="color:var(--primary)"></i> Quét Điểm Tín Dụng</h3>
+        <h3><i class="fa-solid fa-user-shield" style="color:var(--primary)"></i> Quét Bảo Mật</h3>
         <p style="font-size:13px; color:#666; margin-bottom:15px">Hệ thống đang phân tích dữ liệu thực tế...</p>
         <div class="security-progress" style="background:#eee; height:6px; border-radius:3px; overflow:hidden; margin-bottom:15px">
             <div class="progress-bar" id="sec-check-bar" style="height:100%; background:var(--primary); width:0%; transition: width 0.3s"></div>
@@ -760,43 +746,6 @@
             <div id="sec-recommendations"></div>
             <button class="btn-primary" style="margin-top:15px" onclick="app.closeModal()">Hoàn tất</button>
         </div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modal-referral">
-    <div class="modal-box" style="text-align:center">
-        <h3 style="color:#EF476F"><i class="fa-solid fa-gift"></i> Chương trình giới thiệu</h3>
-        <p style="font-size:13px; color:#666; margin-bottom:20px">Chia sẻ link để nhận 50.000đ/lượt (Tối đa 5 lượt)</p>
-        
-        <div style="padding: 15px; border: 2px dashed #f0f0f0; border-radius: 10px; background: #f9f9f9;">
-            <div style="font-size:14px; color:var(--primary); font-weight:600; margin-bottom:10px;">Mã giới thiệu của bạn:</div>
-            <h4 id="referral-code-display" style="font-size:24px; color:#333; margin-bottom:10px;">[USERNAME]</h4>
-        </div>
-        
-        <div style="margin-top: 20px;">
-            <div style="font-size:13px; font-weight:600; color:#555; margin-bottom:10px;">Tiến trình nhận thưởng:</div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:5px; font-size:12px">
-                <span>Số lượt thành công</span><b id="ref-count">0/5</b>
-            </div>
-            <div style="height:8px; background:#eee; border-radius:4px; overflow:hidden; margin-bottom:10px;">
-                <div id="ref-progress-bar" style="width:0%; height:100%; background:var(--danger);"></div>
-            </div>
-            <div style="font-weight:700; color:var(--success)" id="ref-reward-total">0đ đã nhận</div>
-        </div>
-        
-        <button class="btn-primary" style="margin-top:20px" onclick="app.copyReferralLink()">Sao chép Link</button>
-        <button class="btn-outline" onclick="app.closeModal()">Đóng</button>
-    </div>
-</div>
-
-<div class="modal-overlay" id="modal-feedback">
-    <div class="modal-box">
-        <h3><i class="fa-solid fa-envelope-open-text" style="color:var(--primary)"></i> Chia sẻ góp ý</h3>
-        <p style="font-size:13px; color:#666; margin-bottom:15px">Gửi lời nhắn của bạn đến đội ngũ phát triển.</p>
-        <input type="email" id="feedback-email" class="form-input" placeholder="Email của bạn (để chúng tôi liên hệ)">
-        <textarea id="feedback-message" class="form-input" placeholder="Lời nhắn chi tiết (tối đa 500 ký tự)" style="min-height: 100px; resize: none;"></textarea>
-        <button class="btn-primary" onclick="app.submitFeedback()">Gửi góp ý</button>
-        <button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
     </div>
 </div>
 
@@ -838,73 +787,23 @@
 </div>
 
 <script type="module">
-    // GIẢ ĐỊNH FILE config.js ĐÃ ĐƯỢC THÊM
-    // import { auth, db } from './config.js';
-    
-    // TẠM THỜI KHAI BÁO BIẾN GIẢ LẬP ĐỂ KHÔNG BỊ LỖI
-    const auth = {};
-    const db = {};
-    const onAuthStateChanged = (auth, callback) => callback({ uid: 'test-user-flow-123', email: 'user@test.com', emailVerified: true });
-    const signOut = (auth) => new Promise(resolve => resolve());
-    const sendPasswordResetEmail = (auth, email) => new Promise(resolve => resolve());
-    const collection = (db, name) => ({ name });
-    const addDoc = (col, data) => new Promise(resolve => resolve({ id: 'doc_' + Math.random().toString(36).substr(2, 9) }));
-    const query = (col, ...args) => ({ col, args });
-    const where = (field, op, value) => ({ field, op, value });
-    const onSnapshot = (q, callback) => {
-        if (q.col && q.col.name === "transactions") {
-            // Giả lập dữ liệu giao dịch
-            const mockTxs = [
-                { amount: 500000, desc: 'Lương tháng 12', type: 'inc', date: '10/12/2025', timestamp: Date.now() - 50000 },
-                { amount: 150000, desc: 'Mua cafe', type: 'exp', date: '11/12/2025', timestamp: Date.now() - 10000 },
-                { amount: 2000000, desc: 'Chuyển tới Nguyen A', type: 'exp', date: '05/12/2025', timestamp: Date.now() - 100000 },
-                { amount: 1000000, desc: 'Nhận từ Le B', type: 'inc', date: '01/12/2025', timestamp: Date.now() - 200000 },
-                { amount: 20000, desc: 'Phí dịch vụ', type: 'exp', date: '02/12/2025', timestamp: Date.now() - 150000 },
-            ];
-            callback({ forEach: (cb) => mockTxs.forEach(cb) });
-        } else if (q.col && q.col.name === "group_transactions") {
-            callback({ forEach: (cb) => [].forEach(cb) });
-        }
-        return () => {}; // return an unsubscribe function
-    };
-    const doc = (db, col, id) => ({ db, col, id });
-    const getDoc = (ref) => new Promise(resolve => resolve({ 
-        exists: () => true, 
-        data: () => ({
-            name: 'Flow User',
-            username: 'flowuser1',
-            email: 'user@test.com',
-            createdAt: Date.now() - (30 * 24 * 60 * 60 * 1000), // 30 ngày trước
-            is2FAEnabled: false,
-            faceDescriptor: null,
-            linkedBanks: [{ name: 'Vietcombank', number: '9999', balance: 5000000 }],
-            devices: [{ id: 'dev_abc', name: 'PC Web Browser', type: 'desktop', lastSeen: Date.now() }],
-            phone: '0987654321',
-            countryCode: '+84',
-            cccd: '123456789012', // 12 chữ số
-            referralCount: 3, // Giả lập 3 lượt giới thiệu thành công
-        })
-    }));
-    const updateDoc = (ref, data) => new Promise(resolve => resolve());
-    const arrayUnion = (val) => val;
-    const arrayRemove = (val) => val;
-    const setDoc = (ref, data) => new Promise(resolve => resolve());
-    const getDocs = (q) => new Promise(resolve => resolve({ empty: true, docs: [] }));
-    // KẾT THÚC GIẢ LẬP BIẾN
+    import { auth, db } from './config.js';
+    import { onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { collection, addDoc, query, where, onSnapshot, doc, getDoc, updateDoc, arrayUnion, arrayRemove, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     window.app = {
         currentUser: null, userData: null, currentGroup: null, groupTransactions: [], tmpType: 'exp',
         transferTarget: null, generatedOTP: null, 
         currentDeviceId: null, temp2FASecret: null,
         report: { inc: 0, exp: 0, fund: 0 }, 
-        creditScore: 0, 
-        html5QrcodeScanner: null, 
+        html5QrcodeScanner: null, // Scanner Instance
 
         init() {
             let dId = localStorage.getItem('flow_device_id');
             if(!dId) { dId = 'dev_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('flow_device_id', dId); }
             this.currentDeviceId = dId;
             
+            // Load Face API models
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
                 faceapi.nets.faceLandmark68Net.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
@@ -923,6 +822,7 @@
                         if(this.userData.is2FAEnabled) {
                             document.getElementById('auth-check-overlay').classList.add('active');
                         }
+                        // FACE ID CHECK
                         if(this.userData.faceDescriptor) {
                             this.checkLoginFaceID();
                         }
@@ -932,9 +832,7 @@
                         this.listenUserFund(); 
                     }
                     this.listenTransactions();
-                } else { 
-                    // window.location.href = 'dangnhap.html'; 
-                }
+                } else { window.location.href = 'dangnhap.html'; }
             });
         },
 
@@ -945,9 +843,12 @@
             if(type==='success') icon.innerHTML='<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>';
             else if(type==='error') icon.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>';
             else icon.innerHTML='<i class="fa-solid fa-circle-info" style="color:var(--primary)"></i>';
+            // Không xóa nội dung Popup khi đóng, chỉ ẩn đi
+            // if(desc) document.getElementById('pop-desc').style.display = 'block'; else document.getElementById('pop-desc').style.display = 'none';
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
         
+        // --- FLOW AI ---
         toggleChat() {
             const w = document.getElementById('flow-ai-window');
             if(w.style.display === 'flex') w.style.display = 'none'; else { w.style.display = 'flex'; w.classList.add('open'); }
@@ -964,6 +865,7 @@
             setTimeout(() => { chat.innerHTML += `<div class="chat-msg msg-bot">${a}</div>`; chat.scrollTop = chat.scrollHeight; }, 500);
         },
 
+        // --- NOTIFICATIONS ---
         showToast(title, msg) {
             const t = document.getElementById('toast');
             document.getElementById('toast-title').innerText = title;
@@ -972,7 +874,7 @@
             setTimeout(() => t.classList.remove('show'), 4000);
         },
 
-        // --- FACE ID LOGIC (GIỮ NGUYÊN) ---
+        // --- FACE ID LOGIC (UPDATED) ---
         openSetupFaceID() {
             this.openModal('faceid-setup');
             const video = document.getElementById('video-setup');
@@ -982,6 +884,8 @@
         async captureFace() {
             const video = document.getElementById('video-setup');
             const container = document.getElementById('face-container-setup'); 
+
+            // Giả lập trạng thái detect để UI phản hồi
             container.classList.add('face-detected');
 
             const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
@@ -1006,7 +910,10 @@
         },
 
         async checkLoginFaceID() {
-            if (sessionStorage.getItem('isFaceVerified') === 'true') { return; }
+            // [SESSION CHECK] Đã xác thực trong phiên này chưa?
+            if (sessionStorage.getItem('isFaceVerified') === 'true') {
+                return; 
+            }
 
             const lockScreen = document.getElementById('faceid-lock-screen');
             const statusText = document.getElementById('face-status-text');
@@ -1031,6 +938,7 @@
                     const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
                     
                     if (detection) {
+                        // [UI CHANGE] Thấy mặt -> Đổi viền + Animation
                         container.classList.add('face-detected');
                         statusText.innerText = "Đang xác thực...";
                         statusText.style.color = "var(--primary)";
@@ -1040,6 +948,8 @@
                             clearInterval(interval);
                             statusText.innerHTML = '<span style="color:var(--success)"><i class="fa-solid fa-check"></i> OK!</span>';
                             container.style.borderColor = 'var(--success)';
+                            
+                            // [SESSION SAVE]
                             sessionStorage.setItem('isFaceVerified', 'true');
 
                             setTimeout(() => {
@@ -1048,6 +958,7 @@
                             }, 800);
                         }
                     } else {
+                        // [UI CHANGE] Mất mặt -> Reset về viền đứt
                         container.classList.remove('face-detected');
                         statusText.innerText = "Di chuyển khuôn mặt vào khung...";
                         statusText.style.color = "#666";
@@ -1060,216 +971,97 @@
             }
         },
 
-        // --- REFERRAL PROGRAM (NHẬN NGAY 250K) ---
-        openReferralModal() {
-            this.openModal('referral');
-            const count = Math.min(this.userData.referralCount || 0, 5);
-            const reward = count * 50000;
-            const username = this.userData.username || this.currentUser.uid.substring(0, 8);
-            
-            document.getElementById('referral-code-display').innerText = username;
-            document.getElementById('ref-count').innerText = `${count}/5`;
-            document.getElementById('ref-progress-bar').style.width = `${count / 5 * 100}%`;
-            document.getElementById('ref-reward-total').innerText = `${new Intl.NumberFormat('vi-VN').format(reward)}đ đã nhận`;
+        // --- QR SCANNING & MY QR ---
+        showMyQR() {
+            this.openModal('my-qr');
+            document.getElementById('my-qr-container').innerHTML = '';
+            document.getElementById('my-qr-name').innerText = this.userData.name;
+            document.getElementById('my-qr-email').innerText = this.userData.email;
+            const qrData = `FLOW|${this.currentUser.uid}|${this.userData.email}`;
+            new QRCode(document.getElementById("my-qr-container"), { text: qrData, width: 180, height: 180, colorDark : "#4361EE", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H });
+        },
+        startScanTransfer() {
+            this.openModal('scan-qr');
+            const html5QrCode = new Html5Qrcode("qr-reader");
+            this.html5QrcodeScanner = html5QrCode;
+            const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+                if (decodedText.startsWith('FLOW|')) {
+                    const parts = decodedText.split('|'); const targetEmail = parts[2];
+                    this.closeScanner();
+                    const inp = document.getElementById('tf-dest'); inp.value = targetEmail; this.checkUser(inp);
+                    this.showPopup('success', 'Đã quét QR', 'Thông tin người nhận đã được điền.');
+                } else { alert("QR không hợp lệ!"); }
+            };
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+            html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback).catch(err => { console.log("Error starting scanner", err); this.showPopup('error', 'Lỗi Camera', 'Vui lòng cấp quyền camera'); });
+        },
+        closeScanner() {
+            if(this.html5QrcodeScanner) { this.html5QrcodeScanner.stop().then(_ => { this.html5QrcodeScanner.clear(); this.closeModal(); }).catch(error => { console.error("Failed to stop scanner", error); this.closeModal(); }); } else { this.closeModal(); }
         },
 
-        copyReferralLink() {
-            const username = this.userData.username || this.currentUser.uid.substring(0, 8);
-            const link = `https://flow.vn/ref?code=${username}`;
-            navigator.clipboard.writeText(link).then(() => {
-                this.showToast('Thành công', 'Đã sao chép link giới thiệu!');
+        // --- EXISTING LOGIC ---
+        initDeviceHeartbeat() { this.sendHeartbeat(); setInterval(() => this.sendHeartbeat(), 10000); },
+        async sendHeartbeat() {
+            if(!this.currentUser) return;
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const devInfo = { id: this.currentDeviceId, name: isMobile ? 'Mobile App (' + (navigator.platform || 'Phone') + ')' : 'PC Web Browser', type: isMobile ? 'mobile' : 'desktop', lastSeen: Date.now() };
+            const ref = doc(db, "users", this.currentUser.uid);
+            try { const snap = await getDoc(ref); let devices = snap.data().devices || []; devices = devices.filter(d => d.id !== this.currentDeviceId); devices.push(devInfo); await updateDoc(ref, { devices: devices }); this.renderDeviceList(devices); } catch(e) { console.log("HB Error", e); }
+        },
+        renderDeviceList(devices) {
+            const list = document.getElementById('device-list'); list.innerHTML = ''; devices.sort((a,b) => b.lastSeen - a.lastSeen);
+            devices.forEach(d => {
+                const isOnline = (Date.now() - d.lastSeen) < 20000; const timeStr = isOnline ? 'Đang hoạt động' : new Date(d.lastSeen).toLocaleString('vi-VN'); const icon = d.type === 'mobile' ? 'fa-mobile-screen' : 'fa-laptop'; const statusClass = isOnline ? 'online' : '';
+                list.innerHTML += `<div class="device-item"><div style="display:flex;align-items:center"><i class="fa-solid ${icon} device-icon"></i><div><div style="font-weight:600">${d.name} ${d.id===this.currentDeviceId ? '(Máy này)' : ''}</div><div style="color:#888;font-size:11px">Cập nhật: ${timeStr}</div></div></div><div style="display:flex;align-items:center; font-size:11px; font-weight:600; color:${isOnline ? 'var(--success)' : '#999'}"><span class="status-dot ${statusClass}"></span> ${isOnline ? 'Online' : 'Offline'}</div></div>`;
             });
         },
-
-        // --- FEEDBACK ---
-        async submitFeedback() {
-            const email = document.getElementById('feedback-email').value;
-            const message = document.getElementById('feedback-message').value;
-
-            if (!email || !message) {
-                return this.showPopup('error', 'Lỗi', 'Vui lòng điền đầy đủ Email và Lời nhắn.');
-            }
-            if (message.length > 500) {
-                return this.showPopup('error', 'Lỗi', 'Lời nhắn không được vượt quá 500 ký tự.');
-            }
-            
-            try {
-                await addDoc(collection(db, "feedback"), {
-                    uid: this.currentUser.uid,
-                    name: this.userData.name,
-                    email: email,
-                    message: message,
-                    timestamp: Date.now()
-                });
-                this.closeModal();
-                this.showPopup('success', 'Thành công', 'Cảm ơn bạn đã gửi góp ý! Chúng tôi sẽ xem xét sớm.');
-                document.getElementById('feedback-email').value = '';
-                document.getElementById('feedback-message').value = '';
-            } catch(e) {
-                this.showPopup('error', 'Lỗi', 'Không thể gửi góp ý lúc này.');
-            }
+        setup2FA() {
+            this.temp2FASecret = new OTPAuth.Secret({ size: 20 });
+            const totp = new OTPAuth.TOTP({ issuer: "Ví Flow", label: this.currentUser.email, algorithm: "SHA1", digits: 6, period: 30, secret: this.temp2FASecret });
+            this.openModal('setup_2fa');
+            document.getElementById('qrcode').innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), { text: totp.toString(), width: 150, height: 150 });
+            document.getElementById('2fa-secret-display').value = this.temp2FASecret.base32;
         },
-
-        // --- CREDIT SCORE (ĐIỂM TÍN DỤNG) ---
-        getRank(score) {
-            if (score >= 90) return { name: "Kim Cương", color: "#4CC9F0", icon: "fa-gem" };
-            if (score >= 75) return { name: "Vàng", color: "#FFD166", icon: "fa-medal" };
-            if (score >= 50) return { name: "Bạc", color: "#A8A9AD", icon: "fa-trophy" };
-            return { name: "Đồng", color: "#CD7F32", icon: "fa-circle-dot" };
+        async confirmEnable2FA() {
+            const token = document.getElementById('otp-setup-inp').value;
+            const totp = new OTPAuth.TOTP({ secret: this.temp2FASecret });
+            if (totp.validate({ token: token, window: 1 }) !== null) {
+                const codes = Array.from({length: 10}, () => Math.random().toString(36).substr(2, 8).toUpperCase());
+                await updateDoc(doc(db, "users", this.currentUser.uid), { is2FAEnabled: true, twoFASecret: this.temp2FASecret.base32, backupCodes: codes });
+                this.userData.is2FAEnabled = true; this.userData.backupCodes = codes; this.closeModal(); this.renderProfile(); this.showPopup('success', 'Đã bật 2FA thành công!'); this.viewBackupCodes();
+            } else { this.showPopup('error', 'Mã xác thực sai'); }
         },
-
-        async runCreditCheck() {
-            this.openModal('security_check');
-            const list = document.getElementById('sec-check-list'), bar = document.getElementById('sec-check-bar'), res = document.getElementById('sec-result'), scoreDisplay = document.getElementById('sec-final-score'), recDiv = document.getElementById('sec-recommendations');
+        verifyLogin2FA() {
+            const token = document.getElementById('auth-otp-check').value; if(!this.userData.twoFASecret) return;
+            const totp = new OTPAuth.TOTP({ secret: OTPAuth.Secret.fromBase32(this.userData.twoFASecret) });
+            if (totp.validate({ token: token, window: 1 }) !== null) { document.getElementById('auth-check-overlay').classList.remove('active'); } 
+            else { if(this.userData.backupCodes && this.userData.backupCodes.includes(token)) { document.getElementById('auth-check-overlay').classList.remove('active'); alert("Bạn đang dùng mã dự phòng. Hãy tạo mã mới nếu sắp hết."); } else { alert("Mã OTP sai!"); } }
+        },
+        async disable2FA() { if(confirm("Bạn có chắc muốn tắt 2FA?")) { await updateDoc(doc(db, "users", this.currentUser.uid), { is2FAEnabled: false, twoFASecret: null, backupCodes: null }); this.userData.is2FAEnabled = false; this.renderProfile(); this.showPopup('success', 'Đã tắt 2FA'); } },
+        viewBackupCodes() { const list = document.getElementById('backup-codes-list'); list.innerHTML = ''; (this.userData.backupCodes || []).forEach(c => { list.innerHTML += `<div class="backup-code">${c}</div>`; }); this.openModal('backup_codes'); },
+        runSecurityCheck() {
+            this.openModal('security_check'); const list = document.getElementById('sec-check-list'), bar = document.getElementById('sec-check-bar'), res = document.getElementById('sec-result'), scoreDisplay = document.getElementById('sec-final-score'), recDiv = document.getElementById('sec-recommendations');
             list.innerHTML = ''; bar.style.width = '0%'; list.style.display = 'block'; res.style.display = 'none';
-
-            let baseScore = 30; // Điểm nền
-            let txScore = 0;
-            let totalExp = this.report.exp; 
-            let totalTx = 0;
-            let transferValue = 0;
-
-            const txSnap = await getDocs(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)));
-            txSnap.docs.forEach(d => {
-                const t = d.data();
-                totalTx++;
-                if (t.type === 'exp' && t.desc.includes('Chuyển tới')) {
-                    transferValue += t.amount;
-                }
-            });
-            
-            // Logic tính điểm: (Ưu tiên thanh toán chuyển tiền)
-            // - Mỗi 10M chi tiêu/chuyển khoản = 5 điểm (tối đa 30 điểm)
-            // - Tổng số GD (> 20 GD) = 10 điểm
-            // - Tỉ lệ Chi tiêu/Thu nhập (dưới 70%) = 10 điểm
-            // - Đóng quỹ (tổng > 500k) = 5 điểm
-
-            txScore += Math.min(Math.floor((totalExp + transferValue) / 10000000) * 5, 30);
-            if (totalTx >= 20) txScore += 10;
-            if (this.report.inc > 0 && (this.report.exp / this.report.inc) < 0.7) txScore += 10;
-            if (this.report.fund >= 500000) txScore += 5;
-            
-            // Điểm an toàn (tối đa 15 điểm)
-            let securityScore = 0;
-            if (this.userData.is2FAEnabled) securityScore += 5;
-            if (this.userData.faceDescriptor) securityScore += 5;
-            if (this.isKycVerified()) securityScore += 5;
-
-            let finalScore = baseScore + txScore + securityScore;
-            if (finalScore > 100) finalScore = 100;
-            this.creditScore = finalScore;
-            const currentRank = this.getRank(finalScore);
-
-            // 2. Chạy bước kiểm tra 
-            const checks = [
-                { name: "Tổng giá trị giao dịch", icon: "fa-money-bill-transfer", check: () => totalExp >= 5000000, msg: `~${new Intl.NumberFormat('vi-VN').format(totalExp)}đ`, msgOk: "Đạt ngưỡng tối thiểu", msgFail: "Cần tích cực giao dịch hơn" },
-                { name: "Tần suất giao dịch", icon: "fa-arrow-right-arrow-left", check: () => totalTx >= 10, msg: `${totalTx} giao dịch`, msgOk: "Tần suất ổn định", msgFail: "Tần suất giao dịch thấp" },
-                { name: "Đã bật 2FA/FaceID", icon: "fa-shield-halved", check: () => this.userData.is2FAEnabled || this.userData.faceDescriptor, msgOk: "Đã bảo vệ", msgFail: "Cần tăng cường bảo mật" },
-                { name: "Xác thực KYC", icon: "fa-id-card", check: () => this.isKycVerified(), msgOk: "Đã xác thực", msgFail: "Chưa xác thực KYC" }
-            ];
-            
-            let step = 0; let issues = [];
+            const checks = [{ name: "Kết nối mã hóa (HTTPS)", icon: "fa-lock", check: () => window.location.protocol === 'https:', msgOk: "An toàn", msgFail: "Không bảo mật" }, { name: "Xác thực Email", icon: "fa-envelope-circle-check", check: () => this.currentUser.emailVerified, msgOk: "Đã xác minh", msgFail: "Chưa xác minh" }, { name: "Số điện thoại bảo vệ", icon: "fa-phone", check: () => (this.userData.phone && this.userData.phone.length > 8), msgOk: "Đã cập nhật", msgFail: "Chưa thêm SĐT" }, { name: "Bảo mật 2 lớp (2FA)", icon: "fa-shield-halved", check: () => this.userData.is2FAEnabled === true, msgOk: "Đang bật", msgFail: "Đang tắt (Nguy hiểm)" }, { name: "Thiết bị đăng nhập", icon: "fa-laptop-medical", check: () => (this.userData.devices || []).length <= 3, msgOk: "Bình thường", msgFail: "Nhiều thiết bị lạ" }];
+            let score = 0; let step = 0; let issues = [];
             const runStep = () => {
                 if (step >= checks.length) {
-                    bar.style.width = '100%'; 
-                    setTimeout(() => { 
-                        list.style.display = 'none'; 
-                        res.style.display = 'block'; 
-                        scoreDisplay.innerText = `${finalScore}/100`;
-                        scoreDisplay.style.background = currentRank.color;
-                        document.getElementById('sec-final-text').innerText = `Thứ hạng: ${currentRank.name}`;
-                        
-                        recDiv.innerHTML = ""; 
-                        recDiv.innerHTML += `<div style="font-weight:600; font-size:14px; margin-bottom:10px; color:#333"><i class="fa-solid ${currentRank.icon}" style="color:${currentRank.color}"></i> Gợi ý cải thiện điểm</div>`;
-                        
-                        if (finalScore === 100) {
-                             recDiv.innerHTML += '<div style="color:var(--success); font-size:13px"><i class="fa-solid fa-circle-check"></i> Tài khoản đã đạt mức Tín dụng cao nhất!</div>';
-                        } else {
-                            if (!this.userData.is2FAEnabled) issues.push("Bật 2FA/FaceID để tăng độ tin cậy");
-                            if (!this.isKycVerified()) issues.push("Hoàn tất KYC (CCCD & SĐT +84) để mở khóa tối đa điểm");
-                            if (totalExp < 5000000) issues.push("Tăng tổng giao dịch (Chuyển tiền > Chi tiêu) để tích lũy điểm");
-
-                            issues = Array.from(new Set(issues)); 
-                            issues.forEach(iss => { recDiv.innerHTML += `<div class="recommendation"><i class="fa-solid fa-triangle-exclamation"></i> ${iss}</div>`; });
-                        }
-                    }, 500); 
-                    return;
+                    bar.style.width = '100%'; setTimeout(() => { list.style.display = 'none'; res.style.display = 'block'; let currentScore = 0; const scoreInterval = setInterval(() => { if(currentScore >= score) { currentScore = score; clearInterval(scoreInterval); } scoreDisplay.innerText = currentScore + "/100"; if(currentScore < 50) scoreDisplay.style.background = '#EF476F'; else if(currentScore < 80) scoreDisplay.style.background = '#FFD166'; else scoreDisplay.style.background = 'linear-gradient(135deg, #06D6A0 0%, #11998e 100%)'; currentScore++; }, 20); recDiv.innerHTML = ""; if (issues.length === 0) recDiv.innerHTML = '<div style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> Tài khoản của bạn rất an toàn!</div>'; else issues.forEach(iss => { recDiv.innerHTML += `<div class="recommendation"><i class="fa-solid fa-triangle-exclamation"></i> ${iss}</div>`; }); }, 500); return;
                 }
-                const item = checks[step]; const isSafe = item.check(); 
-                const rowId = `check-step-${step}`; 
-                list.innerHTML += `<div class="sec-step-item" id="${rowId}"><div class="sec-step-label"><i class="fa-solid ${item.icon}" style="color:var(--primary)"></i> ${item.name}</div><div class="sec-step-status" style="color:#888"><i class="fa-solid fa-spinner fa-spin"></i> Checking...</div></div>`; 
-                bar.style.width = ((step + 1) / checks.length * 100) + '%';
-                
-                setTimeout(() => { 
-                    const statusDiv = document.getElementById(rowId).querySelector('.sec-step-status'); 
-                    if(isSafe) { 
-                        statusDiv.innerHTML = `<i class="fa-solid fa-check" style="margin-right:5px"></i> ${item.msgOk} ${item.msg || ''}`; 
-                        statusDiv.style.color = 'var(--success)'; 
-                    } else { 
-                        statusDiv.innerHTML = `<i class="fa-solid fa-xmark" style="margin-right:5px"></i> ${item.msgFail} ${item.msg || ''}`; 
-                        statusDiv.style.color = 'var(--danger)'; 
-                    } 
-                    step++; 
-                    runStep(); 
-                }, 600);
+                const item = checks[step]; const isSafe = item.check(); if(isSafe) score += 20; else { if(item.name === "Bảo mật 2 lớp (2FA)") issues.push("Hãy bật 2FA ngay"); if(item.name === "Xác thực Email") issues.push("Hãy xác thực Email"); if(item.name === "Số điện thoại bảo vệ") issues.push("Cập nhật SĐT để khôi phục"); }
+                const rowId = `check-step-${step}`; list.innerHTML += `<div class="sec-step-item" id="${rowId}"><div class="sec-step-label"><i class="fa-solid ${item.icon}" style="color:var(--primary)"></i> ${item.name}</div><div class="sec-step-status" style="color:#888"><i class="fa-solid fa-spinner fa-spin"></i> Checking...</div></div>`; bar.style.width = ((step + 1) / checks.length * 100) + '%';
+                setTimeout(() => { const statusDiv = document.getElementById(rowId).querySelector('.sec-step-status'); if(isSafe) { statusDiv.innerHTML = `<i class="fa-solid fa-check" style="margin-right:5px"></i> ${item.msgOk}`; statusDiv.style.color = 'var(--success)'; } else { statusDiv.innerHTML = `<i class="fa-solid fa-xmark" style="margin-right:5px"></i> ${item.msgFail}`; statusDiv.style.color = 'var(--danger)'; } step++; runStep(); }, 600);
             };
             runStep();
         },
-
-        // --- KYC Logic ---
-        isKycVerified() {
-            const phoneValid = this.userData.phone && this.userData.countryCode === '+84';
-            const cccdValid = this.userData.cccd && this.userData.cccd.length === 12 && /^\d+$/.test(this.userData.cccd);
-            return phoneValid && cccdValid;
-        },
-
-        // --- CÁC HÀM KHÁC (ĐIỀU CHỈNH CÁC HÀM CÓ LIÊN QUAN) ---
-        renderProfile() { 
-            const d = this.userData; 
-            const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; 
-            
-            document.getElementById('home-name').innerHTML = d.name + blueTick; 
-            document.getElementById('pf-name').innerHTML = d.name + blueTick; 
-            document.getElementById('pf-username').innerText = d.username || "Chưa set"; 
-            document.getElementById('pf-email').innerText = d.email; 
-            
-            const ph = document.getElementById('pf-phone-text'); 
-            if(d.phone) { 
-                ph.innerText=d.phone + (d.countryCode ? ` (${d.countryCode})` : ''); 
-                ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; 
-            } else { 
-                ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; 
-            } 
-            
-            document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); 
-            
-            if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; 
-            else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; 
-            
-            if(d.is2FAEnabled) { 
-                document.getElementById('2fa-off').style.display='none'; 
-                document.getElementById('2fa-on').style.display='block'; 
-            } else { 
-                document.getElementById('2fa-off').style.display='block'; 
-                document.getElementById('2fa-on').style.display='none'; 
-            } 
-
-            // Cập nhật trạng thái KYC
-            const kycStatus = document.getElementById('pf-kyc-status');
-            if (this.isKycVerified()) {
-                kycStatus.innerHTML = '<i class="fa-solid fa-check"></i> Đã xác thực KYC';
-                kycStatus.style.background = 'var(--success)';
-                kycStatus.style.color = 'white';
-            } else {
-                kycStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Chưa xác thực KYC';
-                kycStatus.style.background = 'var(--danger)';
-                kycStatus.style.color = 'white';
-            }
-        },
-
-        // Giữ nguyên các hàm còn lại: listenTransactions, logout, nav, openModal, closeModal, setType, etc.
-
-        // ... [Giữ nguyên logic của các hàm khác: linkBank, removeBank, setup2FA, etc.] ...
+        renderWallet() { const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); const existingCards = list.querySelectorAll('.bank-card:not(.add-new)'); existingCards.forEach(c => c.remove()); (this.userData.linkedBanks||[]).forEach((b, index) => { const cardHtml = `<div class="bank-card"><div class="bank-delete" onclick="event.stopPropagation(); app.removeBank(${index})"><i class="fa-solid fa-xmark"></i></div><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`; btn.insertAdjacentHTML('beforebegin', cardHtml); }); },
+        async removeBank(index) { if(!confirm("Bạn có chắc muốn xóa thẻ này?")) return; const bankToRemove = this.userData.linkedBanks[index]; try { await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayRemove(bankToRemove) }); this.userData.linkedBanks.splice(index, 1); this.renderWallet(); this.showPopup('success', 'Đã xóa thẻ'); } catch(e) { console.error(e); this.showPopup('error', 'Lỗi xóa thẻ'); } },
+        async linkBank() { const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value); if(!name || !num) return this.showPopup('error', 'Thiếu thông tin'); const newBank = { name, number: num, balance: bal || 0 }; await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) }); this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong'); },
+        renderProfile() { const d = this.userData; const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; } },
+        listenUserFund() { onSnapshot(query(collection(db, "group_transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { let total = 0; snap.forEach(d => total += d.data().amount); this.report.fund = total; this.updateReportChart(); }); },
+        updateReportChart() { const { inc, exp, fund } = this.report; const max = Math.max(inc, exp, fund, 100000); document.getElementById('chart-bar-inc').style.height = (inc / max * 100) + '%'; document.getElementById('val-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + 'đ'; document.getElementById('chart-bar-exp').style.height = (exp / max * 100) + '%'; document.getElementById('val-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + 'đ'; document.getElementById('chart-bar-fund').style.height = (fund / max * 100) + '%'; document.getElementById('val-fund').innerText = new Intl.NumberFormat('vi-VN').format(fund) + 'đ'; },
+        
         listenTransactions() { 
             onSnapshot(query(collection(db, "transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { 
                 const list = document.getElementById('recent-list'); list.innerHTML=''; 
@@ -1281,7 +1073,7 @@
                 txs.sort((a,b)=>b.timestamp-a.timestamp); 
                 
                 if(txs.length===0) list.innerHTML='<div style="text-align:center;color:#999;padding:20px">Chưa có giao dịch. Số dư 0đ</div>'; 
-                else txs.slice(0, 5).forEach(t => { // Hiển thị 5 GD gần nhất
+                else txs.forEach(t => {
                     const isInc = t.type === 'inc';
                     const color = isInc ? 'var(--success)' : 'var(--danger)';
                     const icon = isInc ? 'fa-arrow-down' : 'fa-arrow-up'; 
@@ -1298,18 +1090,65 @@
             }); 
         },
 
-        // Giữ nguyên các hàm còn lại...
+        listenGroup() { if(this.userData.groupId) { document.getElementById('no-group').style.display='none'; document.getElementById('group-dashboard').style.display='block'; onSnapshot(doc(db,"groups",this.userData.groupId),d=>{if(d.exists()){this.currentGroup=d.data();this.currentGroup.id=d.id;this.renderGroupUI()}}); } },
+        async createGroup() { const name = document.getElementById('group-name-inp').value; if(!name) return this.showPopup('error', 'Thiếu tên'); try { const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] }); await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id }); this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000); } catch(e) { this.showPopup('error', 'Lỗi'); } },
+        async inviteMember() { const email = document.getElementById('invite-email').value; const q = query(collection(db, "users"), where("email", "==", email)); const snap = await getDocs(q); if(snap.empty) return this.showPopup('error', 'Không tìm thấy'); const target = snap.docs[0]; if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác'); try { let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}]; await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems}); await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id}); this.closeModal(); this.showPopup('success', 'Đã mời'); } catch(e) { this.showPopup('error', 'Lỗi'); } },
+        async contributeFund() { const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value; if(!amt) return; try { await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() }); await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt }); this.closeModal(); this.showPopup('success', 'Đã đóng'); } catch(e) {} },
+        renderGroupUI() { document.getElementById('group-name-display').innerText = this.currentGroup.name; document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ'; document.getElementById('member-count').innerText = this.currentGroup.members.length; const list = document.getElementById('group-members'); list.innerHTML = ''; this.currentGroup.members.forEach(m => { let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>'; list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`; }); this.loadGroupHistory(); },
+        loadGroupHistory() { onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => { const div = document.getElementById('group-history'); div.innerHTML=''; let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp); this.groupTransactions = txs; txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); }); },
+        togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; } },
+        async savePhone(btn) { const val = document.getElementById('pf-phone-input').value.trim(); if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi'); try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); } },
+        async addTransaction() { const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value; if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); } },
+        async checkUser(inp) { const val = inp.value.trim(); const nameArea = document.getElementById('tf-name'); this.transferTarget = null; nameArea.innerText = ''; if(!val) return; if(val === this.userData.username || val === this.userData.email) { nameArea.innerText = "Không thể tự chuyển cho chính mình"; return; } let q = query(collection(db, "users"), where("username", "==", val)); let snap = await getDocs(q); if(snap.empty) { q = query(collection(db, "users"), where("email", "==", val)); snap = await getDocs(q); } if(!snap.empty) { const target = snap.docs[0]; this.transferTarget = { id: target.id, ...target.data() }; nameArea.innerText = "Người nhận: " + this.transferTarget.name; } else { nameArea.innerText = "Không tìm thấy người dùng này"; } },
+        preTransfer() { const amt = Number(document.getElementById('tf-amt').value); if(!this.transferTarget) return this.showPopup('error', 'Chưa chọn người nhận hợp lệ'); if(!amt || amt <= 0) return this.showPopup('error', 'Số tiền không hợp lệ'); this.generatedOTP = Math.floor(10000000 + Math.random() * 90000000); document.getElementById('otp-section').style.display = 'block'; document.getElementById('otp-display').innerText = this.generatedOTP; document.getElementById('btn-pre-tf').style.display = 'none'; },
+        
+        async confirmTransfer() { 
+            const userOtp = Number(document.getElementById('tf-otp-inp').value); 
+            const amt = Number(document.getElementById('tf-amt').value); 
+            const note = document.getElementById('tf-note').value || "Chuyển tiền"; 
+            if(userOtp !== this.generatedOTP) return this.showPopup('error', 'Sai mã OTP'); 
+            
+            try { 
+                await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc: `Chuyển tới ${this.transferTarget.name}: ${note}`, type: 'exp', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); 
+                await addDoc(collection(db, "transactions"), { uid: this.transferTarget.id, amount: amt, desc: `Nhận từ ${this.userData.name}: ${note}`, type: 'inc', date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); 
+                
+                this.closeModal(); 
+                
+                // Show Success Screen
+                document.getElementById('transfer-success').style.display = 'flex';
+                document.getElementById('success-amount').innerText = '-' + new Intl.NumberFormat('vi-VN').format(amt) + ' đ';
+                document.getElementById('success-receiver').innerText = this.transferTarget.name;
+
+                // Show Notification
+                this.showToast('Biến động số dư', `Tài khoản -${new Intl.NumberFormat('vi-VN').format(amt)} đ. GD: ${this.transferTarget.name}`);
+
+                // Reset Form
+                document.getElementById('tf-dest').value = ''; document.getElementById('tf-amt').value = ''; document.getElementById('tf-note').value = ''; document.getElementById('otp-section').style.display = 'none'; document.getElementById('btn-pre-tf').style.display = 'block'; document.getElementById('tf-name').innerText = ''; this.transferTarget = null; 
+            } catch(e) { console.error(e); this.showPopup('error', 'Lỗi chuyển tiền'); } 
+        },
+        
+        processBill(input) { const file = input.files[0]; if(!file) return; this.showPopup('info', 'Đang quét Bill...', 'Vui lòng đợi giây lát'); Tesseract.recognize(file, 'vie', { logger: m => console.log(m) }).then(({ data: { text } }) => { this.closePopup(); const numbers = text.match(/\d{1,3}(?:[.,]\d{3})*(?:\.\d+)?/g); let maxAmount = 0; if (numbers) { numbers.forEach(num => { let cleanNum = parseFloat(num.replace(/[.,]/g, '')); if (cleanNum > 1000 && cleanNum < 1000000000) { if(cleanNum > maxAmount) maxAmount = cleanNum; } }); } this.openModal('add_trans'); if(maxAmount > 0) document.getElementById('inp-amt').value = maxAmount; document.getElementById('inp-desc').value = "Quét Bill: " + file.name; this.setType('exp', document.querySelector('#modal-add_trans button')); this.showPopup('success', 'Quét hoàn tất', 'Vui lòng kiểm tra lại số tiền'); }).catch(err => { this.closePopup(); this.showPopup('error', 'Không đọc được Bill'); }); input.value = ''; },
+        async updateAvatar(i) { const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=async(e)=>{const b=e.target.result;document.getElementById('pf-avatar').src=b;await updateDoc(doc(db,"users",this.currentUser.uid),{avatar:b});this.showPopup('success','Đã đổi Avatar');};r.readAsDataURL(f); },
+        async sendPasswordReset() { 
+            console.log("Attempting to send email to:", this.currentUser.email);
+            if(confirm("Gửi mail đổi pass?")) { 
+                try {
+                    await sendPasswordResetEmail(auth, this.currentUser.email); 
+                    this.showPopup('success', 'Đã gửi email', 'Vui lòng kiểm tra hộp thư đến (và mục spam).'); 
+                } catch(e) {
+                    console.error("Firebase Email Error:", e);
+                    this.showPopup('error', 'Lỗi gửi email', e.message);
+                }
+            } 
+        },
         logout() { 
             sessionStorage.removeItem('isFaceVerified');
-            // window.location.href='dangnhap.html'; 
+            signOut(auth).then(()=>window.location.href='dangnhap.html'); 
         },
         nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
-        openModal(id) { 
-            if(id === 'referral') { this.openReferralModal(); }
-            else if (id === 'feedback') { this.openModal('feedback'); }
-            document.getElementById('modal-'+id).classList.add('open'); 
-        },
+        openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },
+        setType(type, btn) { this.tmpType=type; btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.background='#eee';b.style.color='#333'}); btn.style.background=type==='exp'?'#EF476F':'#06D6A0'; btn.style.color='white'; }
     };
     window.onload = () => app.init();
 </script>

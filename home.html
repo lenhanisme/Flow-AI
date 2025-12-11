@@ -548,7 +548,7 @@
                     <i class="fa-solid fa-shield-halved pf-q-icon" style="color:#666"></i>
                     <div class="pf-q-text">Bảo mật</div>
                 </div>
-                <div class="pf-q-item">
+                <div class="pf-q-item" onclick="app.showPopup('info', 'Thông báo', 'Hệ thống thông báo đang được nâng cấp')">
                     <i class="fa-solid fa-bell pf-q-icon" style="color:#666"></i>
                     <div class="pf-q-text">Thông báo</div>
                 </div>
@@ -588,11 +588,11 @@
                     <div class="pf-menu-left"><i class="fa-solid fa-headset pf-menu-icon"></i> Trung tâm trợ giúp</div>
                     <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
                 </div>
-                <div class="pf-menu-item">
+                <div class="pf-menu-item" onclick="app.showPopup('info', 'Thông báo', 'Bạn có thể quản lý cài đặt thông báo trong phần Quick Actions.')">
                     <div class="pf-menu-left"><i class="fa-solid fa-bell pf-menu-icon"></i> Cài đặt thông báo</div>
                     <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
                 </div>
-                <div class="pf-menu-item" onclick="app.showPopup('info', 'Góp ý', 'Tính năng đang phát triển')">
+                <div class="pf-menu-item" onclick="app.showPopup('info', 'Góp ý', 'Cảm ơn bạn đã quan tâm. Tính năng gửi góp ý đang được phát triển.')">
                     <div class="pf-menu-left"><i class="fa-regular fa-envelope pf-menu-icon"></i> Chia sẻ góp ý</div>
                     <div class="pf-menu-right"><i class="fa-solid fa-angle-right"></i></div>
                 </div>
@@ -623,11 +623,11 @@
         </button>
     </div>
     <div id="phone-edit" style="display:none; margin-top:10px; gap:5px">
-         <input type="tel" id="pf-phone-input" placeholder="Nhập SĐT mới" class="form-input" style="margin-bottom:5px">
-         <div style="display:flex; gap:5px">
-             <button onclick="app.savePhone(this)" class="btn-primary" style="padding:8px; font-size:13px">Lưu</button>
-             <button onclick="app.togglePhoneEdit(false)" class="btn-outline" style="padding:8px; margin-top:0">Hủy</button>
-         </div>
+           <input type="tel" id="pf-phone-input" placeholder="Nhập SĐT mới" class="form-input" style="margin-bottom:5px">
+           <div style="display:flex; gap:5px">
+               <button onclick="app.savePhone(this)" class="btn-primary" style="padding:8px; font-size:13px">Lưu</button>
+               <button onclick="app.togglePhoneEdit(false)" class="btn-outline" style="padding:8px; margin-top:0">Hủy</button>
+           </div>
     </div>
 
     <div style="margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.03); border-radius: 10px;">
@@ -843,6 +843,8 @@
             if(type==='success') icon.innerHTML='<i class="fa-solid fa-circle-check" style="color:var(--success)"></i>';
             else if(type==='error') icon.innerHTML='<i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i>';
             else icon.innerHTML='<i class="fa-solid fa-circle-info" style="color:var(--primary)"></i>';
+            // Không xóa nội dung Popup khi đóng, chỉ ẩn đi
+            // if(desc) document.getElementById('pop-desc').style.display = 'block'; else document.getElementById('pop-desc').style.display = 'none';
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
         
@@ -1152,5 +1154,3 @@
 </script>
 </body>
 </html>
-
-

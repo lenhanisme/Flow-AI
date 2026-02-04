@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Ví Flow - Ứng dụng quản lý chi tiêu, quỹ nhóm và tài chính cá nhân hàng đầu Việt Nam. An toàn, bảo mật, miễn phí.">
     <title>Ví Flow - Quản lý tài chính thông minh cho người Việt</title>
     
@@ -20,11 +20,10 @@
             --accent-bg: #EFF6FF;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
         body { 
             background-color: #F9FAFB;
-            /* Nền Dot Grid đồng bộ với trang Login/Register */
             background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-main);
@@ -35,20 +34,40 @@
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 16px 5%; 
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95); /* Tăng độ đậm nền để menu rõ hơn */
             backdrop-filter: blur(10px);
             position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid var(--border);
+            height: 70px;
         }
         .logo { 
             font-size: 22px; font-weight: 800; color: var(--primary);
-            display: flex; align-items: center; gap: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 1002; position: relative;
         }
-        .nav-links { display: flex; gap: 30px; }
+        
+        /* Desktop Menu */
+        .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--text-sub); font-weight: 500; font-size: 15px; transition: 0.2s; }
         .nav-links a:hover { color: var(--primary); }
-
         .auth-buttons { display: flex; gap: 12px; }
+
+        /* Mobile Menu Toggle (Ẩn trên Desktop) */
+        .mobile-toggle { display: none; font-size: 24px; color: var(--text-main); cursor: pointer; z-index: 1002; padding: 5px; }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: white; z-index: 1001;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px;
+            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+        .mobile-menu.active { transform: translateX(0); opacity: 1; }
+        .mobile-menu a.menu-link { font-size: 20px; font-weight: 600; color: var(--text-main); text-decoration: none; }
+        .mobile-menu .auth-block { display: flex; flex-direction: column; gap: 15px; width: 80%; margin-top: 20px; }
+        .mobile-menu .btn { width: 100%; text-align: center; padding: 14px; }
+
+        /* Buttons */
         .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; text-decoration: none; display: inline-block; }
         .btn-outline { border: 1px solid var(--border); background: white; color: var(--text-main); }
         .btn-outline:hover { background: #F3F4F6; }
@@ -56,17 +75,11 @@
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
         /* --- HERO SECTION --- */
-        .hero {
-            padding: 80px 5%;
-            text-align: center;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        .hero { padding: 80px 5%; text-align: center; max-width: 1000px; margin: 0 auto; }
         .badge {
             background: var(--accent-bg); color: var(--primary);
             padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;
-            display: inline-block; margin-bottom: 20px;
-            border: 1px solid #DBEAFE;
+            display: inline-block; margin-bottom: 20px; border: 1px solid #DBEAFE;
         }
         .hero h1 {
             font-size: 48px; line-height: 1.2; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px;
@@ -74,12 +87,13 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .hero p { color: var(--text-sub); font-size: 18px; line-height: 1.6; max-width: 650px; margin: 0 auto 32px; }
-        
-        /* --- TRUST BADGES (Ngân hàng) --- */
+        .hero-btns { display: flex; gap: 15px; justify-content: center; }
+
+        /* --- TRUST BADGES --- */
         .trust-section { padding: 40px 5%; text-align: center; border-bottom: 1px solid var(--border); background: white; }
         .trust-title { font-size: 13px; color: #9CA3AF; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-weight: 600; }
         .bank-logos { display: flex; justify-content: center; gap: 40px; opacity: 0.6; flex-wrap: wrap; }
-        .bank-logos i { font-size: 32px; color: #6B7280; } /* Dùng icon thay thế logo thật để demo */
+        .bank-logos i { font-size: 32px; color: #6B7280; }
 
         /* --- FEATURES --- */
         .features { padding: 80px 5%; background: white; }
@@ -115,7 +129,7 @@
         }
         .cta-box h2 { font-size: 32px; margin-bottom: 15px; }
         .cta-box p { opacity: 0.9; margin-bottom: 30px; font-size: 16px; }
-        .btn-white { background: white; color: var(--primary); padding: 12px 30px; border-radius: 8px; font-weight: 700; text-decoration: none; }
+        .btn-white { background: white; color: var(--primary); padding: 12px 30px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-block; }
         .btn-white:hover { background: #F9FAFB; }
 
         /* --- FOOTER --- */
@@ -128,13 +142,43 @@
         .footer-col ul li a:hover { color: var(--primary); }
         .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); color: #9CA3AF; }
 
-        /* Responsive */
+        /* ================= RESPONSIVE MOBILE ================= */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .nav-links { display: none; } /* Ẩn menu trên mobile cho gọn */
+            /* 1. Navbar: Ẩn menu thường, hiện nút toggle */
+            .nav-links, .auth-buttons { display: none; }
+            .mobile-toggle { display: block; }
+            .navbar { padding: 15px 20px; }
+
+            /* 2. Hero: Chữ to vừa phải, nút xếp dọc */
+            .hero { padding: 50px 20px; }
+            .hero h1 { font-size: 32px; margin-bottom: 15px; }
+            .hero p { font-size: 16px; margin-bottom: 25px; }
+            .hero-btns { flex-direction: column; gap: 12px; }
+            .hero-btns .btn { width: 100%; }
+
+            /* 3. Sections: Padding nhỏ lại */
+            .trust-section { padding: 30px 20px; }
+            .bank-logos { gap: 25px; }
+            .bank-logos i { font-size: 26px; }
+
+            .features { padding: 50px 20px; }
+            .grid { grid-template-columns: 1fr; gap: 20px; } /* Grid 1 cột */
+            .section-header h2 { font-size: 26px; }
+
+            /* 4. Stats: Xếp dọc */
+            .stats { padding: 40px 20px; }
+            .stats-grid { gap: 40px; flex-direction: column; }
+            
+            /* 5. CTA */
+            .cta-section { padding: 40px 20px; }
+            .cta-box { padding: 40px 20px; }
+            .cta-box h2 { font-size: 24px; }
+
+            /* 6. Footer: Xếp dọc */
             .footer-grid { grid-template-columns: 1fr; gap: 30px; }
-            .bank-logos { gap: 20px; }
-            .bank-logos i { font-size: 24px; }
+            .footer-col { text-align: center; }
+            .footer-col .logo { justify-content: center; }
+            .footer-col div[style*="flex"] { justify-content: center; } /* Căn giữa icon social */
         }
     </style>
 </head>
@@ -144,6 +188,7 @@
         <div class="logo" onclick="window.location.href='index.html'">
             <i class="fa-solid fa-wallet"></i> Ví Flow
         </div>
+        
         <div class="nav-links">
             <a href="#features">Tính năng</a>
             <a href="#security">Bảo mật</a>
@@ -154,13 +199,29 @@
             <a href="dangnhap.html" class="btn btn-outline">Đăng nhập</a>
             <a href="dangky.html" class="btn btn-primary">Đăng ký ngay</a>
         </div>
+
+        <div class="mobile-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
+
+    <div class="mobile-menu">
+        <a href="#features" class="menu-link">Tính năng</a>
+        <a href="#security" class="menu-link">Bảo mật</a>
+        <a href="#pricing" class="menu-link">Biểu phí</a>
+        <a href="https://fb.com/lenhanriel" class="menu-link">Hỗ trợ</a>
+        
+        <div class="auth-block">
+            <a href="dangnhap.html" class="btn btn-outline">Đăng nhập</a>
+            <a href="dangky.html" class="btn btn-primary">Đăng ký ngay</a>
+        </div>
+    </div>
 
     <section class="hero">
         <div class="badge"><i class="fa-solid fa-star"></i> Ứng dụng quản lý chi tiêu #1</div>
         <h1>Làm chủ tài chính cá nhân<br>Đơn giản & Hiệu quả</h1>
         <p>Ví Flow giúp bạn theo dõi dòng tiền, quản lý quỹ nhóm và tiết kiệm thông minh hơn. Dữ liệu được mã hóa an toàn tuyệt đối.</p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
+        <div class="hero-btns">
             <a href="dangky.html" class="btn btn-primary" style="padding: 14px 30px; font-size: 16px;">
                 Tạo tài khoản miễn phí <i class="fa-solid fa-arrow-right" style="margin-left: 5px;"></i>
             </a>
@@ -288,6 +349,36 @@
             <p>&copy; © 2024 - 2026 Ví Flow (FLPAY.VN). All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const icon = mobileToggle.querySelector('i');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        // Hàm bật/tắt menu
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            
+            // Đổi icon: 3 gạch <-> dấu X
+            if(mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+                document.body.style.overflow = 'hidden'; // Khóa cuộn trang khi mở menu
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto'; // Mở lại cuộn trang
+            }
+        }
+
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        // Tự động đóng menu khi bấm vào link bên trong
+        menuLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+    </script>
 
 </body>
 </html>

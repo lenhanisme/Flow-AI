@@ -6,7 +6,6 @@
     <title>Ví Flow - Quản lý chi tiêu Gia đình & Nhóm</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
             --primary: #4361EE;
@@ -16,11 +15,11 @@
             --text-light: #6c757d;
             --bg: #F0F4F8; /* Màu nền hơi xanh nhẹ dịu mắt */
             --white: #ffffff;
+            --success: #28a745;
             --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
             --shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
             --radius: 24px;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
         body { background-color: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -30,33 +29,37 @@
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 5%; position: fixed; width: 100%; top: 0;
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.03);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             border-bottom: 1px solid rgba(255,255,255,0.5);
+            transition: background 0.3s;
         }
+        .navbar.scrolled { background: rgba(255, 255, 255, 0.98); }
         
-        .logo { 
-            font-size: 26px; font-weight: 800; 
-            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            display: flex; align-items: center; gap: 8px; 
+        .logo {
+            font-size: 26px; font-weight: 800;
+            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: flex; align-items: center; gap: 8px;
         }
-
         .nav-menu { display: flex; align-items: center; gap: 40px; }
         .nav-link { font-weight: 500; color: var(--text); position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: 0.3s; }
+        .nav-link:hover::after { width: 100%; }
         .nav-link:hover { color: var(--primary); }
         
         /* Mobile Menu Toggle */
-        .hamburger { display: none; cursor: pointer; font-size: 24px; color: var(--text); }
-
+        .hamburger { display: none; cursor: pointer; font-size: 24px; color: var(--text); transition: transform 0.3s; }
+        .hamburger.active { transform: rotate(90deg); }
+        
         /* Buttons */
         .btn-group { display: flex; gap: 15px; align-items: center; }
         .btn {
-            padding: 10px 24px; border-radius: 50px; font-weight: 600; 
-            cursor: pointer; white-space: nowrap; font-size: 15px; transition: 0.3s;
+            padding: 10px 24px; border-radius: 50px; font-weight: 600;
+            cursor: pointer; white-space: nowrap; font-size: 15px; transition: 0.3s ease;
         }
         .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
-        .btn-outline:hover { background: var(--primary); color: var(--white); }
+        .btn-outline:hover { background: var(--primary); color: var(--white); transform: translateY(-2px); }
         .btn-fill { background: var(--gradient); color: var(--white); border: none; box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3); }
         .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4); }
 
@@ -66,59 +69,73 @@
             padding: 140px 5% 60px; min-height: 100vh;
             background: radial-gradient(circle at top right, rgba(76, 201, 240, 0.15) 0%, transparent 40%),
                         radial-gradient(circle at bottom left, rgba(67, 97, 238, 0.1) 0%, transparent 40%);
+            position: relative; overflow: hidden;
         }
-        .hero-text { flex: 1; max-width: 650px; padding-right: 20px; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(67,97,238,0.05)" fill-opacity="1" d="M0,128L48,138.7C96,149,192,171,288,176C384,181,480,171,576,154.7C672,139,768,117,864,128C960,139,1056,181,1152,181.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat; background-size: cover; opacity: 0.5; }
+        
+        .hero-text { flex: 1; max-width: 650px; padding-right: 40px; opacity: 0; transform: translateY(50px); animation: fadeUp 1s forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
         .badge {
-            display: inline-block; padding: 6px 16px; background: #EEF4FF; 
+            display: inline-flex; align-items: center; padding: 6px 16px; background: rgba(67, 97, 238, 0.1);
             color: var(--primary); border-radius: 30px; font-size: 13px; font-weight: 600;
-            margin-bottom: 20px; border: 1px solid rgba(67, 97, 238, 0.2);
+            margin-bottom: 20px; border: 1px solid rgba(67, 97, 238, 0.2); transition: transform 0.3s;
         }
+        .badge:hover { transform: scale(1.05); }
+        
         .hero-text h1 { font-size: 52px; line-height: 1.15; margin-bottom: 20px; font-weight: 800; letter-spacing: -1px; }
-        .hero-text span { color: var(--primary); }
+        .hero-text span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero-text p { font-size: 18px; color: var(--text-light); margin-bottom: 35px; max-width: 90%; }
         
         .trust-badge {
             margin-top: 40px; display: flex; align-items: center; gap: 20px; font-size: 14px; color: var(--text-light);
             padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05);
         }
-        .trust-item { display: flex; align-items: center; gap: 6px; }
-
-        /* PHONE ANIMATION */
-        .hero-img { flex: 1; display: flex; justify-content: center; position: relative; perspective: 1000px; }
-        .phone-container {
-            width: 320px; height: 640px; background: var(--white); border-radius: 45px;
-            border: 8px solid #2B2D42; position: relative; overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-            animation: float 6s ease-in-out infinite;
-            transform: rotateY(-10deg) rotateX(5deg);
-            transition: 0.5s;
-        }
-        .phone-container:hover { transform: rotateY(0) rotateX(0); }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotateY(-10deg); } 50% { transform: translateY(-20px) rotateY(-10deg); } }
+        .trust-item { display: flex; align-items: center; gap: 6px; transition: color 0.3s; }
+        .trust-item:hover { color: var(--primary); }
         
-        .screen-header { background: var(--gradient); height: 160px; padding: 25px; border-radius: 0 0 30px 30px; color: white; }
-        .screen-body { padding: 20px; }
-        .stat-card { background: white; padding: 15px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: -50px; margin-bottom: 20px; }
-        .fake-trans { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; }
-        .fake-icon { width: 40px; height: 40px; background: #EEF4FF; border-radius: 12px; }
+        /* PHONE ANIMATION */
+        .hero-img { flex: 1; display: flex; justify-content: center; position: relative; perspective: 1500px; opacity: 0; transform: translateY(50px); animation: fadeUp 1s 0.3s forwards; }
+        .phone-container {
+            width: 320px; height: 640px; background: var(--white); border-radius: 60px;
+            border: 8px solid #2B2D42; position: relative; overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5);
+            animation: float 6s ease-in-out infinite;
+            transform-style: preserve-3d; transition: transform 0.5s ease;
+        }
+        .phone-container:hover { transform: rotateY(0) rotateX(0) scale(1.05) !important; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotateY(-10deg) rotateX(5deg); } 50% { transform: translateY(-20px) rotateY(-10deg) rotateX(5deg); } }
+        
+        .screen-header { background: var(--gradient); height: 160px; padding: 25px; border-radius: 0 0 40px 40px; color: white; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .screen-body { padding: 20px; background: linear-gradient(to bottom, #f8f9fa, #ffffff); }
+        .stat-card { background: white; padding: 15px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-top: -50px; margin-bottom: 20px; transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .fake-trans { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; padding: 10px; border-radius: 12px; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.03); transition: box-shadow 0.3s; }
+        .fake-trans:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .fake-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
         .fake-line { height: 10px; background: #F0F0F0; border-radius: 5px; flex: 1; }
 
         /* --- FEATURES SECTION --- */
-        .features { padding: 80px 5%; text-align: center; background: var(--white); border-radius: 40px 40px 0 0; }
-        .section-title h2 { font-size: 36px; margin-bottom: 15px; font-weight: 700; }
+        .features { padding: 100px 5%; text-align: center; background: var(--white); border-radius: 60px 60px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.05); }
+        .section-title h2 { font-size: 36px; margin-bottom: 15px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .section-title p { color: var(--text-light); margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
         
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .feature-card {
             background: #F8F9FA; padding: 40px 30px; border-radius: var(--radius);
-            transition: 0.3s; border: 1px solid transparent; text-align: left;
+            transition: 0.4s ease; border: 1px solid rgba(0,0,0,0.03); text-align: left;
+            opacity: 0; transform: translateY(50px); animation: fadeUp 1s forwards;
         }
-        .feature-card:hover { background: var(--white); transform: translateY(-10px); box-shadow: var(--shadow); border-color: #EEF4FF; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.4s; }
+        .feature-card:nth-child(4) { animation-delay: 0.6s; }
+        .feature-card:hover { background: var(--white); transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow); border-color: var(--primary); }
         .f-icon {
-            width: 60px; height: 60px; background: var(--white); border-radius: 16px;
+            width: 60px; height: 60px; background: linear-gradient(135deg, rgba(67,97,238,0.1), rgba(76,201,240,0.1)); border-radius: 16px;
             display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
-            font-size: 24px; color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            font-size: 24px; color: var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s;
         }
+        .feature-card:hover .f-icon { transform: rotate(10deg) scale(1.1); background: linear-gradient(135deg, rgba(67,97,238,0.2), rgba(76,201,240,0.2)); }
         .feature-card h3 { font-size: 20px; margin-bottom: 10px; }
         .feature-card p { color: var(--text-light); font-size: 15px; }
 
@@ -128,61 +145,54 @@
         .social-btn {
             width: 45px; height: 45px; border-radius: 50%; background: #F8F9FA;
             display: flex; align-items: center; justify-content: center; color: var(--text);
-            font-size: 20px; transition: 0.3s;
+            font-size: 20px; transition: 0.3s ease;
         }
-        .social-btn:hover { background: var(--primary); color: var(--white); transform: rotate(10deg); }
+        .social-btn:hover { background: var(--gradient); color: var(--white); transform: rotate(360deg); box-shadow: 0 5px 15px rgba(67,97,238,0.3); }
         
         /* --- RESPONSIVE CSS --- */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 42px; }
             .phone-container { width: 280px; height: 560px; }
         }
-
         @media (max-width: 768px) {
             .navbar { padding: 15px 20px; }
             .hamburger { display: block; }
             
-            /* Menu Mobile dạng trượt hoặc dropdown */
             .nav-menu {
                 position: absolute; top: 100%; left: 0; width: 100%;
                 background: var(--white); flex-direction: column; gap: 0;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                max-height: 0; overflow: hidden; transition: 0.4s ease;
+                max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
             }
             .nav-menu.active { max-height: 400px; padding-bottom: 20px; }
             
             .nav-link { display: block; padding: 15px 20px; border-bottom: 1px solid #f0f0f0; width: 100%; text-align: center; }
             
-            .btn-group { 
-                flex-direction: column; width: 100%; padding: 20px; 
-                display: none; /* Ẩn nút mặc định, hiện khi active */
+            .btn-group {
+                flex-direction: column; width: 100%; padding: 20px;
+                display: none;
             }
             .nav-menu.active .btn-group { display: flex; }
             
             .btn { width: 100%; text-align: center; justify-content: center; }
-
             .hero { flex-direction: column-reverse; padding-top: 100px; text-align: center; padding-bottom: 40px; }
             .hero-text { padding-right: 0; margin-top: 40px; }
             .hero-text h1 { font-size: 36px; }
             .hero-btns { justify-content: center; }
             .trust-badge { justify-content: center; flex-wrap: wrap; }
             
-            .phone-container { transform: none; animation: none; margin: 0 auto; width: 100%; max-width: 300px; }
-            .phone-container:hover { transform: none; }
+            .phone-container { transform: none !important; animation: none; margin: 0 auto; width: 100%; max-width: 300px; }
         }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
         <a href="#" class="logo">
             <i class="fa-solid fa-layer-group"></i> Ví Flow
         </a>
-
         <div class="hamburger" onclick="toggleMenu()">
             <i class="fa-solid fa-bars"></i>
         </div>
-
         <div class="nav-menu" id="navMenu">
             <a href="#features" class="nav-link">Tính năng</a>
             <a href="#family" class="nav-link">Gia đình & Nhóm</a>
@@ -194,7 +204,6 @@
             </div>
         </div>
     </nav>
-
     <section class="hero">
         <div class="hero-text">
             <span class="badge">✨ Giải pháp tài chính 4.0</span>
@@ -214,7 +223,6 @@
                 <div class="trust-item"><i class="fa-solid fa-users" style="color: var(--primary);"></i> +10.000 Nhóm tin dùng</div>
             </div>
         </div>
-
         <div class="hero-img">
             <div class="phone-container">
                 <div class="screen-header">
@@ -239,7 +247,7 @@
                     <div style="font-weight:700; margin-bottom:15px; font-size:14px;">Giao dịch nhóm</div>
                     
                     <div class="fake-trans">
-                        <div class="fake-icon" style="background:#FFE0E6; color:#F25C54; display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-cart-shopping"></i></div>
+                        <div class="fake-icon" style="background:#FFE0E6; color:#F25C54;"><i class="fa-solid fa-cart-shopping"></i></div>
                         <div style="flex:1">
                             <div style="font-size:13px; font-weight:600">Siêu thị BigC</div>
                             <div style="font-size:10px; color:#999">Mẹ chi tiêu</div>
@@ -248,16 +256,15 @@
                     </div>
                     
                     <div class="fake-trans">
-                        <div class="fake-icon" style="background:#E0F7FA; color:#00BCD4; display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="fake-icon" style="background:#E0F7FA; color:#00BCD4;"><i class="fa-solid fa-bolt"></i></div>
                         <div style="flex:1">
                             <div style="font-size:13px; font-weight:600">Tiền điện</div>
                             <div style="font-size:10px; color:#999">Bố thanh toán</div>
                         </div>
                         <div style="font-size:13px; font-weight:700; color:#F25C54">-850k</div>
                     </div>
-
-                     <div class="fake-trans">
-                        <div class="fake-icon" style="background:#E8F5E9; color:#4CAF50; display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="fake-trans">
+                        <div class="fake-icon" style="background:#E8F5E9; color:#4CAF50;"><i class="fa-solid fa-piggy-bank"></i></div>
                         <div style="flex:1">
                             <div style="font-size:13px; font-weight:600">Đóng quỹ tháng</div>
                             <div style="font-size:10px; color:#999">Bo chuyển khoản</div>
@@ -268,7 +275,6 @@
             </div>
         </div>
     </section>
-
     <section class="features" id="features">
         <div class="section-title">
             <h2>Tại sao chọn Ví Flow?</h2>
@@ -298,7 +304,6 @@
             </div>
         </div>
     </section>
-
     <footer>
         <div class="logo" style="justify-content: center; margin-bottom: 20px;">
             <i class="fa-solid fa-layer-group"></i> Ví Flow
@@ -326,14 +331,14 @@
             &copy; 2025 Ví Flow. Được phát triển bởi Bo.
         </p>
     </footer>
-
     <script>
         // Xử lý Responsive Menu
         function toggleMenu() {
             const menu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
             menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
         }
-
         // Kiểm tra đăng nhập để đổi nút
         const user = localStorage.getItem('flow_current_user');
         if (user) {
@@ -346,7 +351,6 @@
                     <i class="fa-solid fa-rocket" style="margin-right:5px"></i> Vào Dashboard
                 </a>
             `;
-
             authDiv.innerHTML = dashboardBtn;
             
             heroBtns.innerHTML = `
@@ -355,7 +359,11 @@
                 </a>
             `;
         }
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
     </script>
 </body>
 </html>
-

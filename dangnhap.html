@@ -3,97 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Ví Flow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Đăng nhập Ví điện tử Flow - Quản lý tài chính cá nhân an toàn và hiệu quả.">
+    <title>Đăng Nhập - Ví Flow (FLPAY.VN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        :root {
-            --primary: #4361EE;
-            --bg: #F0F4F8;
-            --text: #2B2D42;
-            --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%);
+        :root { 
+            --primary: #2563EB; 
+            --primary-hover: #1d4ed8;
+            --text-main: #111827; 
+            --text-sub: #6B7280;
+            --border: #E5E7EB;
+            --bg-surface: #ffffff;
+            --error: #EF4444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        /* Background đồng bộ với trang Đăng ký: Dot Grid */
         body { 
-            background-color: var(--bg); height: 100vh; 
-            display: flex; align-items: center; justify-content: center; padding: 20px;
+            background-color: #F9FAFB;
+            background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
+            background-size: 24px 24px;
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
         }
 
-        .auth-container {
-            background: white; width: 100%; max-width: 420px;
-            padding: 40px; border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(67, 97, 238, 0.1); text-align: center;
+        .auth-container { 
+            background: var(--bg-surface);
+            width: 100%; 
+            max-width: 420px; 
+            padding: 48px 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            text-align: center; 
         }
 
-        .logo {
-            font-size: 28px; font-weight: 800; 
-            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px; display: inline-flex; align-items: center; gap: 10px;
+        .logo { 
+            font-size: 26px; 
+            font-weight: 700; 
+            color: var(--primary);
+            margin-bottom: 8px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px;
         }
-
-        h2 { color: var(--text); margin-bottom: 5px; font-size: 22px; }
-        p.sub-text { color: #888; font-size: 14px; margin-bottom: 30px; }
-
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; display: block; color: #555; margin-left: 5px; }
         
+        .logo i { font-size: 28px; }
+
+        h2 { color: var(--text-main); margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+        p.sub-text { color: var(--text-sub); font-size: 14px; margin-bottom: 32px; }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+
         .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
-        
+        .input-wrapper i { 
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%); 
+            color: #9CA3AF; font-size: 16px; transition: 0.2s;
+        }
+
         input { 
-            width: 100%; padding: 14px 14px 14px 45px; 
-            border: 2px solid #f0f0f0; border-radius: 15px; 
-            font-size: 15px; outline: none; transition: 0.3s; color: var(--text); background: #f9f9f9;
+            width: 100%; 
+            padding: 14px 40px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            font-size: 14px; 
+            outline: none; 
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            background: #F9FAFB;
         }
-        input:focus { border-color: var(--primary); background: white; }
 
-        button { 
-            width: 100%; padding: 16px; background: var(--gradient); color: white; 
-            border: none; border-radius: 50px; font-weight: 700; font-size: 16px; cursor: pointer; 
-            transition: 0.3s; box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3); margin-top: 5px;
+        input:focus { 
+            background: #fff; border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
         }
-        button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(67, 97, 238, 0.4); }
-        button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+        input:focus + i { color: var(--primary); }
 
-        .link { margin-top: 25px; font-size: 14px; color: #666; }
-        .link a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        .link a:hover { text-decoration: underline; }
-        
-        .forgot-pass { text-align: right; margin-bottom: 20px; font-size: 13px; }
-        .forgot-pass a { color: #888; text-decoration: none; transition: 0.3s; }
+        /* Style riêng cho nút Quên mật khẩu */
+        .forgot-pass { 
+            text-align: right; 
+            margin-top: -10px; 
+            margin-bottom: 24px; 
+            font-size: 13px; 
+        }
+        .forgot-pass a { 
+            color: var(--text-sub); 
+            text-decoration: none; 
+            font-weight: 500;
+            transition: color 0.2s;
+        }
         .forgot-pass a:hover { color: var(--primary); }
 
-        .error-msg {
-            background: #FFF5F5; color: #EF476F; padding: 10px; border-radius: 10px; 
-            font-size: 13px; margin-bottom: 20px; display: none; border: 1px solid #FFCDD2;
+        button#btn-login { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 15px; 
+            cursor: pointer; 
+            transition: background 0.2s;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        button#btn-login:hover { background: var(--primary-hover); }
+        button:disabled { background: #9CA3AF; cursor: wait; }
+
+        .link { margin-top: 24px; font-size: 14px; color: var(--text-sub); }
+        .link a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .link a:hover { text-decoration: underline; }
+
+        .error-msg { 
+            background: #FEF2F2; color: var(--error); padding: 10px; border-radius: 6px; 
+            font-size: 13px; margin-bottom: 20px; display: none; border: 1px solid #FCA5A5;
+            text-align: left;
         }
     </style>
 </head>
 <body>
 
     <div class="auth-container">
-        <div class="logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
-        <h2>Chào mừng trở lại!</h2>
-        <p class="sub-text">Đăng nhập để quản lý dòng tiền của bạn</p>
+        <div class="logo"><i class="fa-solid fa-wallet"></i> Ví Flow</div>
+        <h2>Chào mừng trở lại</h2>
+        <p class="sub-text">Đăng nhập để tiếp tục quản lý tài chính</p>
 
         <div id="error-box" class="error-msg"></div>
 
         <div class="form-group">
-            <label class="form-label">Email</label>
             <div class="input-wrapper">
                 <i class="fa-regular fa-envelope"></i>
-                <input type="email" id="login-email" placeholder="Nhập email của bạn">
+                <input type="email" id="login-email" placeholder="Email đăng nhập">
             </div>
         </div>
 
-        <div class="form-group" style="margin-bottom: 10px;">
-            <label class="form-label">Mật khẩu</label>
+        <div class="form-group">
             <div class="input-wrapper">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" id="login-pass" placeholder="Nhập mật khẩu">
+                <input type="password" id="login-pass" placeholder="Mật khẩu">
             </div>
         </div>
 
@@ -106,8 +160,10 @@
         <div class="link">
             Chưa có tài khoản? <a href="dangky.html">Đăng ký ngay</a>
         </div>
-        <div class="link" style="margin-top: 10px; font-size: 13px;">
-            <a href="index.html" style="color: #999;"><i class="fa-solid fa-arrow-left"></i> Quay về trang chủ</a>
+        <div class="link" style="margin-top: 12px; font-size: 13px;">
+            <a href="index.html" style="color: var(--text-sub); font-weight: 500;">
+                <i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ
+            </a>
         </div>
     </div>
 
@@ -124,7 +180,7 @@
             const pass = document.getElementById('login-pass').value;
 
             if(!email || !pass) {
-                showError('Vui lòng nhập Email và Mật khẩu');
+                showError('Vui lòng nhập đầy đủ Email và Mật khẩu.');
                 return;
             }
 
@@ -150,31 +206,41 @@
                         name: userData.name,
                         username: userData.username
                     };
+                    
+                    // Lưu session và chuyển hướng
                     localStorage.setItem('flow_current_user', JSON.stringify(sessionData));
                     window.location.href = 'home.html';
                 } else {
-                    showError('Lỗi: Không tìm thấy hồ sơ người dùng!');
-                    btn.disabled = false;
-                    btn.innerText = 'Đăng Nhập';
+                    showError('Lỗi dữ liệu: Không tìm thấy hồ sơ người dùng.');
+                    resetBtn();
                 }
 
             } catch (error) {
                 console.error(error);
-                let msg = 'Đăng nhập thất bại!';
+                let msg = 'Đăng nhập thất bại. Vui lòng thử lại.';
+                
+                // Xử lý mã lỗi Firebase
                 if(error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-                    msg = 'Sai Email hoặc Mật khẩu!';
+                    msg = 'Thông tin đăng nhập không chính xác.';
                 } else if (error.code === 'auth/too-many-requests') {
-                    msg = 'Quá nhiều lần thử sai. Hãy đợi lát nữa!';
+                    msg = 'Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau.';
+                } else if (error.code === 'auth/invalid-email') {
+                     msg = 'Địa chỉ email không hợp lệ.';
                 }
+
                 showError(msg);
-                btn.innerText = 'Đăng Nhập';
-                btn.disabled = false;
+                resetBtn();
             }
         });
 
         function showError(msg) {
             errBox.innerText = msg;
             errBox.style.display = 'block';
+        }
+
+        function resetBtn() {
+            btn.innerText = 'Đăng Nhập';
+            btn.disabled = false;
         }
     </script>
 </body>

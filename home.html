@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard - Ví Flow</title>
+    <title>Dashboard - Ví Flow Premium</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
@@ -15,322 +15,296 @@
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     
     <style>
-        /* --- CORE STYLES --- */
-        :root { --primary: #4361EE; --accent: #4CC9F0; --bg-body: #F8F9FA; --bg-card: #FFFFFF; --text-main: #2B2D42; --text-light: #8D99AE; --success: #06D6A0; --danger: #EF476F; --warning: #FFD166; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); --radius: 20px; --sidebar-width: 260px; --shadow: 0 10px 30px rgba(67, 97, 238, 0.1); }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        
-        * { -webkit-tap-highlight-color: transparent !important; outline: none !important; }
-        *:focus { outline: none !important; box-shadow: none !important; }
-        input:focus, select:focus { border-color: var(--primary) !important; }
+        /* --- MODERN FINTECH THEME UI --- */
+        :root {
+            --primary: #3b82f6; /* Xanh hiện đại hơn */
+            --primary-dark: #2563eb;
+            --accent: #8b5cf6; /* Tím nhẹ */
+            --bg-body: #F0F2F5;
+            --bg-card: #FFFFFF;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-card: linear-gradient(120deg, #2563eb, #9333ea);
+            --radius: 24px;
+            --radius-sm: 16px;
+            --sidebar-width: 280px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            --shadow-glow: 0 20px 25px -5px rgba(59, 130, 246, 0.3);
+            --font-main: 'Outfit', sans-serif;
+        }
 
-        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-main); -webkit-tap-highlight-color: transparent; outline: none !important; }
+        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; font-size: 15px; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; }
-        
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
         /* LAYOUT */
         .app-layout { display: flex; min-height: 100vh; width: 100vw; }
         
-        .sidebar { 
-            width: var(--sidebar-width); background: var(--bg-card); padding: 30px; 
-            display: flex; flex-direction: column; border-right: 1px solid #eee; 
-            position: fixed; height: 100vh; top: 0; left: 0; z-index: 10; transition: 0.3s; 
+        /* SIDEBAR MODERN */
+        .sidebar {
+            width: var(--sidebar-width); background: var(--bg-card); padding: 40px 25px;
+            display: flex; flex-direction: column; position: fixed; height: 100vh; top: 0; left: 0;
+            border-right: 1px solid rgba(0,0,0,0.03); z-index: 50; transition: 0.3s;
         }
-        
-        .logo { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
-        .nav-links { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-        .nav-btn { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border-radius: 15px; color: var(--text-light); cursor: pointer; transition: 0.3s; font-weight: 500; user-select: none; }
-        .nav-btn:hover, .nav-btn.active { background: #EEF4FF; color: var(--primary); font-weight: 600; }
-        .nav-btn.active i { color: var(--primary); }
-        
-        .main-content { 
-            flex: 1; padding: 30px; margin-left: var(--sidebar-width); 
-            min-height: 100vh; 
+        .logo { 
+            font-size: 28px; font-weight: 800; letter-spacing: -0.5px;
+            background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 50px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none;
         }
-        
-        .mobile-header { display: none; }
-        .view-section { display: none; animation: slideIn 0.4s ease; max-width: 1200px; margin: 0 auto; padding-bottom: 100px; }
+        .nav-links { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .nav-btn {
+            display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: var(--radius-sm);
+            color: var(--text-light); cursor: pointer; transition: all 0.3s ease; font-weight: 500; font-size: 15px; user-select: none;
+        }
+        .nav-btn:hover { background: #f8fafc; color: var(--primary); transform: translateX(5px); }
+        .nav-btn.active { background: #eff6ff; color: var(--primary); font-weight: 600; }
+        .nav-btn i { font-size: 20px; width: 24px; text-align: center; transition: 0.3s; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1; margin-left: var(--sidebar-width); padding: 40px;
+            max-width: 1600px; width: 100%; transition: 0.3s; min-height: 100vh;
+        }
+        .view-section { display: none; animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); padding-bottom: 100px; }
         .view-section.active { display: block; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* COMPONENTS */
-        .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
-        .card { background: var(--bg-card); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid #f0f0f0; position: relative; }
-        
-        .balance-card { background: var(--gradient); color: white; position: relative; overflow: hidden; }
-        .balance-card::before { content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%; }
-        .balance-val { font-size: 40px; font-weight: 700; margin: 10px 0 20px; }
-        
-        .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
-        .act-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; padding: 15px; border-radius: 18px; cursor: pointer; transition: 0.2s; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); user-select: none; }
-        .act-btn:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .act-btn i { font-size: 22px; color: var(--primary); margin-bottom: 8px; background: #EEF4FF; padding: 12px; border-radius: 50%; }
-        .trans-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; }
-        
-        .t-icon { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0; font-size: 18px; }
+        /* CARDS & DASHBOARD */
+        .grid-2 { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 30px; }
+        .card {
+            background: var(--bg-card); border-radius: var(--radius); padding: 30px;
+            box-shadow: var(--shadow-md); margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.02);
+            position: relative; overflow: hidden;
+        }
+        h3 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; letter-spacing: -0.02em; }
 
-        /* WALLET STYLES */
-        .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .bank-card:hover { transform: translateY(-3px); }
-        .bank-card.add-new { background: white; color: #888; border: 2px dashed #ccc; align-items: center; justify-content: center; cursor: pointer; }
-        .bank-logo { font-size: 14px; font-weight: 700; opacity: 0.9; text-transform: uppercase; background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 5px; display: inline-block; }
-        .bank-delete { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .bank-delete:hover { background: rgba(239, 71, 111, 0.8); }
-
-        /* --- NEW PROFILE UI STYLES (MOMO STYLE) --- */
-        .pf-bg-header {
-            background: linear-gradient(180deg, #FFE6F2 0%, #FFF0F5 60%, var(--bg-body) 100%);
-            padding: 20px 20px 10px 20px;
-            border-radius: 0 0 30px 30px;
-            margin: -30px -30px 20px -30px; /* Stretch to edges */
-            text-align: center;
-            position: relative;
+        /* BALANCE CARD - VISA STYLE */
+        .balance-card {
+            background: var(--gradient-card); color: white;
+            padding: 35px; min-height: 220px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: var(--shadow-glow); position: relative; z-index: 1;
+            border-radius: var(--radius);
         }
+        .balance-card::before, .balance-card::after {
+            content: ''; position: absolute; border-radius: 50%; z-index: -1;
+        }
+        .balance-card::before { width: 300px; height: 300px; background: rgba(255,255,255,0.1); top: -100px; right: -50px; }
+        .balance-card::after { width: 200px; height: 200px; background: rgba(255,255,255,0.05); bottom: -50px; left: -50px; }
         
-        .pf-top-actions {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(255,255,255,0.6);
-            padding: 5px 10px; border-radius: 20px;
-            font-size: 12px; font-weight: 600; color: #333;
-            cursor: pointer; backdrop-filter: blur(5px);
-            display: flex; align-items: center; gap: 5px;
+        .balance-label { font-size: 14px; opacity: 0.9; font-weight: 500; }
+        .balance-val { font-size: 42px; font-weight: 800; margin: 5px 0 0; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .card-footer-info { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 20px; }
+        .card-chip { width: 40px; height: 30px; background: rgba(255,255,255,0.2); border-radius: 6px; position: relative; overflow: hidden; }
+        .card-chip::after { content:''; position: absolute; top:50%; left:0; width:100%; height:1px; background:rgba(255,255,255,0.3); }
+
+        /* ACTIONS ROW */
+        .actions-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 30px 0; }
+        .act-btn {
+            background: var(--bg-card); padding: 20px 10px; border-radius: var(--radius);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-sm); border: 1px solid transparent; user-select: none;
+        }
+        .act-btn:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: rgba(59, 130, 246, 0.1); }
+        .act-btn i {
+            font-size: 24px; color: var(--primary);
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+            background: #EFF6FF; border-radius: 18px; transition: 0.3s;
+        }
+        .act-btn:hover i { background: var(--primary); color: white; }
+        .act-btn span { font-size: 13px; font-weight: 600; color: var(--text-main); }
+
+        /* LISTS & ITEMS */
+        .trans-item {
+            display: flex; align-items: center; padding: 18px 0;
+            border-bottom: 1px solid #f1f5f9; transition: 0.2s; cursor: pointer;
+        }
+        .trans-item:last-child { border-bottom: none; }
+        .trans-item:hover { background: #f8fafc; padding-left: 10px; padding-right: 10px; border-radius: 12px; margin: 0 -10px; }
+        .t-icon {
+            width: 48px; height: 48px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 18px; font-size: 18px; flex-shrink: 0;
         }
 
-        .pf-avatar-circle {
-            width: 90px; height: 90px;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            object-fit: cover;
-            margin-top: 10px;
-            cursor: pointer;
-        }
+        /* MOBILE & RESPONSIVE */
+        .mobile-header { display: none; }
+        .bottom-nav { display: none; }
 
-        .pf-user-name { font-size: 20px; font-weight: 800; color: #333; margin-top: 10px; }
-        .pf-user-phone { font-size: 14px; color: #666; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; margin-bottom: 15px; }
-        .pf-badge { background: #06D6A0; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; display: flex; align-items: center; gap: 3px; }
-
-        .pf-promo-row {
-            display: flex; justify-content: space-between; gap: 10px;
-            background: white; border-radius: 15px;
-            padding: 10px;
-            max-width: 400px; margin: 0 auto;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-        .pf-promo-btn {
-            flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-            font-weight: 600; font-size: 13px; color: #333; cursor: pointer;
-            padding: 5px; border-radius: 10px; transition: 0.2s;
-        }
-        .pf-promo-btn:active { background: #f0f0f0; }
-
-        .pf-quick-actions {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            background: white; border-radius: 20px; padding: 20px 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            margin-bottom: 20px; text-align: center;
-        }
-        .pf-q-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s; }
-        .pf-q-item:hover { transform: translateY(-3px); }
-        .pf-q-icon { font-size: 22px; color: #666; margin-bottom: 2px; }
-        .pf-q-text { font-size: 11px; font-weight: 600; color: #333; text-align: center; }
-
-        .pf-section-title { font-size: 18px; font-weight: 700; color: #333; margin-bottom: 15px; margin-left: 5px; }
-        
-        .pf-utilities-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;
-            margin-bottom: 25px;
-        }
-        @media (min-width: 600px) { .pf-utilities-grid { grid-template-columns: repeat(3, 1fr); } }
-        
-        .pf-util-card {
-            background: white; padding: 15px; border-radius: 16px;
-            display: flex; flex-direction: column; gap: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.02); cursor: pointer; border: 1px solid transparent; transition: 0.2s;
-        }
-        .pf-util-card:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1); }
-        .pf-util-icon-box {
-            width: 40px; height: 40px; border-radius: 12px;
-            background: #EEF4FF; color: var(--primary);
-            display: flex; align-items: center; justify-content: center; font-size: 18px;
-        }
-        .pf-util-name { font-weight: 600; font-size: 13px; color: #333; }
-        
-        .pf-menu-list { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-        .pf-menu-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 18px 20px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s;
-        }
-        .pf-menu-item:hover { background: #f9f9f9; }
-        .pf-menu-item:last-child { border-bottom: none; }
-        .pf-menu-left { display: flex; align-items: center; gap: 15px; font-size: 14px; font-weight: 500; color: #333; }
-        .pf-menu-icon { color: #888; width: 20px; text-align: center; }
-        .pf-menu-right { color: #ccc; font-size: 14px; }
-        
-        /* Mobile Profile Fix */
         @media (max-width: 900px) {
-            .pf-bg-header { margin: -15px -15px 20px -15px; border-radius: 0 0 25px 25px; }
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 20px 20px 100px 20px; width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; gap: 20px; }
+            .card { padding: 20px; margin-bottom: 20px; }
+            .balance-val { font-size: 32px; }
+            .actions-row { gap: 12px; margin: 20px 0; }
+            .act-btn { padding: 15px 5px; border-radius: 16px; }
+            .act-btn i { width: 40px; height: 40px; font-size: 20px; border-radius: 14px; }
+            .act-btn span { font-size: 11px; }
+            
+            /* Mobile Header */
+            .mobile-header {
+                display: flex; align-items: center; justify-content: space-between;
+                padding: 15px 20px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px);
+                position: sticky; top: 0; z-index: 40; border-bottom: 1px solid #eee;
+            }
+
+            /* Modern Floating Bottom Nav */
+            .bottom-nav {
+                position: fixed; bottom: 20px; left: 20px; right: 20px;
+                background: rgba(255,255,255,0.95); backdrop-filter: blur(15px);
+                height: 70px; border-radius: 25px;
+                display: flex; justify-content: space-around; align-items: center;
+                box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.5);
+                z-index: 100; padding: 0 10px;
+            }
+            .b-nav-item {
+                flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+                background: none; border: none; gap: 4px; color: #94a3b8; transition: 0.3s;
+                height: 100%; cursor: pointer; user-select: none;
+            }
+            .b-nav-item i { font-size: 22px; margin-bottom: 2px; transition: 0.3s; }
+            .b-nav-item.active { color: var(--primary); }
+            .b-nav-item.active i { transform: translateY(-3px); }
+            .b-nav-middle {
+                width: 60px; height: 60px; background: var(--gradient);
+                border-radius: 20px; display: flex; align-items: center; justify-content: center;
+                color: white; font-size: 24px; transform: translateY(-20px) rotate(45deg);
+                box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4); border: 4px solid white; cursor: pointer;
+            }
+            .b-nav-middle i { transform: rotate(-45deg); }
         }
 
-        /* --- OLD STYLES CONTINUED --- */
-        .backup-codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .backup-code { background: #f0f0f0; padding: 8px; text-align: center; border-radius: 6px; font-family: monospace; letter-spacing: 2px; font-weight: bold; }
-
-        /* FORM & INPUT WITH ICON */
-        .form-input { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        /* GENERIC COMPONENTS */
+        .btn-primary {
+            background: var(--gradient); color: white; border: none;
+            padding: 14px 20px; border-radius: 12px; font-weight: 600; width: 100%;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+        .btn-primary:active { transform: scale(0.98); }
+        .btn-outline {
+            background: transparent; border: 1px solid #e2e8f0; color: var(--text-main);
+            padding: 12px; border-radius: 12px; width: 100%; font-weight: 600; cursor: pointer;
+        }
+        .form-input {
+            background: #f8fafc; border: 1px solid #e2e8f0; color: var(--text-main);
+            padding: 14px; border-radius: 12px; width: 100%; outline: none; transition: 0.3s; margin-bottom: 15px;
+        }
+        .form-input:focus { background: white; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
         .input-group { position: relative; width: 100%; margin-bottom: 15px; }
         .input-group .form-input { margin-bottom: 0; padding-right: 40px; }
         .input-icon-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 18px; cursor: pointer; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; }
-        .input-icon-btn:hover { background: #EEF4FF; }
+        
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); padding: 35px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+        .modal-overlay.open .modal-box { transform: scale(1); }
 
-        .btn-primary { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 600; cursor: pointer; }
-        .btn-outline { width: 100%; padding: 10px; background: white; color: var(--text-main); border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 13px; margin-top: 5px; }
-        .btn-danger { background: #FFE5E5; color: var(--danger); border: none; padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+        /* OTHER STYLES (Kept for compatibility) */
+        .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
+        .bank-card.add-new { background: white; color: #888; border: 2px dashed #ccc; align-items: center; justify-content: center; cursor: pointer; }
+        .bank-logo { background: rgba(0,0,0,0.2); padding: 5px 10px; border-radius: 5px; }
+        .bank-delete { position: absolute; top: 15px; right: 15px; background: rgba(255,255,255,0.2); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
-        /* 2FA LOCK SCREEN */
+        /* PROFILE */
+        .pf-bg-header { background: linear-gradient(180deg, #EFF6FF 0%, #F0F2F5 100%); padding: 20px 20px 10px 20px; border-radius: 0 0 30px 30px; margin: -30px -30px 20px -30px; text-align: center; position: relative; }
+        .pf-avatar-circle { width: 90px; height: 90px; border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.08); object-fit: cover; margin-top: 10px; cursor: pointer; }
+        .pf-top-actions { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.6); padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .pf-user-name { font-size: 20px; font-weight: 800; color: #333; margin-top: 10px; }
+        .pf-user-phone { font-size: 14px; color: #666; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 5px; margin-bottom: 15px; }
+        .pf-badge { background: #06D6A0; color: white; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+        .pf-promo-row { display: flex; justify-content: space-between; gap: 10px; background: white; border-radius: 15px; padding: 10px; max-width: 400px; margin: 0 auto; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .pf-promo-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 13px; color: #333; cursor: pointer; padding: 5px; border-radius: 10px; }
+        .pf-quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); background: white; border-radius: 20px; padding: 20px 10px; margin-bottom: 20px; text-align: center; border: 1px solid #eee; }
+        .pf-q-item { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; }
+        .pf-q-icon { font-size: 22px; color: #666; }
+        .pf-q-text { font-size: 11px; font-weight: 600; color: #333; }
+        .pf-section-title { font-size: 18px; font-weight: 700; color: #333; margin-bottom: 15px; margin-left: 5px; }
+        .pf-utilities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        @media (min-width: 600px) { .pf-utilities-grid { grid-template-columns: repeat(3, 1fr); } }
+        .pf-util-card { background: white; padding: 15px; border-radius: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
+        .pf-util-card:hover { border-color: var(--primary); box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1); }
+        .pf-util-icon-box { width: 40px; height: 40px; border-radius: 12px; background: #EEF4FF; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .pf-util-name { font-weight: 600; font-size: 13px; color: #333; }
+        .pf-menu-list { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .pf-menu-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
+        .pf-menu-left { display: flex; align-items: center; gap: 15px; font-size: 14px; font-weight: 500; color: #333; }
+        .pf-menu-icon { color: #888; width: 20px; text-align: center; }
+
+        /* CHART */
+        .bar-chart-3-col { display: flex; justify-content: space-around; align-items: flex-end; height: 200px; padding-top: 30px; }
+        .b3-col { width: 25%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+        .b3-bar { width: 100%; border-radius: 8px 8px 0 0; min-height: 5px; opacity: 0.9; transition: height 0.8s; }
+        .b3-val { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+        .b3-label { font-size: 13px; color: #888; margin-top: 10px; font-weight: 600; }
+        #chart-bar-inc { background: var(--success); }
+        #chart-bar-exp { background: var(--danger); }
+        #chart-bar-fund { background: var(--warning); }
+
+        /* SECURITY & OVERLAYS */
         .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px; }
         .auth-overlay.active { display: flex; }
         .auth-box { width: 100%; max-width: 400px; text-align: center; }
+        
+        .toast-notify { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: white; padding: 15px 20px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; z-index: 4000; transition: 0.5s; font-size: 13px; font-weight: 600; border: 1px solid #eee; min-width: 300px; }
+        .toast-notify.show { transform: translateX(-50%) translateY(0); }
+        .toast-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
 
-        /* SECURITY CHECK MODAL STYLES */
-        .sec-step-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
-        .sec-step-item:last-child { border-bottom: none; }
-        .sec-step-label { display: flex; align-items: center; gap: 10px; }
-        .sec-step-status { font-weight: 600; font-size: 12px; }
-        .sec-score-box { text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 15px; }
-        .score-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
-        .recommendation { color: var(--danger); font-size: 13px; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        #transfer-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 3000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .success-icon { width: 80px; height: 80px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #10b981; margin-bottom: 20px; animation: pop 0.5s ease; }
+        @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* CHART STYLES */
-        .bar-chart-3-col { display: flex; justify-content: space-around; align-items: flex-end; height: 200px; padding-top: 30px; }
-        .b3-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; width: 30%; position: relative; }
-        .b3-bar { width: 40px; border-radius: 10px 10px 0 0; transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); min-height: 5px; position: relative; }
-        .b3-val { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
-        .b3-label { font-size: 13px; color: #888; margin-top: 10px; font-weight: 600; }
-        #chart-bar-inc { background: var(--success); box-shadow: 0 4px 10px rgba(0, 214, 160, 0.3); }
-        #chart-bar-exp { background: var(--danger); box-shadow: 0 4px 10px rgba(239, 71, 111, 0.3); }
-        #chart-bar-fund { background: var(--warning); box-shadow: 0 4px 10px rgba(255, 209, 102, 0.3); }
-
-        /* SCANNER STYLE */
-        #qr-reader { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 10px; min-height: 250px; background: #000; }
-        #qr-reader video { object-fit: cover; border-radius: 15px; width: 100%; height: 100%; }
-
-        /* --- FLOW AI CHATBOT STYLES --- */
+        /* FLOW AI CHAT */
         .flow-ai-fab { position: fixed; bottom: 100px; right: 20px; width: 55px; height: 55px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4); cursor: pointer; z-index: 1500; transition: 0.3s; animation: float 3s ease-in-out infinite; }
         .flow-ai-fab:hover { transform: scale(1.1); }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-
         .chat-window { position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 1500; display: none; flex-direction: column; overflow: hidden; border: 1px solid #eee; }
         .chat-window.open { display: flex; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
         .chat-header { background: var(--gradient); padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
         .chat-body { flex: 1; padding: 15px; overflow-y: auto; background: #F8F9FA; display: flex; flex-direction: column; gap: 10px; }
         .chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 15px; font-size: 13px; line-height: 1.4; word-wrap: break-word; }
         .msg-bot { background: white; border: 1px solid #eee; align-self: flex-start; border-bottom-left-radius: 2px; }
         .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-        
         .chat-options { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
         .chat-opt-btn { font-size: 11px; background: white; border: 1px solid var(--primary); color: var(--primary); padding: 5px 10px; border-radius: 20px; cursor: pointer; transition: 0.2s; }
         .chat-opt-btn:hover { background: var(--primary); color: white; }
 
-        /* SUCCESS OVERLAY */
-        #transfer-success { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 3000; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .success-icon { width: 80px; height: 80px; background: #d1fae5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #10b981; margin-bottom: 20px; animation: pop 0.5s ease; }
-        @keyframes pop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        
-        /* TOAST NOTIFICATION */
-        .toast-notify { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: white; padding: 15px 20px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 15px; z-index: 4000; transition: 0.5s; font-size: 13px; font-weight: 600; border: 1px solid #eee; min-width: 300px; }
-        .toast-notify.show { transform: translateX(-50%) translateY(0); }
-        .toast-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; }
-
-        /* --- FACEID UI STYLES --- */
-        .face-scan-container {
-            position: relative; margin: 0 auto 20px; overflow: hidden; background: #000;
-            display: flex; align-items: center; justify-content: center;
-            border: 4px dashed #666; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
+        /* SCANNER & FACEID */
+        #qr-reader { width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 10px; min-height: 250px; background: #000; }
+        #qr-reader video { object-fit: cover; border-radius: 15px; width: 100%; height: 100%; }
+        .face-scan-container { position: relative; margin: 0 auto 20px; overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; border: 4px dashed #666; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .face-scan-container video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); opacity: 0.6; transition: opacity 0.3s; }
         .face-scan-container.face-detected { border: 4px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
         .face-scan-container.face-detected video { opacity: 1; }
-
-        @media (min-width: 901px) {
-            .face-scan-container { width: 480px; height: 360px; border-radius: 20px; }
-            .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--success); box-shadow: 0 0 15px var(--success); animation: scanMove 2s linear infinite; opacity: 0; z-index: 10; }
-            .face-scan-container.face-detected .scan-line { opacity: 1; }
-            @keyframes scanMove { 0% { top:0; opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { top:100%; opacity:0; } }
-            .scan-ring { display: none; }
-        }
-
-        @media (max-width: 900px) {
-            .face-scan-container { width: 260px; height: 260px; border-radius: 50%; }
-            .scan-ring { position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--success); border-left-color: var(--success); animation: spin 2s linear infinite; z-index: 10; opacity: 0; }
-            .face-scan-container.face-detected .scan-ring { opacity: 1; }
-            .scan-line { display: none; }
-            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        }
-
+        @media (min-width: 901px) { .face-scan-container { width: 480px; height: 360px; border-radius: 20px; } .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--success); box-shadow: 0 0 15px var(--success); animation: scanMove 2s linear infinite; opacity: 0; z-index: 10; } .face-scan-container.face-detected .scan-line { opacity: 1; } @keyframes scanMove { 0% { top:0; opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { top:100%; opacity:0; } } .scan-ring { display: none; } }
+        @media (max-width: 900px) { .face-scan-container { width: 260px; height: 260px; border-radius: 50%; } .scan-ring { position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px; border-radius: 50%; border: 4px solid transparent; border-top-color: var(--success); border-left-color: var(--success); animation: spin 2s linear infinite; z-index: 10; opacity: 0; } .face-scan-container.face-detected .scan-ring { opacity: 1; } .scan-line { display: none; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } }
         .face-instruction { text-align: center; margin-bottom: 20px; color: #555; font-size: 14px; background: #f0f0f0; padding: 8px 15px; border-radius: 20px; display: inline-block; }
         #faceid-lock-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; }
 
-        /* RESPONSIVE & MOBILE FIX */
-        .bottom-nav { display: none; }
-        
-        @media (max-width: 900px) { 
-            .sidebar { display: none; } 
-            .main-content { margin-left: 0; padding: 15px 15px 100px 15px; width: 100%; } 
-            .grid-2 { grid-template-columns: 1fr; } 
-            .app-layout { display: block; } 
-            
-            .mobile-header { 
-                display: flex; align-items: center; justify-content: space-between; 
-                padding: 15px 20px; background: white; position: sticky; top: 0; 
-                z-index: 50; box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
-            } 
-            
-            .bottom-nav { 
-                position: fixed; bottom: 0; left: 0; width: 100%; 
-                background: white; border-top: 1px solid #eee; 
-                display: flex; justify-content: space-between; 
-                padding: 12px 10px 20px; 
-                z-index: 100;
-                height: 80px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
-                overflow: visible; 
-            } 
-            .b-nav-item { 
-                display: flex; flex-direction: column; align-items: center; justify-content: center;
-                color: #aaa; font-size: 12px; gap: 6px; border:none; background:none; 
-                flex: 1; height: 100%; cursor: pointer; user-select: none;
-            } 
-            .b-nav-item i { font-size: 26px; transition: 0.2s; margin-bottom: 2px; }
-            .b-nav-item.active { color: var(--primary); font-weight: 600; }
-            .b-nav-item.active i { transform: translateY(-3px); }
-
-            .b-nav-middle {
-                width: 60px; height: 60px;
-                background: var(--gradient);
-                border-radius: 50%;
-                display: flex; align-items: center; justify-content: center;
-                color: white; font-size: 22px;
-                transform: translateY(-25px); 
-                box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
-                border: 5px solid white;
-                cursor: pointer;
-                flex-shrink: 0; 
-                margin: 0 10px;
-            }
-        }
-
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
-        .modal-overlay.open { opacity: 1; pointer-events: auto; }
-        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 25px; padding: 25px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
-        .modal-overlay.open .modal-box { transform: scale(1); }
-        
+        /* Popup */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
         .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
-
-        #modal-scan-qr { z-index: 2000 !important; }
+        
+        .sec-step-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
+        .sec-score-box { text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 15px; }
+        .score-circle { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 10px; box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3); }
+        .recommendation { color: var(--danger); font-size: 13px; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .backup-codes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .backup-code { background: #f0f0f0; padding: 8px; text-align: center; border-radius: 6px; font-family: monospace; letter-spacing: 2px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -410,35 +384,100 @@
         </div>
 
         <div id="home" class="view-section active">
+            <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="font-size: 24px;">Tổng quan</h2>
+                    <div style="color: var(--text-light); font-size: 14px;">Chào mừng trở lại!</div>
+                </div>
+                <div style="display:flex; gap:10px">
+                    <div style="width:40px; height:40px; background:white; border-radius:12px; display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid #eee"><i class="fa-regular fa-bell"></i></div>
+                </div>
+            </div>
+
             <div class="grid-2">
                 <div>
                     <div class="balance-card card">
-                        <div style="opacity: 0.8;">Xin chào, <span id="home-name">...</span></div>
-                        <div class="balance-val" id="total-balance">0 đ</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <div class="balance-label"><i class="fa-solid fa-wallet"></i> Tổng tài sản</div>
+                                <div class="balance-val" id="total-balance">0 đ</div>
+                                <div style="font-size: 13px; opacity: 0.8; margin-top: 5px;">**** **** **** 8888</div>
+                            </div>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" style="height: 20px; opacity: 0.8; filter: brightness(100); mix-blend-mode: overlay;">
+                        </div>
+                        
+                        <div class="card-footer-info">
+                            <div style="opacity: 0.9;">
+                                <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Chủ thẻ</div>
+                                <div style="font-weight: 600; font-size: 16px; margin-top:2px;" id="home-name">...</div>
+                            </div>
+                            <div class="card-chip"></div>
+                        </div>
                     </div>
+
+                    <div style="margin-bottom: 15px; font-weight: 600; font-size: 16px;">Tiện ích nhanh</div>
                     <div class="actions-row">
-                        <div class="act-btn" onclick="app.openModal('add_trans')"><i class="fa-solid fa-plus"></i><span>Thêm GD</span></div>
-                        <div class="act-btn" onclick="app.openModal('transfer')"><i class="fa-solid fa-money-bill-transfer"></i><span>Chuyển tiền</span></div>
-                        <div class="act-btn" onclick="document.getElementById('bill-scan-inp').click()"><i class="fa-solid fa-expand"></i><span>Quét Bill</span></div>
-                        <input type="file" id="bill-scan-inp" hidden accept="image/*" onchange="app.processBill(this)">
-                        <div class="act-btn" onclick="app.nav('groups')"><i class="fa-solid fa-users-viewfinder"></i><span>Quỹ Nhóm</span></div>
+                        <div class="act-btn" onclick="app.openModal('transfer')">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Chuyển tiền</span>
+                        </div>
+                        <div class="act-btn" onclick="app.openModal('add_trans')">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <span>Thêm GD</span>
+                        </div>
+                        <div class="act-btn" onclick="document.getElementById('bill-scan-inp').click()">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Quét Bill</span>
+                            <input type="file" id="bill-scan-inp" hidden accept="image/*" onchange="app.processBill(this)">
+                        </div>
+                        <div class="act-btn" onclick="app.nav('groups')">
+                            <i class="fa-solid fa-users"></i>
+                            <span>Quỹ Nhóm</span>
+                        </div>
                     </div>
+
                     <div class="card">
-                        <h3>Giao dịch gần đây</h3>
-                        <div id="recent-list" style="margin-top: 15px;">
-                            <div style="text-align:center; color:#999; padding:20px;">Đang tải dữ liệu...</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <h3>Giao dịch gần đây</h3>
+                            <span style="font-size: 13px; color: var(--primary); font-weight: 600; cursor: pointer;">Xem tất cả</span>
+                        </div>
+                        <div id="recent-list">
+                            <div style="text-align:center; color:#999; padding:40px;">
+                                <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px; color: var(--primary)"></i>
+                                <div>Đang tải dữ liệu...</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div>
                     <div class="card">
                         <h3>Ngân sách tháng</h3>
-                        <div style="margin: 15px 0;">
-                            <div style="display:flex;justify-content:space-between; margin-bottom:5px; font-size:13px">
-                                <span>Tiêu dùng</span><b id="budget-percent">0%</b>
+                        <div style="text-align: center; margin: 20px 0;">
+                            <div style="width: 120px; height: 120px; border-radius: 50%; border: 10px solid #f1f5f9; border-top-color: var(--primary); border-left-color: var(--accent); margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <span style="font-size: 24px; font-weight: 700;" id="budget-percent">0%</span>
+                                <span style="font-size: 11px; color: #888;">Đã dùng</span>
                             </div>
-                            <div style="height:8px; background:#eee; border-radius:4px; overflow:hidden;">
-                                <div id="budget-bar" style="width:0%; height:100%; background:var(--primary);"></div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin-top: 10px;">
+                            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom: 5px;">
+                                <span style="color:#666">Tiến độ chi tiêu</span>
+                                <span style="font-weight:600; color:var(--primary)">An toàn</span>
+                            </div>
+                            <div style="height:6px; background:#e2e8f0; border-radius:4px; overflow:hidden;">
+                                <div id="budget-bar" style="width:0%; height:100%; background:var(--gradient); border-radius:4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="background: linear-gradient(135deg, #111 0%, #333 100%); color: white; border:none;">
+                        <div style="display:flex; gap:15px; align-items:center;">
+                            <div style="width:40px; height:40px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                                <i class="fa-solid fa-crown" style="color: #FFD700;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;">Nâng cấp Premium</div>
+                                <div style="font-size:12px; opacity:0.7;">Mở khóa giới hạn chi tiêu</div>
                             </div>
                         </div>
                     </div>
@@ -447,22 +486,24 @@
         </div>
 
         <div id="groups" class="view-section">
-            <div class="group-header">
+            <div class="group-header" style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center">
                 <h2>Quỹ Nhóm & Gia Đình</h2>
-                <button class="btn-primary" style="width:auto; padding:8px 15px; font-size:13px" onclick="app.openModal('create_group')"><i class="fa-solid fa-plus"></i> Tạo nhóm</button>
+                <button class="btn-primary" style="width:auto; padding:10px 20px; font-size:13px" onclick="app.openModal('create_group')"><i class="fa-solid fa-plus"></i> Tạo nhóm</button>
             </div>
             <div id="group-dashboard" style="display:none;">
-                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); color:#333">
-                    <div style="opacity: 0.7; color:white" id="group-name-display">Tên Nhóm</div>
+                <div class="balance-card card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); color:#333; box-shadow: 0 10px 30px rgba(255, 154, 158, 0.4);">
+                    <div style="opacity: 0.7; color:white; font-size: 14px;" id="group-name-display">Tên Nhóm</div>
                     <div class="balance-val" id="group-balance" style="color:white">0 đ</div>
-                    <button style="background:rgba(255,255,255,0.3); border:none; color:white; padding:8px 20px; border-radius:15px; cursor:pointer; font-weight:600" onclick="app.openModal('group_contribute')">
-                        <i class="fa-solid fa-circle-dollar-to-slot"></i> Đóng quỹ ngay
-                    </button>
+                    <div style="margin-top:20px">
+                        <button style="background:rgba(255,255,255,0.3); border:none; color:white; padding:8px 20px; border-radius:15px; cursor:pointer; font-weight:600" onclick="app.openModal('group_contribute')">
+                            <i class="fa-solid fa-circle-dollar-to-slot"></i> Đóng quỹ ngay
+                        </button>
+                    </div>
                 </div>
                 <div class="grid-2">
                     <div class="card">
                         <h3>Thành viên (<span id="member-count">0</span>)</h3>
-                        <div id="group-members" class="member-list"></div>
+                        <div id="group-members" class="member-list" style="display:flex; flex-direction:column; gap:10px"></div>
                         <button class="btn-outline" style="width:100%; margin-top:15px" onclick="app.openModal('invite_member')">Mời thành viên</button>
                     </div>
                     <div class="card">
@@ -658,7 +699,7 @@
         <button class="b-nav-item" onclick="app.nav('wallet')"><i class="fa-solid fa-wallet"></i>Ví</button>
         
         <div class="b-nav-middle" onclick="app.openModal('transfer')">
-            <i class="fa-solid fa-money-bill-transfer"></i>
+            <i class="fa-solid fa-plus"></i>
         </div>
 
         <button class="b-nav-item" onclick="app.nav('groups')"><i class="fa-solid fa-users"></i>Nhóm</button>
@@ -1079,7 +1120,7 @@
                     const icon = isInc ? 'fa-arrow-down' : 'fa-arrow-up'; 
                     const sign = isInc ? '+' : '-';
                     
-                    list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${color}"><i class="fa-solid ${icon}" style="color:white"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${color}">${sign}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
+                    list.innerHTML+=`<div class="trans-item"><div class="t-icon" style="background:${isInc?'#DCFCE7':'#FEE2E2'}"><i class="fa-solid ${icon}" style="color:${color}"></i></div><div style="flex:1"><div style="font-weight:600">${t.desc}</div><div style="font-size:12px;color:#888">${t.date}</div></div><div style="font-weight:700;color:${color}">${sign}${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`;
                 }); 
                 
                 const bal=inc-exp; const fmt=new Intl.NumberFormat('vi-VN').format; 
@@ -1094,7 +1135,7 @@
         async createGroup() { const name = document.getElementById('group-name-inp').value; if(!name) return this.showPopup('error', 'Thiếu tên'); try { const ref = await addDoc(collection(db, "groups"), { name, adminId: this.currentUser.uid, balance: 0, members: [{uid:this.currentUser.uid, name:this.userData.name, role:'admin', status:'active'}] }); await updateDoc(doc(db, "users", this.currentUser.uid), { groupId: ref.id }); this.closeModal(); this.showPopup('success', 'Thành công'); setTimeout(()=>location.reload(),1000); } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async inviteMember() { const email = document.getElementById('invite-email').value; const q = query(collection(db, "users"), where("email", "==", email)); const snap = await getDocs(q); if(snap.empty) return this.showPopup('error', 'Không tìm thấy'); const target = snap.docs[0]; if(target.data().groupId) return this.showPopup('error', 'Đã ở nhóm khác'); try { let newMems = [...this.currentGroup.members, {uid:target.id, name:target.data().name, role:'member', status:'active'}]; await updateDoc(doc(db, "groups", this.currentGroup.id), {members: newMems}); await updateDoc(doc(db, "users", target.id), {groupId: this.currentGroup.id}); this.closeModal(); this.showPopup('success', 'Đã mời'); } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async contributeFund() { const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value; if(!amt) return; try { await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() }); await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt }); this.closeModal(); this.showPopup('success', 'Đã đóng'); } catch(e) {} },
-        renderGroupUI() { document.getElementById('group-name-display').innerText = this.currentGroup.name; document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ'; document.getElementById('member-count').innerText = this.currentGroup.members.length; const list = document.getElementById('group-members'); list.innerHTML = ''; this.currentGroup.members.forEach(m => { let badge = m.role==='admin' ? '<span class="role-badge role-admin">Admin</span>' : '<span class="role-badge role-member">Member</span>'; list.innerHTML += `<div class="member-item"><div class="member-info"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`; }); this.loadGroupHistory(); },
+        renderGroupUI() { document.getElementById('group-name-display').innerText = this.currentGroup.name; document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ'; document.getElementById('member-count').innerText = this.currentGroup.members.length; const list = document.getElementById('group-members'); list.innerHTML = ''; this.currentGroup.members.forEach(m => { let badge = m.role==='admin' ? '<span class="role-badge role-admin" style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;font-size:10px">Admin</span>' : '<span class="role-badge role-member" style="background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:10px;font-size:10px">Member</span>'; list.innerHTML += `<div class="member-item"><div class="member-info" style="display:flex;gap:10px;align-items:center"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`; }); this.loadGroupHistory(); },
         loadGroupHistory() { onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => { const div = document.getElementById('group-history'); div.innerHTML=''; let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp); this.groupTransactions = txs; txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); }); },
         togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; } },
         async savePhone(btn) { const val = document.getElementById('pf-phone-input').value.trim(); if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi'); try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); } },
@@ -1145,7 +1186,7 @@
             sessionStorage.removeItem('isFaceVerified');
             signOut(auth).then(()=>window.location.href='dangnhap.html'); 
         },
-        nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
+        nav(id) { document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('.nav-btn, .b-nav-item').forEach(e=>e.classList.remove('active')); event.currentTarget.classList.add('active'); },
         openModal(id) { document.getElementById('modal-'+id).classList.add('open'); },
         closeModal() { document.querySelectorAll('.modal-overlay').forEach(e=>e.classList.remove('open')); },
         setType(type, btn) { this.tmpType=type; btn.parentElement.querySelectorAll('button').forEach(b=>{b.style.background='#eee';b.style.color='#333'}); btn.style.background=type==='exp'?'#EF476F':'#06D6A0'; btn.style.color='white'; }

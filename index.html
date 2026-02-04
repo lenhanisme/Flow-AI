@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- CORE VARIABLES --- */
         :root { 
             --primary: #2563EB; 
             --primary-dark: #1E40AF;
@@ -26,6 +27,7 @@
         
         body { 
             background-color: #F9FAFB;
+            /* Nền Dot Grid (Lưới chấm) */
             background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
             background-size: 24px 24px;
             color: var(--text-main);
@@ -53,20 +55,54 @@
         .nav-links a:hover { color: var(--primary); }
         .auth-buttons { display: flex; gap: 12px; }
 
-        /* Mobile Menu */
+        /* Nút Hamburger (Chỉ hiện trên Mobile) */
         .mobile-toggle { display: none; font-size: 24px; color: var(--text-main); cursor: pointer; z-index: 1002; padding: 5px; }
-        .mobile-menu {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: white; z-index: 1001;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px;
-            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-        }
-        .mobile-menu.active { transform: translateX(0); opacity: 1; }
-        .mobile-menu a { font-size: 20px; font-weight: 600; color: var(--text-main); text-decoration: none; }
-        .mobile-menu .btn { width: 80%; text-align: center; padding: 14px; }
 
-        /* Buttons */
+        /* --- SIDEBAR MENU (MỚI) --- */
+        
+        /* 1. Màn đen mờ che phía sau */
+        .menu-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            opacity: 0; visibility: hidden;
+            transition: 0.3s;
+        }
+        .menu-backdrop.active { opacity: 1; visibility: visible; }
+
+        /* 2. Menu trượt từ phải sang */
+        .mobile-menu {
+            position: fixed; top: 0; right: 0; /* Căn phải */
+            width: 280px; height: 100vh;
+            background: white; 
+            z-index: 1002;
+            display: flex; flex-direction: column; 
+            padding: 30px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transform: translateX(100%); /* Mặc định ẩn sang phải */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.active { transform: translateX(0); }
+
+        /* 3. Nút X đóng menu */
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            font-size: 26px; color: #9CA3AF;
+            cursor: pointer; padding: 5px;
+            transition: 0.2s;
+        }
+        .close-btn:hover { color: var(--danger); transform: rotate(90deg); }
+
+        /* Link trong menu sidebar */
+        .mobile-menu a.menu-link { 
+            font-size: 16px; font-weight: 600; color: var(--text-main); 
+            text-decoration: none; margin-bottom: 20px; display: block;
+            border-bottom: 1px solid #f3f4f6; padding-bottom: 12px;
+        }
+        .mobile-menu a.menu-link:hover { color: var(--primary); padding-left: 5px; }
+
+
+        /* --- BUTTONS --- */
         .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; text-decoration: none; display: inline-block; }
         .btn-outline { border: 1px solid var(--border); background: white; color: var(--text-main); }
         .btn-outline:hover { background: #F3F4F6; transform: translateY(-1px); }
@@ -173,8 +209,8 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links, .auth-buttons { display: none; } /* Hide Desktop Menu */
-            .mobile-toggle { display: block; } /* Show Hamburger */
+            .nav-links, .auth-buttons { display: none; } /* Ẩn menu PC */
+            .mobile-toggle { display: block; } /* Hiện nút Hamburger */
             
             .hero { flex-direction: column; padding: 40px 20px; text-align: center; }
             .hero-content { margin-bottom: 40px; }
@@ -213,11 +249,20 @@
         </div>
     </nav>
 
+    <div class="menu-backdrop" onclick="closeMenu()"></div>
+
     <div class="mobile-menu">
-        <a href="#features" class="menu-link">Tính năng</a>
-        <a href="#family" class="menu-link">Gia đình & Nhóm</a>
-        <a href="#about" class="menu-link">Về chúng tôi</a>
-        <div id="mobile-auth" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+        <div class="close-btn" onclick="closeMenu()">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <a href="#features" class="menu-link">Tính năng</a>
+            <a href="#family" class="menu-link">Gia đình & Nhóm</a>
+            <a href="#about" class="menu-link">Về chúng tôi</a>
+        </div>
+
+        <div id="mobile-auth" style="margin-top: auto; width: 100%; display: flex; flex-direction: column; gap: 15px;">
             </div>
     </div>
 
@@ -385,35 +430,36 @@
     </footer>
 
     <script>
-        // 1. Logic Mobile Menu
-        const mobileToggle = document.querySelector('.mobile-toggle');
+        // --- 1. LOGIC MENU SIDEBAR ---
         const mobileMenu = document.querySelector('.mobile-menu');
+        const backdrop = document.querySelector('.menu-backdrop');
         const menuLinks = document.querySelectorAll('.menu-link');
-        const icon = mobileToggle.querySelector('i');
+        const mobileToggle = document.querySelector('.mobile-toggle');
 
-        function toggleMenu() {
-            mobileMenu.classList.toggle('active');
-            if(mobileMenu.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-                document.body.style.overflow = 'hidden';
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = 'auto';
-            }
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            backdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        mobileToggle.addEventListener('click', toggleMenu);
-        menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
 
-        // 2. Logic Kiểm tra đăng nhập (Auth Check)
+        function closeMenu() {
+            mobileMenu.classList.remove('active');
+            backdrop.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        mobileToggle.addEventListener('click', openMenu);
+        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+
+        // --- 2. LOGIC KIỂM TRA ĐĂNG NHẬP ---
         const user = localStorage.getItem('flow_current_user');
         const desktopAuth = document.getElementById('desktop-auth');
         const mobileAuth = document.getElementById('mobile-auth');
         const heroCta = document.getElementById('hero-cta');
 
         if (user) {
-            // Nút Dashboard HTML
+            // ĐÃ ĐĂNG NHẬP: Hiển thị nút vào Dashboard
             const btnDashboard = `
                 <a href="home.html" class="btn btn-primary">
                     <i class="fa-solid fa-rocket" style="margin-right:5px"></i> Vào Dashboard
@@ -425,20 +471,18 @@
                 </a>
             `;
 
-            // Thay thế nút
             desktopAuth.innerHTML = btnDashboard;
             mobileAuth.innerHTML = btnDashboard;
             heroCta.innerHTML = btnHero;
         } else {
-            // Nút Mặc định (Chưa đăng nhập)
+            // CHƯA ĐĂNG NHẬP: Hiển thị nút Login/Register
             const defaultBtns = `
                 <a href="dangnhap.html" class="btn btn-outline">Đăng nhập</a>
                 <a href="dangky.html" class="btn btn-primary">Đăng ký ngay</a>
             `;
-            // (Mặc định đã có trong HTML, nhưng thêm vào mobile nếu cần)
+            // Desktop đã có sẵn trong HTML tĩnh, chỉ cần thêm vào Mobile
             mobileAuth.innerHTML = defaultBtns;
         }
     </script>
 </body>
 </html>
-

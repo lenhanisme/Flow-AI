@@ -6,39 +6,196 @@
     <title>Đăng Ký - Ví Flow</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* Dùng chung CSS với identify.html */
-        :root { --primary: #4361EE; --bg: #F0F4F8; --text: #2B2D42; --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); }
+        /* Cập nhật CSS để giao diện hiện đại hơn, khác biệt với gốc */
+        :root { 
+            --primary: #4361EE; 
+            --accent: #4CC9F0;
+            --bg: #F0F4F8; 
+            --text: #2B2D42; 
+            --text-light: #6c757d;
+            --gradient: linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); 
+            --shadow: 0 10px 30px rgba(67, 97, 238, 0.15);
+            --error: #EF476F;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background-color: var(--bg); height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .auth-container { background: white; width: 100%; max-width: 420px; padding: 40px; border-radius: 30px; box-shadow: 0 20px 60px rgba(67, 97, 238, 0.1); text-align: center; }
-        .logo { font-size: 28px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 10px; }
-        h2 { color: var(--text); margin-bottom: 5px; font-size: 22px; }
-        p.sub-text { color: #888; font-size: 14px; margin-bottom: 25px; }
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-label { font-size: 13px; font-weight: 600; margin-bottom: 5px; display: block; color: #555; margin-left: 5px; }
-        .input-wrapper { position: relative; }
-        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #aaa; }
-        input { width: 100%; padding: 14px 14px 14px 45px; border: 2px solid #f0f0f0; border-radius: 15px; font-size: 15px; outline: none; transition: 0.3s; background: #f9f9f9; }
-        input:focus { border-color: var(--primary); background: white; }
-        button { width: 100%; padding: 16px; background: var(--gradient); color: white; border: none; border-radius: 50px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-        button:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(67, 97, 238, 0.4); }
-        button:disabled { opacity: 0.7; cursor: not-allowed; }
-        .link { margin-top: 20px; font-size: 14px; color: #666; }
-        .link a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        .error-msg { background: #FFF5F5; color: #EF476F; padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 20px; display: none; border: 1px solid #FFCDD2; }
+        body { 
+            background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(67,97,238,0.05)" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,197.3C960,171,1056,117,1152,117.3C1248,117,1344,171,1392,197.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat; 
+            background-size: cover;
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+            overflow: hidden;
+        }
+        .auth-container { 
+            background: white; 
+            width: 100%; 
+            max-width: 450px; 
+            padding: 50px 40px; 
+            border-radius: 40px; 
+            box-shadow: var(--shadow); 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        .auth-container::before { 
+            content: ''; 
+            position: absolute; 
+            top: -50px; 
+            left: -50px; 
+            width: 200px; 
+            height: 200px; 
+            background: radial-gradient(circle, rgba(67,97,238,0.2), transparent); 
+            border-radius: 50%;
+        }
+        .auth-container::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -50px; 
+            right: -50px; 
+            width: 200px; 
+            height: 200px; 
+            background: radial-gradient(circle, rgba(76,201,240,0.2), transparent); 
+            border-radius: 50%;
+        }
+        .logo { 
+            font-size: 32px; 
+            font-weight: 800; 
+            background: var(--gradient); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 15px; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            position: relative; 
+            z-index: 1;
+        }
+        h2 { 
+            color: var(--text); 
+            margin-bottom: 8px; 
+            font-size: 24px; 
+            position: relative; 
+            z-index: 1;
+        }
+        p.sub-text { 
+            color: var(--text-light); 
+            font-size: 15px; 
+            margin-bottom: 30px; 
+            position: relative; 
+            z-index: 1;
+        }
+        .form-group { 
+            margin-bottom: 20px; 
+            text-align: left; 
+            position: relative; 
+            z-index: 1;
+        }
+        .form-label { 
+            font-size: 14px; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            display: block; 
+            color: var(--text); 
+            margin-left: 5px; 
+        }
+        .input-wrapper { 
+            position: relative; 
+        }
+        .input-wrapper i { 
+            position: absolute; 
+            left: 20px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--text-light); 
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        input { 
+            width: 100%; 
+            padding: 16px 16px 16px 50px; 
+            border: 2px solid rgba(67,97,238,0.1); 
+            border-radius: 20px; 
+            font-size: 15px; 
+            outline: none; 
+            transition: all 0.3s ease; 
+            background: #f9faff; 
+        }
+        input:focus { 
+            border-color: var(--primary); 
+            background: white; 
+            box-shadow: 0 0 0 4px rgba(67,97,238,0.1);
+        }
+        input:focus + i { 
+            color: var(--primary); 
+        }
+        button { 
+            width: 100%; 
+            padding: 18px; 
+            background: var(--gradient); 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            margin-top: 15px; 
+            box-shadow: 0 4px 15px rgba(67,97,238,0.3);
+            position: relative; 
+            z-index: 1;
+        }
+        button:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(67,97,238,0.4); 
+        }
+        button:disabled { 
+            opacity: 0.7; 
+            cursor: not-allowed; 
+            transform: none;
+        }
+        .link { 
+            margin-top: 25px; 
+            font-size: 14px; 
+            color: var(--text-light); 
+            position: relative; 
+            z-index: 1;
+        }
+        .link a { 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-weight: 600; 
+            transition: color 0.3s;
+        }
+        .link a:hover { 
+            color: var(--accent); 
+        }
+        .error-msg { 
+            background: rgba(239,71,111,0.1); 
+            color: var(--error); 
+            padding: 12px; 
+            border-radius: 15px; 
+            font-size: 13px; 
+            margin-bottom: 25px; 
+            display: none; 
+            border: 1px solid rgba(239,71,111,0.3); 
+            position: relative; 
+            z-index: 1;
+            animation: shake 0.5s;
+        }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } }
     </style>
 </head>
 <body>
-
     <div class="auth-container">
         <div class="logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</div>
         <h2>Đăng Ký Tài Khoản</h2>
-        <p class="sub-text">Tham gia cộng đồng quản lý tài chính thông minh</p>
-
+        <p class="sub-text">Tham gia cộng đồng quản lý tài chính thông minh và minh bạch</p>
         <div id="error-box" class="error-msg"></div>
-
         <div class="form-group">
             <label class="form-label">Họ và tên</label>
             <div class="input-wrapper">
@@ -46,7 +203,6 @@
                 <input type="text" id="reg-name" placeholder="VD: Nguyễn Văn A">
             </div>
         </div>
-
         <div class="form-group">
             <label class="form-label">Tên đăng nhập (Username)</label>
             <div class="input-wrapper">
@@ -54,7 +210,6 @@
                 <input type="text" id="reg-username" placeholder="VD: bo_nguyen_99">
             </div>
         </div>
-
         <div class="form-group">
             <label class="form-label">Email</label>
             <div class="input-wrapper">
@@ -62,7 +217,6 @@
                 <input type="email" id="reg-email" placeholder="email@cuaban.com">
             </div>
         </div>
-
         <div class="form-group">
             <label class="form-label">Mật khẩu</label>
             <div class="input-wrapper">
@@ -70,31 +224,26 @@
                 <input type="password" id="reg-pass" placeholder="Nhập mật khẩu ( > 6 ký tự)">
             </div>
         </div>
-
         <button id="btn-reg">Đăng Ký Ngay</button>
         
         <div class="link">
             Đã có tài khoản? <a href="dangnhap.html">Đăng nhập</a>
         </div>
-        <div class="link" style="margin-top: 5px;">
-            <a href="index.html" style="color:#999"><i class="fa-solid fa-house"></i> Trang chủ</a>
+        <div class="link" style="margin-top: 10px;">
+            <a href="index.html" style="color: var(--text-light);"><i class="fa-solid fa-house"></i> Trang chủ</a>
         </div>
     </div>
-
     <script type="module">
         import { auth, db } from './config.js';
         import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
         const btn = document.getElementById('btn-reg');
         const errBox = document.getElementById('error-box');
-
         btn.addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value.trim();
             const username = document.getElementById('reg-username').value.trim();
             const email = document.getElementById('reg-email').value.trim();
             const pass = document.getElementById('reg-pass').value;
-
             // Validate
             if(!name || !username || !email || !pass) {
                 showError('Vui lòng điền đầy đủ tất cả các trường!');
@@ -104,16 +253,13 @@
                 showError('Mật khẩu phải có ít nhất 6 ký tự!');
                 return;
             }
-
             btn.innerText = 'Đang khởi tạo...';
             btn.disabled = true;
             errBox.style.display = 'none';
-
             try {
                 // 1. Tạo User bên Auth (Nếu email trùng -> Firebase tự báo lỗi)
                 const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
                 const user = userCredential.user;
-
                 // 2. Lưu thông tin vào Database (Bao gồm cả Username)
                 await setDoc(doc(db, "users", user.uid), {
                     name: name,
@@ -122,10 +268,8 @@
                     balance: 0,
                     createdAt: new Date().toISOString()
                 });
-
                 alert('Đăng ký thành công! Hãy đăng nhập ngay.');
                 window.location.href = 'dangnhap.html';
-
             } catch (error) {
                 console.error(error);
                 let msg = 'Đăng ký thất bại. Vui lòng thử lại.';
@@ -144,19 +288,10 @@
                 btn.disabled = false;
             }
         });
-
         function showError(msg) {
             errBox.innerText = msg;
             errBox.style.display = 'block';
-            // Animation rung form
-            const container = document.querySelector('.auth-container');
-            container.style.animation = 'shake 0.3s';
-            setTimeout(() => container.style.animation = '', 300);
         }
-        
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes shake { 0%, 100% { transform: translateX(0); } 25%, 75% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }`;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>

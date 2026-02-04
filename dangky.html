@@ -3,326 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Ký - Ví Flow</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Đăng ký tài khoản Ví điện tử Flow - FLPAY.VN. Thanh toán nhanh chóng, an toàn và bảo mật.">
+    <title>Đăng Ký Tài Khoản - Ví Flow (FLPAY.VN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
-            --primary: #2563EB; 
-            --primary-dark: #1E40AF;
-            --accent: #06B6D4;
-            --bg-gradient: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text: #1E293B; 
-            --text-light: #64748B;
+            --primary: #2563EB; /* Xanh hoàng gia hiện đại */
+            --primary-hover: #1d4ed8;
+            --text-main: #111827; 
+            --text-sub: #6B7280;
+            --border: #E5E7EB;
+            --bg-surface: #ffffff;
             --error: #EF4444;
-            --success: #10B981;
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --glow: 0 0 20px rgba(6, 182, 212, 0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
+        /* BACKGROUND MỚI: Clean & Professional */
         body { 
-            background: #0f172a; /* Fallback */
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-color: #F9FAFB;
+            /* Hiệu ứng lưới chấm (Dot Grid) nhẹ nhàng - Hot trend SaaS 2025 */
+            background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
+            background-size: 24px 24px;
             height: 100vh; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            padding: 20px; 
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Hiệu ứng nền động (Orb decoration) */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            animation: float 10s infinite ease-in-out;
-        }
-        .orb-1 { width: 300px; height: 300px; background: #4338ca; top: -50px; left: -50px; animation-delay: 0s; }
-        .orb-2 { width: 400px; height: 400px; background: #0891b2; bottom: -100px; right: -100px; animation-delay: -5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
+            padding: 20px;
         }
 
         .auth-container { 
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-surface);
             width: 100%; 
-            max-width: 420px; 
-            padding: 40px; 
-            border-radius: 24px; 
-            box-shadow: var(--shadow-lg);
+            max-width: 440px; 
+            padding: 48px 40px; 
+            border-radius: 16px; 
+            /* Đổ bóng tinh tế, không bị lòe loẹt */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
             text-align: center; 
-            position: relative; 
-            z-index: 10;
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
         .logo { 
-            font-size: 28px; 
-            font-weight: 800; 
+            font-size: 26px; 
+            font-weight: 700; 
             color: var(--primary);
-            margin-bottom: 10px; 
+            margin-bottom: 8px; 
             display: inline-flex; 
             align-items: center; 
             gap: 10px;
-            letter-spacing: -0.5px;
         }
         
-        .logo i {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 32px;
-        }
+        .logo i { font-size: 28px; }
 
-        h2 { color: var(--text); margin-bottom: 5px; font-size: 22px; font-weight: 700; }
-        p.sub-text { color: var(--text-light); font-size: 14px; margin-bottom: 30px; }
+        h2 { color: var(--text-main); margin-bottom: 4px; font-size: 24px; font-weight: 700; }
+        p.sub-text { color: var(--text-sub); font-size: 14px; margin-bottom: 32px; }
 
-        /* Form Styling with Floating Labels */
-        .form-group { 
-            margin-bottom: 20px; 
-            position: relative; 
-            text-align: left;
-        }
+        /* Form Styling */
+        .form-group { margin-bottom: 20px; text-align: left; }
 
         .input-wrapper { position: relative; }
-
-        .input-wrapper i.icon-left { 
-            position: absolute; 
-            left: 16px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: #94A3B8; 
-            font-size: 16px; 
-            transition: 0.3s;
-            z-index: 2;
+        .input-wrapper i { 
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%); 
+            color: #9CA3AF; font-size: 16px; transition: 0.2s;
         }
-
-        /* Nút ẩn hiện mật khẩu */
-        .toggle-password {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94A3B8;
-            cursor: pointer;
-            z-index: 3;
-            padding: 5px;
-        }
-        .toggle-password:hover { color: var(--primary); }
 
         input { 
             width: 100%; 
-            padding: 16px 40px 16px 45px; /* Chừa chỗ cho icon trái và phải */
-            border: 2px solid transparent; 
-            background: #F1F5F9;
-            border-radius: 12px; 
-            font-size: 15px; 
+            padding: 14px 40px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+            font-size: 14px; 
             outline: none; 
-            transition: all 0.3s ease; 
-            color: var(--text);
-            font-weight: 500;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            background: #F9FAFB;
         }
 
         input:focus { 
-            background: #fff; 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); 
+            background: #fff; border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
         }
+        input:focus + i { color: var(--primary); }
 
-        input:focus + i.icon-left { color: var(--primary); }
-
-        /* Floating Label Logic */
-        label.floating-label {
-            position: absolute;
-            left: 45px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            color: var(--text-light);
-            font-size: 15px;
-            pointer-events: none;
-            transition: all 0.25s ease;
-            padding: 0 4px;
+        /* Checkbox Điều khoản */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            text-align: left;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--text-sub);
         }
-
-        input:focus ~ label.floating-label,
-        input:not(:placeholder-shown) ~ label.floating-label {
-            top: 0;
-            left: 12px;
-            font-size: 12px;
+        .terms-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 3px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .terms-link {
             color: var(--primary);
-            background: white; /* Che đường viền nếu cần, hoặc background của input */
-            padding: 0 6px;
-            border-radius: 4px;
             font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
         }
-        
-        /* Ẩn placeholder mặc định để dùng floating label */
-        input::placeholder { color: transparent; }
+        .terms-link:hover { text-decoration: underline; }
 
-        button { 
+        button#btn-reg { 
             width: 100%; 
-            padding: 16px; 
-            background: linear-gradient(135deg, var(--primary) 0%, #3B82F6 100%); 
+            padding: 14px; 
+            background: var(--primary); 
             color: white; 
             border: none; 
-            border-radius: 12px; 
+            border-radius: 8px; 
             font-weight: 600; 
-            font-size: 16px; 
+            font-size: 15px; 
             cursor: pointer; 
-            transition: all 0.3s ease; 
-            margin-top: 10px; 
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+            transition: background 0.2s;
         }
 
-        button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); 
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-        }
+        button#btn-reg:hover { background: var(--primary-hover); }
+        button:disabled { background: #9CA3AF; cursor: not-allowed; }
 
-        button:active { transform: translateY(0); }
-        button:disabled { opacity: 0.7; cursor: wait; }
-
-        .link { margin-top: 24px; font-size: 14px; color: var(--text-light); }
-        .link a { color: var(--primary); text-decoration: none; font-weight: 600; transition: 0.2s; }
-        .link a:hover { color: var(--accent); text-decoration: underline; }
+        .link { margin-top: 24px; font-size: 14px; color: var(--text-sub); }
+        .link a { color: var(--primary); text-decoration: none; font-weight: 600; }
 
         .error-msg { 
-            background: #FEF2F2; 
-            color: var(--error); 
-            padding: 12px 16px; 
-            border-radius: 8px; 
-            font-size: 13px; 
-            margin-bottom: 20px; 
-            display: none; 
-            border-left: 4px solid var(--error);
+            background: #FEF2F2; color: var(--error); padding: 10px; border-radius: 6px; 
+            font-size: 13px; margin-bottom: 20px; display: none; border: 1px solid #FCA5A5;
             text-align: left;
-            align-items: center;
-            gap: 8px;
-            animation: shake 0.4s ease-in-out;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
         }
 
-        /* Responsive */
-        @media (max-width: 480px) {
-            .auth-container { padding: 30px 20px; border-radius: 0; height: 100vh; display: flex; flex-direction: column; justify-content: center; max-width: 100%; }
-            body { padding: 0; }
-            .orb { display: none; } /* Tắt hiệu ứng nền trên mobile cho nhẹ */
+        /* --- MODAL (POPUP) STYLES --- */
+        .modal {
+            display: none; /* Mặc định ẩn */
+            position: fixed; 
+            z-index: 100; 
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.5); /* Nền mờ đen */
+            backdrop-filter: blur(4px);
+            align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+        .modal.show { opacity: 1; }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal.show .modal-content { transform: scale(1); }
+
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .modal-header h3 { font-size: 18px; color: var(--text-main); }
+        .close-modal { font-size: 24px; color: #9CA3AF; cursor: pointer; }
+        .close-modal:hover { color: var(--text-main); }
+
+        .modal-body { font-size: 14px; color: var(--text-sub); line-height: 1.6; text-align: left; }
+        .modal-body h4 { color: var(--text-main); margin: 15px 0 5px; font-size: 15px; }
+        .modal-body ul { padding-left: 20px; }
+        
+        .modal-footer { margin-top: 20px; text-align: right; }
+        .btn-close-modal {
+            padding: 8px 16px; background: #E5E7EB; border: none; border-radius: 6px; 
+            color: var(--text-main); font-weight: 500; cursor: pointer;
+        }
+        .btn-close-modal:hover { background: #D1D5DB; }
+
     </style>
 </head>
 <body>
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-
     <div class="auth-container">
         <div class="logo"><i class="fa-solid fa-wallet"></i> Ví Flow</div>
         <h2>Tạo tài khoản mới</h2>
-        <p class="sub-text">Bắt đầu hành trình tài chính thông minh</p>
+        <p class="sub-text">Quản lý tài chính thông minh cùng FLPAY.VN</p>
         
-        <div id="error-box" class="error-msg">
-            <i class="fa-solid fa-circle-exclamation"></i> <span></span>
-        </div>
+        <div id="error-box" class="error-msg"></div>
 
         <div class="form-group">
             <div class="input-wrapper">
+                <i class="fa-regular fa-user"></i>
                 <input type="text" id="reg-name" placeholder="Họ và tên">
-                <i class="fa-regular fa-user icon-left"></i>
-                <label class="floating-label">Họ và tên</label>
             </div>
         </div>
 
         <div class="form-group">
             <div class="input-wrapper">
-                <input type="text" id="reg-username" placeholder="Tên đăng nhập">
-                <i class="fa-solid fa-at icon-left"></i>
-                <label class="floating-label">Tên đăng nhập (Username)</label>
+                <i class="fa-solid fa-at"></i>
+                <input type="text" id="reg-username" placeholder="Tên đăng nhập (Username)">
             </div>
         </div>
 
         <div class="form-group">
             <div class="input-wrapper">
+                <i class="fa-regular fa-envelope"></i>
                 <input type="email" id="reg-email" placeholder="Email">
-                <i class="fa-regular fa-envelope icon-left"></i>
-                <label class="floating-label">Địa chỉ Email</label>
             </div>
         </div>
 
         <div class="form-group">
             <div class="input-wrapper">
+                <i class="fa-solid fa-lock"></i>
                 <input type="password" id="reg-pass" placeholder="Mật khẩu">
-                <i class="fa-solid fa-lock icon-left"></i>
-                <i class="fa-regular fa-eye toggle-password" id="toggle-pwd"></i>
-                <label class="floating-label">Mật khẩu</label>
             </div>
         </div>
 
-        <button id="btn-reg">Đăng Ký Tài Khoản</button>
+        <div class="terms-group">
+            <input type="checkbox" id="terms-check">
+            <label for="terms-check">
+                Tôi đồng ý với <span class="terms-link" id="open-terms">Điều khoản sử dụng</span> và chính sách bảo mật của Ví Flow.
+            </label>
+        </div>
+
+        <button id="btn-reg">Đăng Ký</button>
         
         <div class="link">
-            Đã là thành viên? <a href="dangnhap.html">Đăng nhập ngay</a>
+            Đã có tài khoản? <a href="dangnhap.html">Đăng nhập</a>
         </div>
-        <div class="link" style="margin-top: 10px;">
-            <a href="index.html" style="color: var(--text-light); font-weight: normal; font-size: 13px;">
-                <i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ
-            </a>
+    </div>
+
+    <div id="terms-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Điều khoản sử dụng FLPAY.VN</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Chào mừng bạn đến với Ví điện tử Flow (FLPAY.VN). Khi đăng ký tài khoản, bạn đồng ý với các quy định sau:</p>
+                
+                <h4>1. Tài khoản và Bảo mật</h4>
+                <ul>
+                    <li>Người dùng chịu trách nhiệm bảo mật thông tin đăng nhập và mật khẩu.</li>
+                    <li>Không chia sẻ mã OTP hoặc mật khẩu cho bất kỳ ai, kể cả nhân viên Ví Flow.</li>
+                </ul>
+
+                <h4>2. Giao dịch</h4>
+                <ul>
+                    <li>Mọi giao dịch trên FLPAY.VN đều là minh bạch và không thể hoàn tác sau khi đã xác nhận.</li>
+                    <li>Nghiêm cấm sử dụng ví cho các mục đích rửa tiền, đánh bạc trái phép.</li>
+                </ul>
+
+                <h4>3. Quyền hạn của FLPAY.VN</h4>
+                <ul>
+                    <li>Chúng tôi có quyền khóa tài khoản tạm thời nếu phát hiện dấu hiệu gian lận.</li>
+                    <li>Dữ liệu của bạn được bảo mật tuyệt đối theo tiêu chuẩn quốc tế.</li>
+                </ul>
+                <br>
+                <p><i>Cập nhật lần cuối: 2025</i></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-close-modal">Đã hiểu</button>
+            </div>
         </div>
     </div>
 
     <script type="module">
-        // Import Logic giữ nguyên
         import { auth, db } from './config.js';
         import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // --- XỬ LÝ MODAL (POPUP) ---
+        const modal = document.getElementById('terms-modal');
+        const openBtn = document.getElementById('open-terms');
+        const closeSpan = document.getElementsByClassName('close-modal')[0];
+        const closeBtn = document.querySelector('.btn-close-modal');
+
+        function openModal() {
+            modal.style.display = "flex";
+            setTimeout(() => { modal.classList.add('show'); }, 10); // Animation
+        }
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = "none"; }, 300);
+        }
+
+        openBtn.onclick = openModal;
+        closeSpan.onclick = closeModal;
+        closeBtn.onclick = closeModal;
+        window.onclick = function(event) {
+            if (event.target == modal) { closeModal(); }
+        }
+
+        // --- XỬ LÝ ĐĂNG KÝ ---
         const btn = document.getElementById('btn-reg');
         const errBox = document.getElementById('error-box');
-        const errSpan = errBox.querySelector('span'); // Chọn thẻ span trong hộp lỗi
 
-        // Logic UI: Ẩn/Hiện mật khẩu
-        const togglePwdBtn = document.getElementById('toggle-pwd');
-        const pwdInput = document.getElementById('reg-pass');
-        
-        togglePwdBtn.addEventListener('click', () => {
-            const type = pwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            pwdInput.setAttribute('type', type);
-            // Đổi icon
-            togglePwdBtn.classList.toggle('fa-eye');
-            togglePwdBtn.classList.toggle('fa-eye-slash');
-        });
-
-        // Logic Đăng ký
         btn.addEventListener('click', async () => {
             const name = document.getElementById('reg-name').value.trim();
             const username = document.getElementById('reg-username').value.trim();
             const email = document.getElementById('reg-email').value.trim();
             const pass = document.getElementById('reg-pass').value;
+            const isChecked = document.getElementById('terms-check').checked;
 
-            // Validate Basic
+            // 1. Validate Điều khoản
+            if (!isChecked) {
+                showError('Bạn cần đồng ý với Điều khoản sử dụng để tiếp tục.');
+                return;
+            }
+
+            // Validate thông tin
             if(!name || !username || !email || !pass) {
                 showError('Vui lòng điền đầy đủ thông tin.');
                 return;
@@ -332,55 +325,41 @@
                 return;
             }
 
-            // UI Loading state
-            const originalText = btn.innerText;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang xử lý...';
+            btn.innerText = 'Đang xử lý...';
             btn.disabled = true;
             errBox.style.display = 'none';
 
             try {
-                // 1. Tạo User Authentication
                 const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
                 const user = userCredential.user;
 
-                // 2. Lưu thông tin vào Firestore
                 await setDoc(doc(db, "users", user.uid), {
                     name: name,
                     username: username,
                     email: email,
                     balance: 0,
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date().toISOString(),
+                    termsAgreed: true // Lưu lại việc user đã đồng ý điều khoản
                 });
 
-                alert('Đăng ký thành công! Chào mừng bạn đến với Ví Flow.');
+                alert('Đăng ký thành công!');
                 window.location.href = 'dangnhap.html';
-
             } catch (error) {
                 console.error(error);
-                let msg = 'Đăng ký thất bại. Vui lòng thử lại.';
-                
-                // Xử lý thông báo lỗi thân thiện hơn
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        msg = 'Email này đã được đăng ký.';
-                        break;
-                    case 'auth/invalid-email':
-                        msg = 'Định dạng email không hợp lệ.';
-                        break;
-                    case 'auth/weak-password':
-                        msg = 'Mật khẩu quá yếu. Hãy dùng mật khẩu mạnh hơn.';
-                        break;
-                }
+                let msg = 'Đăng ký thất bại.';
+                if (error.code === 'auth/email-already-in-use') msg = 'Email này đã tồn tại.';
+                else if (error.code === 'auth/invalid-email') msg = 'Email không hợp lệ.';
+                else if (error.code === 'auth/weak-password') msg = 'Mật khẩu quá yếu.';
                 
                 showError(msg);
-                btn.innerText = originalText;
+                btn.innerText = 'Đăng Ký';
                 btn.disabled = false;
             }
         });
 
         function showError(msg) {
-            errSpan.innerText = msg;
-            errBox.style.display = 'flex'; // Dùng flex để căn chỉnh icon và text
+            errBox.innerText = msg;
+            errBox.style.display = 'block';
         }
     </script>
 </body>

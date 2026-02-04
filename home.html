@@ -69,6 +69,8 @@
         body.dark-theme .mobile-header, body.dark-theme .bottom-nav { background: rgba(30, 41, 59, 0.95); border-color: #334155; }
         body.dark-theme .modal-box { background: #1e293b; color: white; }
         body.dark-theme h3 { color: white; }
+        body.dark-theme .profile-info-group { background: #1e293b; border-color: #334155; }
+        body.dark-theme .p-row { border-color: #334155; }
 
         /* SCROLLBAR */
         ::-webkit-scrollbar { width: 6px; }
@@ -279,6 +281,17 @@
         .pf-menu-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid #f5f5f5; cursor: pointer; }
         .pf-menu-left { display: flex; align-items: center; gap: 15px; font-size: 14px; font-weight: 500; color: #333; }
         .pf-menu-icon { color: #888; width: 20px; text-align: center; }
+
+        /* NEW PROFILE INFO UI */
+        .profile-info-group { background: #f8fafc; border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(0,0,0,0.05); }
+        .p-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #e2e8f0; }
+        .p-row:last-child { border-bottom: none; }
+        .p-label { color: var(--text-light); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .p-val { font-weight: 600; color: var(--text-main); font-size: 14px; text-align: right; }
+        
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+        .status-badge.off { background: #FEE2E2; color: #EF476F; }
+        .status-badge.on { background: #DCFCE7; color: #10B981; }
 
         /* CHART */
         .bar-chart-3-col { display: flex; justify-content: space-around; align-items: flex-end; height: 200px; padding-top: 30px; }
@@ -697,51 +710,53 @@
                 </div>
                 
                 <div id="general-info-expand" style="display:none; background:var(--bg-body); padding:20px; border-top:1px solid #eee">
-    
-    <div class="pf-detail-row">
-        <span class="pf-detail-label">Username : </span>
-        <span class="pf-detail-val" id="pf-username"><strong>...</strong></span>
-    </div>
-    <div class="pf-detail-row">
-        <span class="pf-detail-label">Email : </span>
-        <span class="pf-detail-val" id="pf-email"><strong>...</strong></span>
-    </div>
-    <div class="pf-detail-row" style="border-bottom:none">
-        <span class="pf-detail-label">Ngày tham gia : </span>
-        <span class="pf-detail-val" id="pf-joined"><strong>...</strong></span>
-    </div>
+                    
+                    <div class="profile-info-group">
+                        <div class="p-row">
+                            <div class="p-label"><i class="fa-regular fa-user"></i> Username</div>
+                            <div class="p-val" id="pf-username">...</div>
+                        </div>
+                        <div class="p-row">
+                            <div class="p-label"><i class="fa-regular fa-envelope"></i> Email</div>
+                            <div class="p-val" id="pf-email" style="font-size:13px">...</div>
+                        </div>
+                        <div class="p-row">
+                            <div class="p-label"><i class="fa-regular fa-calendar"></i> Ngày tham gia</div>
+                            <div class="p-val" id="pf-joined">...</div>
+                        </div>
+                        <div class="p-row">
+                            <div class="p-label"><i class="fa-solid fa-phone"></i> Số điện thoại</div>
+                            <div style="display:flex; align-items:center; gap:10px">
+                                <div id="phone-view" class="p-val">...</div>
+                                <div id="phone-edit" style="display:none; align-items:center; gap:5px">
+                                    <input type="tel" id="pf-phone-input" style="padding:5px; border-radius:8px; border:1px solid #ccc; width:100px; font-size:13px">
+                                    <i class="fa-solid fa-check" style="color:var(--success); cursor:pointer" onclick="app.savePhone(this)"></i>
+                                    <i class="fa-solid fa-xmark" style="color:var(--danger); cursor:pointer" onclick="app.togglePhoneEdit(false)"></i>
+                                </div>
+                                <i class="fa-solid fa-pen" style="color:var(--primary); font-size:12px; cursor:pointer" onclick="app.togglePhoneEdit(true)" id="btn-edit-phone"></i>
+                            </div>
+                        </div>
+                    </div>
 
-    <div id="phone-view" style="margin-top:10px">
-        <button onclick="app.togglePhoneEdit(true)" class="btn-outline" style="background:var(--bg-card); border:1px solid var(--primary); color:var(--primary)">
-            <i class="fa-solid fa-phone"></i> Cập nhật SĐT
-        </button>
-    </div>
-    <div id="phone-edit" style="display:none; margin-top:10px; gap:5px">
-           <input type="tel" id="pf-phone-input" placeholder="Nhập SĐT mới" class="form-input" style="margin-bottom:5px">
-           <div style="display:flex; gap:5px">
-               <button onclick="app.savePhone(this)" class="btn-primary" style="padding:8px; font-size:13px">Lưu</button>
-               <button onclick="app.togglePhoneEdit(false)" class="btn-outline" style="padding:8px; margin-top:0">Hủy</button>
-           </div>
-    </div>
-
-    <div style="margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.03); border-radius: 10px;">
-        <div id="2fa-status-area">
-            <div id="2fa-off" style="font-weight:600; color:var(--danger); display:flex; align-items:center; gap:5px">
-                <i class="fa-solid fa-triangle-exclamation"></i> 2FA đang tắt
-            </div>
-            <div id="2fa-on" style="display:none; font-weight:600; color:var(--success); align-items:center; gap:5px">
-                <i class="fa-solid fa-shield-check"></i> 2FA đang bật
-            </div>
-        </div>
-    </div>
-
-    <button class="btn-outline" onclick="app.sendPasswordReset()"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
-    
-    <div style="margin-top:20px">
-        <div style="font-size:12px; font-weight:700; color:#888; margin-bottom:10px; text-transform:uppercase">Thiết bị đăng nhập</div>
-        <div id="device-list"></div>
-    </div>
-</div>
+                    <div class="profile-info-group">
+                        <div class="p-row">
+                            <div class="p-label"><i class="fa-solid fa-shield-halved"></i> Bảo mật 2 lớp</div>
+                            <div id="2fa-status-area">
+                                <div id="2fa-off" class="status-badge off"><i class="fa-solid fa-triangle-exclamation"></i> Đang tắt</div>
+                                <div id="2fa-on" class="status-badge on" style="display:none"><i class="fa-solid fa-check"></i> Đang bật</div>
+                            </div>
+                        </div>
+                        <div class="p-row" onclick="app.sendPasswordReset()" style="cursor:pointer">
+                            <div class="p-label"><i class="fa-solid fa-key"></i> Đổi mật khẩu</div>
+                            <div style="font-size:12px; color:var(--primary)"><i class="fa-solid fa-chevron-right"></i></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:20px">
+                        <div style="font-size:12px; font-weight:700; color:#888; margin-bottom:10px; text-transform:uppercase">Thiết bị đăng nhập</div>
+                        <div id="device-list"></div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -1335,7 +1350,7 @@
         renderWallet() { const list = document.getElementById('wallet-list'), btn = list.querySelector('.add-new'); const existingCards = list.querySelectorAll('.bank-card:not(.add-new)'); existingCards.forEach(c => c.remove()); (this.userData.linkedBanks||[]).forEach((b, index) => { const cardHtml = `<div class="bank-card"><div class="bank-delete" onclick="event.stopPropagation(); app.removeBank(${index})"><i class="fa-solid fa-xmark"></i></div><div style="display:flex;justify-content:space-between;"><span class="bank-logo">${b.name}</span><i class="fa-solid fa-wifi"></i></div><div style="font-size:20px;margin:20px 0;letter-spacing:2px">**** ${b.number}</div><div><div style="font-size:12px;opacity:0.8">Số dư</div><div style="font-weight:700;font-size:20px">${new Intl.NumberFormat('vi-VN').format(b.balance)} đ</div></div></div>`; btn.insertAdjacentHTML('beforebegin', cardHtml); }); },
         async removeBank(index) { if(!confirm("Bạn có chắc muốn xóa thẻ này?")) return; const bankToRemove = this.userData.linkedBanks[index]; try { await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayRemove(bankToRemove) }); this.userData.linkedBanks.splice(index, 1); this.renderWallet(); this.showPopup('success', 'Đã xóa thẻ'); } catch(e) { console.error(e); this.showPopup('error', 'Lỗi xóa thẻ'); } },
         async linkBank() { const name = document.getElementById('bank-select').value, num = document.getElementById('bank-num').value, bal = Number(document.getElementById('bank-bal').value); if(!name || !num) return this.showPopup('error', 'Thiếu thông tin'); const newBank = { name, number: num, balance: bal || 0 }; await updateDoc(doc(db, "users", this.currentUser.uid), { linkedBanks: arrayUnion(newBank) }); this.userData.linkedBanks = [...(this.userData.linkedBanks||[]), newBank]; this.renderWallet(); this.closeModal(); this.showPopup('success', 'Liên kết xong'); },
-        renderProfile() { const d = this.userData; const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='block'; } else { document.getElementById('2fa-off').style.display='block'; document.getElementById('2fa-on').style.display='none'; } },
+        renderProfile() { const d = this.userData; const blueTick = (d.email === 'lenhancute1@gmail.com') ? '<i class="fa-solid fa-circle-check" style="color:#1DA1F2; margin-left:5px; font-size:16px" title="Đã xác minh"></i>' : ''; document.getElementById('home-name').innerHTML = d.name + blueTick; document.getElementById('pf-name').innerHTML = d.name + blueTick; document.getElementById('pf-username').innerText = d.username || "Chưa set"; document.getElementById('pf-email').innerText = d.email; const ph = document.getElementById('pf-phone-text'); if(d.phone) { document.getElementById('phone-view').innerText=d.phone; ph.innerText=d.phone; ph.style.color='var(--text-main)'; ph.style.fontWeight='600'; } else { document.getElementById('phone-view').innerText="Chưa có SĐT"; ph.innerText="Chưa cập nhật"; ph.style.color='#999'; ph.style.fontWeight='400'; } document.getElementById('pf-joined').innerText = new Date(d.createdAt).toLocaleDateString('vi-VN'); if(d.avatar) document.getElementById('pf-avatar').src = d.avatar; else document.getElementById('pf-avatar').src = `https://ui-avatars.com/api/?name=${d.name}&background=random&size=200`; if(d.is2FAEnabled) { document.getElementById('2fa-off').style.display='none'; document.getElementById('2fa-on').style.display='inline-flex'; } else { document.getElementById('2fa-off').style.display='inline-flex'; document.getElementById('2fa-on').style.display='none'; } },
         listenUserFund() { onSnapshot(query(collection(db, "group_transactions"), where("uid", "==", this.currentUser.uid)), (snap) => { let total = 0; snap.forEach(d => total += d.data().amount); this.report.fund = total; this.updateReportChart(); }); },
         updateReportChart() { const { inc, exp, fund } = this.report; const max = Math.max(inc, exp, fund, 100000); document.getElementById('chart-bar-inc').style.height = (inc / max * 100) + '%'; document.getElementById('val-inc').innerText = new Intl.NumberFormat('vi-VN').format(inc) + 'đ'; document.getElementById('chart-bar-exp').style.height = (exp / max * 100) + '%'; document.getElementById('val-exp').innerText = new Intl.NumberFormat('vi-VN').format(exp) + 'đ'; document.getElementById('chart-bar-fund').style.height = (fund / max * 100) + '%'; document.getElementById('val-fund').innerText = new Intl.NumberFormat('vi-VN').format(fund) + 'đ'; },
         
@@ -1373,7 +1388,7 @@
         async contributeFund() { const amt = Number(document.getElementById('contribute-amt').value), note = document.getElementById('contribute-note').value; if(!amt) return; try { await addDoc(collection(db, "group_transactions"), { groupId: this.currentGroup.id, uid: this.currentUser.uid, userName: this.userData.name, amount: amt, note, timestamp: Date.now() }); await updateDoc(doc(db, "groups", this.currentGroup.id), { balance: (this.currentGroup.balance||0)+amt }); this.closeModal(); this.showPopup('success', 'Đã đóng'); } catch(e) {} },
         renderGroupUI() { document.getElementById('group-name-display').innerText = this.currentGroup.name; document.getElementById('group-balance').innerText = new Intl.NumberFormat('vi-VN').format(this.currentGroup.balance) + ' đ'; document.getElementById('member-count').innerText = this.currentGroup.members.length; const list = document.getElementById('group-members'); list.innerHTML = ''; this.currentGroup.members.forEach(m => { let badge = m.role==='admin' ? '<span class="role-badge role-admin" style="background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:10px;font-size:10px">Admin</span>' : '<span class="role-badge role-member" style="background:#f3f4f6;color:#374151;padding:2px 8px;border-radius:10px;font-size:10px">Member</span>'; list.innerHTML += `<div class="member-item"><div class="member-info" style="display:flex;gap:10px;align-items:center"><img src="https://ui-avatars.com/api/?name=${m.name}&background=random" style="width:30px;height:30px;border-radius:50%"><div><div style="font-weight:600;font-size:13px">${m.name}</div>${badge}</div></div></div>`; }); this.loadGroupHistory(); },
         loadGroupHistory() { onSnapshot(query(collection(db, "group_transactions"), where("groupId", "==", this.currentGroup.id)), (snap) => { const div = document.getElementById('group-history'); div.innerHTML=''; let txs=[]; snap.forEach(d=>txs.push(d.data())); txs.sort((a,b)=>b.timestamp-a.timestamp); this.groupTransactions = txs; txs.forEach(t => div.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid #eee;font-size:13px"><div><b>${t.userName}</b><div style="color:#666;font-size:11px">${t.note||'Góp quỹ'}</div></div><div style="color:var(--success)">+${new Intl.NumberFormat('vi-VN').format(t.amount)}</div></div>`); }); },
-        togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), inp = document.getElementById('pf-phone-input'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; inp.value=this.userData.phone||""; inp.focus(); } else { view.style.display='flex'; edit.style.display='none'; } },
+        togglePhoneEdit(isEdit) { const view = document.getElementById('phone-view'), edit = document.getElementById('phone-edit'), btn = document.getElementById('btn-edit-phone'); if(isEdit) { view.style.display='none'; edit.style.display='flex'; btn.style.display='none'; document.getElementById('pf-phone-input').value=this.userData.phone||""; } else { view.style.display='block'; edit.style.display='none'; btn.style.display='block'; } },
         async savePhone(btn) { const val = document.getElementById('pf-phone-input').value.trim(); if(val && !/^\d{9,11}$/.test(val)) return this.showPopup('error', 'SĐT lỗi'); try { await updateDoc(doc(db, "users", this.currentUser.uid), { phone: val }); this.userData.phone = val; this.renderProfile(); this.togglePhoneEdit(false); this.showPopup('success', 'Đã lưu'); } catch(e){ this.showPopup('error', 'Lỗi'); } },
         async addTransaction() { const amt = Number(document.getElementById('inp-amt').value), desc = document.getElementById('inp-desc').value; if(!amt || !desc) return this.showPopup('error', 'Nhập thiếu'); try { await addDoc(collection(db, "transactions"), { uid: this.currentUser.uid, amount: amt, desc, type: this.tmpType, date: new Date().toLocaleDateString('vi-VN'), timestamp: Date.now() }); this.closeModal(); document.getElementById('inp-amt').value = ''; document.getElementById('inp-desc').value = ''; } catch(e) { this.showPopup('error', 'Lỗi'); } },
         async checkUser(inp) { const val = inp.value.trim(); const nameArea = document.getElementById('tf-name'); this.transferTarget = null; nameArea.innerText = ''; if(!val) return; if(val === this.userData.username || val === this.userData.email) { nameArea.innerText = "Không thể tự chuyển cho chính mình"; return; } let q = query(collection(db, "users"), where("username", "==", val)); let snap = await getDocs(q); if(snap.empty) { q = query(collection(db, "users"), where("email", "==", val)); snap = await getDocs(q); } if(!snap.empty) { const target = snap.docs[0]; this.transferTarget = { id: target.id, ...target.data() }; nameArea.innerText = "Người nhận: " + this.transferTarget.name; } else { nameArea.innerText = "Không tìm thấy người dùng này"; } },

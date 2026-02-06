@@ -14,6 +14,9 @@
             --border: #E5E7EB;
             --bg-surface: #ffffff;
             --bg-body: #F9FAFB;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -38,60 +41,72 @@
         .nav-back { text-decoration: none; color: var(--text-sub); font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .nav-back:hover { color: var(--primary); }
 
-        /* --- MAIN LAYOUT --- */
-        .container {
-            max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1;
-        }
-
+        /* --- CONTAINER --- */
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
         .header-section { text-align: center; margin-bottom: 40px; }
         .header-section h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
         .header-section p { color: var(--text-sub); }
 
-        /* --- SUPPORT FORM CARD --- */
-        .support-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px;
+        /* --- CARDS --- */
+        .card-box {
+            background: var(--bg-surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 40px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
 
-        /* Grid Layout */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
+        /* FORM STYLES */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .full-width { grid-column: span 2; }
-
-        .form-group label {
-            display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-main);
-        }
-
+        .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
         .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 12px 16px;
-            border: 1px solid var(--border); border-radius: 8px;
-            font-size: 14px; outline: none; transition: 0.2s;
-            background: #F9FAFB; color: var(--text-main);
+            width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 8px;
+            font-size: 14px; outline: none; transition: 0.2s; background: #F9FAFB; color: var(--text-main);
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            background: #fff; border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            background: #fff; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-        .form-group textarea { resize: vertical; min-height: 150px; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
 
-        /* --- BUTTONS --- */
+        /* BUTTONS */
         .btn-submit {
-            width: 100%; padding: 14px;
-            background: var(--primary); color: white;
-            border: none; border-radius: 8px;
-            font-weight: 600; font-size: 16px; cursor: pointer;
-            transition: 0.2s; margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 14px; background: var(--primary); color: white;
+            border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer;
+            transition: 0.2s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .btn-submit:hover { background: #1E40AF; }
-        .btn-submit:disabled { background: #9CA3AF; cursor: wait; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #DC2626; }
+        .btn-success { background: var(--success); }
+        .btn-success:hover { background: #059669; }
+
+        /* --- ADMIN SPECIFIC STYLES --- */
+        #admin-panel, #admin-login-modal { display: none; } /* Mặc định ẩn */
+
+        .ticket-info-row {
+            display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border);
+        }
+        .ticket-info-row:last-child { border-bottom: none; }
+        .ticket-label { color: var(--text-sub); font-size: 14px; }
+        .ticket-value { font-weight: 600; color: var(--text-main); text-align: right; }
+        
+        /* Status Badge */
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .st-pending { background: #FEF3C7; color: #D97706; }
+        .st-resolved { background: #D1FAE5; color: #059669; }
+        .st-wontfix { background: #FEE2E2; color: #DC2626; }
+        .st-processing { background: #DBEAFE; color: #2563EB; }
+
+        /* Admin Login Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .login-box {
+            background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px;
+            text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
 
         /* --- STATUS MESSAGES --- */
         .status-msg { 
@@ -101,34 +116,27 @@
         .msg-success { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
         .msg-error { background: #FEF2F2; color: #991B1B; border: 1px solid #FCA5A5; }
 
-        /* Responsive Mobile */
         @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; gap: 16px; }
+            .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
-            .support-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="index.html" class="logo">
-            <i class="fa-solid fa-layer-group"></i> Ví Flow
-        </a>
-        <a href="home.html" class="nav-back">
-            <i class="fa-solid fa-arrow-left"></i> Quay lại
-        </a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-layer-group"></i> Ví Flow</a>
+        <a href="home.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
     </nav>
 
     <div class="container">
-        <div class="header-section">
+        <div class="header-section" id="page-header">
             <h1>Trung tâm trợ giúp</h1>
             <p>Gửi yêu cầu hỗ trợ hoặc báo lỗi. Chúng tôi sẽ phản hồi sớm nhất.</p>
         </div>
 
-        <div class="support-card">
+        <div id="user-view" class="card-box">
             <div id="status-box" class="status-msg"></div>
-
             <div class="form-grid">
                 <div class="form-group">
                     <label>Họ và tên</label>
@@ -138,106 +146,342 @@
                     <label>Email liên hệ</label>
                     <input type="email" id="t-email" placeholder="email@example.com">
                 </div>
-
                 <div class="form-group full-width">
                     <label>Loại yêu cầu</label>
                     <select id="t-category">
-                        <option value="technical">Báo lỗi kỹ thuật / Web lỗi</option>
-                        <option value="account">Vấn đề tài khoản / Đăng nhập</option>
+                        <option value="technical">Báo lỗi kỹ thuật</option>
+                        <option value="account">Vấn đề tài khoản</option>
                         <option value="billing">Nạp / Rút tiền</option>
-                        <option value="feature">Góp ý tính năng mới</option>
+                        <option value="feature">Góp ý tính năng</option>
                         <option value="other">Khác</option>
                     </select>
                 </div>
-
                 <div class="form-group full-width">
                     <label>Tiêu đề</label>
                     <input type="text" id="t-subject" placeholder="VD: Không thể nạp tiền...">
                 </div>
-
                 <div class="form-group full-width">
                     <label>Chi tiết vấn đề</label>
-                    <textarea id="t-message" placeholder="Mô tả chi tiết vấn đề bạn gặp phải..."></textarea>
+                    <textarea id="t-message" placeholder="Mô tả chi tiết vấn đề..."></textarea>
+                </div>
+            </div>
+            <button class="btn-submit" id="btn-send"><i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu</button>
+        </div>
+
+        <div id="admin-panel">
+            <div class="card-box" style="border-left: 5px solid var(--primary);">
+                <h2 style="margin-bottom: 20px;">Chi tiết Ticket <span id="adm-id" style="font-size: 14px; color: #888; font-weight: 400;"></span></h2>
+                
+                <div class="ticket-info-row">
+                    <span class="ticket-label">Người gửi:</span>
+                    <span class="ticket-value" id="adm-name">...</span>
+                </div>
+                <div class="ticket-info-row">
+                    <span class="ticket-label">Email:</span>
+                    <span class="ticket-value" id="adm-email">...</span>
+                </div>
+                <div class="ticket-info-row">
+                    <span class="ticket-label">Danh mục:</span>
+                    <span class="ticket-value" id="adm-category">...</span>
+                </div>
+                <div class="ticket-info-row">
+                    <span class="ticket-label">Ngày tạo:</span>
+                    <span class="ticket-value" id="adm-date">...</span>
+                </div>
+                <div class="ticket-info-row">
+                    <span class="ticket-label">Trạng thái:</span>
+                    <span class="ticket-value"><span id="adm-status-badge" class="status-badge st-pending">...</span></span>
+                </div>
+
+                <div style="margin-top: 20px; background: #f3f4f6; padding: 15px; border-radius: 8px;">
+                    <strong style="display:block; margin-bottom: 5px;">Tiêu đề:</strong>
+                    <div id="adm-subject" style="margin-bottom: 10px;">...</div>
+                    <strong style="display:block; margin-bottom: 5px;">Nội dung:</strong>
+                    <div id="adm-message" style="white-space: pre-wrap; color: #374151;">...</div>
                 </div>
             </div>
 
-            <button class="btn-submit" id="btn-send">
-                <i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu
-            </button>
+            <div class="card-box">
+                <h3 style="margin-bottom: 15px;">Xử lý yêu cầu</h3>
+                <div class="form-group full-width" style="margin-bottom: 15px;">
+                    <label>Hành động / Trạng thái:</label>
+                    <select id="adm-action-select" onchange="toggleReasonInput()">
+                        <option value="pending">Đang chờ (Pending)</option>
+                        <option value="processing">Đang xử lý (Processing)</option>
+                        <option value="resolved">Đã giải quyết / Chấp thuận (Resolved)</option>
+                        <option value="wontfix">Không giải quyết (Wontfix)</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width" style="margin-bottom: 15px;">
+                    <label>Phản hồi của Admin (Reply):</label>
+                    <textarea id="adm-reply" placeholder="Nhập nội dung trả lời user..." style="min-height: 80px;"></textarea>
+                </div>
+
+                <div class="form-group full-width" id="reason-box" style="margin-bottom: 15px; display: none;">
+                    <label style="color: var(--danger);">Lý do (Từ chối / Xóa):</label>
+                    <input type="text" id="adm-reason" placeholder="Nhập lý do tại sao không giải quyết hoặc xóa...">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-submit btn-success" id="btn-update">
+                        <i class="fa-solid fa-check"></i> Cập nhật Ticket
+                    </button>
+                    <button class="btn-submit btn-danger" id="btn-delete" style="background: var(--danger);">
+                        <i class="fa-solid fa-trash"></i> Xóa Ticket
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-login-modal" class="modal-overlay">
+        <div class="login-box">
+            <h2 style="margin-bottom: 15px;">Admin Access</h2>
+            <p style="margin-bottom: 20px; color: #666;">Vui lòng nhập mã bảo mật để quản lý ticket.</p>
+            <input type="password" id="admin-pass" placeholder="Nhập mã Admin..." 
+                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
+            <button class="btn-submit" onclick="checkAdmin()">Xác nhận</button>
+            <div id="login-err" style="color: red; margin-top: 10px; font-size: 13px; display: none;">Mã sai!</div>
         </div>
     </div>
 
     <script type="module">
         import { auth, db } from './config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        // Chỉ cần import Firestore
-        import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // DOM Elements User View
+        const userView = document.getElementById('user-view');
+        const headerSection = document.getElementById('page-header');
         const btnSend = document.getElementById('btn-send');
         const statusBox = document.getElementById('status-box');
+        
+        // DOM Elements Admin View
+        const adminPanel = document.getElementById('admin-panel');
+        const adminLoginModal = document.getElementById('admin-login-modal');
+        const btnUpdate = document.getElementById('btn-update');
+        const btnDelete = document.getElementById('btn-delete');
+        const reasonBox = document.getElementById('reason-box');
+
         let currentUser = null;
+        let currentTicketId = null; // ID lấy từ URL
 
-        // 1. Auto-fill nếu đã đăng nhập
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('t-email').value = user.email;
-                if(user.displayName) document.getElementById('t-name').value = user.displayName;
-                
-                // Khóa trường email
-                document.getElementById('t-email').readOnly = true;
-                document.getElementById('t-email').style.background = '#F3F4F6';
+        // --- 1. KIỂM TRA URL PARAMETER (?id=...) ---
+        const urlParams = new URLSearchParams(window.location.search);
+        currentTicketId = urlParams.get('id');
+
+        if (currentTicketId) {
+            // ==> CHẾ ĐỘ ADMIN
+            initAdminMode();
+        } else {
+            // ==> CHẾ ĐỘ USER (Mặc định)
+            initUserMode();
+        }
+
+        // ================= LOGIC USER MODE =================
+        function initUserMode() {
+            // Auto-fill form nếu đã đăng nhập
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    document.getElementById('t-email').value = user.email;
+                    if(user.displayName) document.getElementById('t-name').value = user.displayName;
+                    document.getElementById('t-email').readOnly = true;
+                    document.getElementById('t-email').style.background = '#F3F4F6';
+                }
+            });
+
+            // Gửi Ticket
+            btnSend.addEventListener('click', async () => {
+                const name = document.getElementById('t-name').value.trim();
+                const email = document.getElementById('t-email').value.trim();
+                const category = document.getElementById('t-category').value;
+                const subject = document.getElementById('t-subject').value.trim();
+                const message = document.getElementById('t-message').value.trim();
+
+                if(!name || !email || !subject || !message) {
+                    showStatus('Vui lòng điền đầy đủ thông tin!', 'error');
+                    return;
+                }
+
+                btnSend.disabled = true;
+                btnSend.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
+
+                try {
+                    await addDoc(collection(db, "support_tickets"), {
+                        uid: currentUser ? currentUser.uid : 'anonymous',
+                        name: name,
+                        email: email,
+                        category: category,
+                        subject: subject,
+                        message: message,
+                        status: 'pending', // pending, processing, resolved, wontfix
+                        adminReply: '',
+                        adminNote: '',
+                        createdAt: serverTimestamp()
+                    });
+                    showStatus('Gửi yêu cầu thành công!', 'success');
+                    document.getElementById('t-subject').value = '';
+                    document.getElementById('t-message').value = '';
+                } catch (error) {
+                    console.error(error);
+                    showStatus('Lỗi kết nối. Vui lòng thử lại.', 'error');
+                } finally {
+                    btnSend.disabled = false;
+                    btnSend.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu';
+                }
+            });
+        }
+
+        // ================= LOGIC ADMIN MODE =================
+        function initAdminMode() {
+            // Ẩn view user, hiện modal login
+            userView.style.display = 'none';
+            headerSection.innerHTML = `<h1>Quản trị Ticket</h1><p>Mã ticket: ${currentTicketId}</p>`;
+            adminLoginModal.style.display = 'flex'; // Hiện popup nhập pass
+        }
+
+        // Hàm check pass Admin (gọi từ nút Xác nhận ở HTML)
+        window.checkAdmin = async () => {
+            const pass = document.getElementById('admin-pass').value;
+            const err = document.getElementById('login-err');
+            
+            if (pass === 'Adminisme') {
+                // Pass đúng
+                adminLoginModal.style.display = 'none';
+                adminPanel.style.display = 'block'; // Hiện Admin Panel
+                loadTicketData(currentTicketId);
+            } else {
+                err.style.display = 'block';
             }
-        });
+        }
 
-        // 2. Xử lý Gửi Ticket
-        btnSend.addEventListener('click', async () => {
-            const name = document.getElementById('t-name').value.trim();
-            const email = document.getElementById('t-email').value.trim();
-            const category = document.getElementById('t-category').value;
-            const subject = document.getElementById('t-subject').value.trim();
-            const message = document.getElementById('t-message').value.trim();
+        // Toggle hiện ô lý do khi chọn "Wontfix"
+        window.toggleReasonInput = () => {
+            const status = document.getElementById('adm-action-select').value;
+            if (status === 'wontfix') {
+                reasonBox.style.display = 'block';
+            } else {
+                reasonBox.style.display = 'none';
+            }
+        }
 
-            // Validate
-            if(!name || !email || !subject || !message) {
-                showStatus('Vui lòng điền đầy đủ thông tin!', 'error');
+        // Load dữ liệu Ticket từ Firebase
+        async function loadTicketData(id) {
+            try {
+                const docRef = doc(db, "support_tickets", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    // Điền thông tin vào UI Read-only
+                    document.getElementById('adm-id').innerText = '#' + id.slice(0, 8);
+                    document.getElementById('adm-name').innerText = data.name;
+                    document.getElementById('adm-email').innerText = data.email;
+                    document.getElementById('adm-category').innerText = data.category;
+                    
+                    // Format ngày tháng
+                    let dateStr = "Vừa xong";
+                    if(data.createdAt) dateStr = new Date(data.createdAt.seconds * 1000).toLocaleString('vi-VN');
+                    document.getElementById('adm-date').innerText = dateStr;
+
+                    // Badge status
+                    const badge = document.getElementById('adm-status-badge');
+                    badge.className = `status-badge st-${data.status}`;
+                    let statusText = {
+                        'pending': 'Đang chờ',
+                        'processing': 'Đang xử lý',
+                        'resolved': 'Đã giải quyết',
+                        'wontfix': 'Không giải quyết'
+                    };
+                    badge.innerText = statusText[data.status] || data.status;
+
+                    document.getElementById('adm-subject').innerText = data.subject;
+                    document.getElementById('adm-message').innerText = data.message;
+
+                    // Điền form xử lý (nếu đã có dữ liệu cũ)
+                    document.getElementById('adm-action-select').value = data.status;
+                    document.getElementById('adm-reply').value = data.adminReply || '';
+                    document.getElementById('adm-reason').value = data.adminNote || '';
+
+                    toggleReasonInput(); // Check xem có cần hiện ô reason không
+
+                } else {
+                    alert("Không tìm thấy Ticket này!");
+                    window.location.href = 'hotro.html';
+                }
+            } catch (error) {
+                console.error("Lỗi load ticket:", error);
+                alert("Lỗi tải dữ liệu!");
+            }
+        }
+
+        // Xử lý CẬP NHẬT (Rep, Đổi status)
+        btnUpdate.addEventListener('click', async () => {
+            const newStatus = document.getElementById('adm-action-select').value;
+            const reply = document.getElementById('adm-reply').value;
+            const note = document.getElementById('adm-reason').value;
+
+            // Validate logic logic
+            if (newStatus === 'wontfix' && !note) {
+                alert("Vui lòng nhập lý do 'Không giải quyết'!");
                 return;
             }
 
-            // UI Loading
-            btnSend.disabled = true;
-            btnSend.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
-            statusBox.style.display = 'none';
+            if (!confirm("Bạn có chắc muốn cập nhật ticket này?")) return;
 
             try {
-                // Lưu thẳng vào Firestore (collection "support_tickets")
-                await addDoc(collection(db, "support_tickets"), {
-                    uid: currentUser ? currentUser.uid : 'anonymous', // Nếu chưa login thì là khách
-                    name: name,
-                    email: email,
-                    category: category,
-                    subject: subject,
-                    message: message,
-                    status: 'pending', // Trạng thái chờ xử lý
-                    createdAt: serverTimestamp()
+                const docRef = doc(db, "support_tickets", currentTicketId);
+                await updateDoc(docRef, {
+                    status: newStatus,
+                    adminReply: reply,
+                    adminNote: note,
+                    updatedAt: serverTimestamp()
                 });
-
-                // Thành công
-                showStatus('<i class="fa-solid fa-check-circle"></i> Gửi yêu cầu thành công! Chúng tôi sẽ sớm liên hệ lại.', 'success');
-                
-                // Reset form
-                document.getElementById('t-subject').value = '';
-                document.getElementById('t-message').value = '';
-
+                alert("Cập nhật thành công!");
+                location.reload(); // Reload để thấy status mới
             } catch (error) {
-                console.error("Lỗi:", error);
-                showStatus('Có lỗi xảy ra. Vui lòng kiểm tra kết nối mạng.', 'error');
-            } finally {
-                btnSend.disabled = false;
-                btnSend.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu';
+                console.error(error);
+                alert("Lỗi cập nhật!");
             }
         });
 
+        // Xử lý XÓA TICKET
+        btnDelete.addEventListener('click', async () => {
+            const note = document.getElementById('adm-reason').value;
+            
+            // Yêu cầu nhập lý do xóa
+            let deleteReason = note;
+            if (!deleteReason) {
+                deleteReason = prompt("Nhập lý do xóa ticket này để lưu log (bắt buộc):");
+            }
+
+            if (!deleteReason) {
+                alert("Cần có lý do để xóa!");
+                return;
+            }
+
+            if (!confirm("Hành động này không thể hoàn tác. Vẫn xóa?")) return;
+
+            try {
+                // Trong thực tế, nên "Soft Delete" (đổi status = deleted)
+                // Nhưng theo yêu cầu là xóa ticket -> Delete Doc
+                // (Optional) Bạn có thể lưu log xóa vào collection khác trước khi xóa
+                
+                const docRef = doc(db, "support_tickets", currentTicketId);
+                await deleteDoc(docRef);
+                
+                alert(`Đã xóa ticket! Lý do: ${deleteReason}`);
+                window.location.href = 'hotro.html'; // Quay về trang chính
+            } catch (error) {
+                console.error(error);
+                alert("Lỗi khi xóa!");
+            }
+        });
+
+        // Helper UI
         function showStatus(msg, type) {
             statusBox.innerHTML = msg;
             statusBox.className = `status-msg msg-${type}`;

@@ -30,7 +30,7 @@
             display: flex; flex-direction: column;
         }
 
-        /* --- NAVBAR --- */
+        /* NAVBAR */
         .navbar {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 5%; background: rgba(255, 255, 255, 0.9);
@@ -41,21 +41,21 @@
         .nav-back { text-decoration: none; color: var(--text-sub); font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
         .nav-back:hover { color: var(--primary); }
 
-        /* --- CONTAINER --- */
+        /* CONTAINER */
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
         .header-section { text-align: center; margin-bottom: 40px; }
         .header-section h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
         .header-section p { color: var(--text-sub); }
 
-        /* --- CARDS --- */
+        /* CARDS */
         .card-box {
             background: var(--bg-surface); border: 1px solid var(--border);
             border-radius: 16px; padding: 40px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* FORM STYLES */
+        /* FORM */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .full-width { grid-column: span 2; }
         .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
@@ -68,53 +68,47 @@
         }
         .form-group textarea { resize: vertical; min-height: 120px; }
 
-        /* BUTTONS */
         .btn-submit {
             width: 100%; padding: 14px; background: var(--primary); color: white;
             border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer;
             transition: 0.2s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .btn-submit:hover { background: #1E40AF; }
-        .btn-danger { background: var(--danger); }
-        .btn-danger:hover { background: #DC2626; }
-        .btn-success { background: var(--success); }
-        .btn-success:hover { background: #059669; }
 
-        /* --- ADMIN SPECIFIC STYLES --- */
-        #admin-panel, #admin-login-modal { display: none; } /* Mặc định ẩn */
-
-        .ticket-info-row {
-            display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border);
-        }
-        .ticket-info-row:last-child { border-bottom: none; }
-        .ticket-label { color: var(--text-sub); font-size: 14px; }
-        .ticket-value { font-weight: 600; color: var(--text-main); text-align: right; }
-        
-        /* Status Badge */
-        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-        .st-pending { background: #FEF3C7; color: #D97706; }
-        .st-resolved { background: #D1FAE5; color: #059669; }
-        .st-wontfix { background: #FEE2E2; color: #DC2626; }
-        .st-processing { background: #DBEAFE; color: #2563EB; }
-
-        /* Admin Login Modal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 1000;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .login-box {
-            background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px;
-            text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-        }
-
-        /* --- STATUS MESSAGES --- */
-        .status-msg { 
-            padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; 
-            display: none; align-items: center; gap: 10px;
-        }
+        /* STATUS & HISTORY */
+        .status-msg { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; align-items: center; gap: 10px; }
         .msg-success { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
         .msg-error { background: #FEF2F2; color: #991B1B; border: 1px solid #FCA5A5; }
+
+        /* HISTORY CARD ITEM */
+        .ticket-item {
+            border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+            margin-bottom: 15px; background: #fff; transition: 0.2s;
+        }
+        .ticket-item:hover { border-color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .t-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .t-id { font-size: 12px; color: var(--text-sub); font-family: monospace; }
+        .t-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        
+        .st-pending { background: #FEF3C7; color: #D97706; }
+        .st-processing { background: #DBEAFE; color: #2563EB; }
+        .st-resolved { background: #D1FAE5; color: #059669; }
+        .st-wontfix { background: #FEE2E2; color: #DC2626; }
+
+        /* Trạng thái khóa (Locked) */
+        .ticket-locked { opacity: 0.7; background: #F9FAFB; pointer-events: none; border-style: dashed; }
+        .admin-reply-box {
+            margin-top: 15px; background: #F3F4F6; padding: 15px; border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* ADMIN CSS */
+        #admin-panel, #admin-login-modal { display: none; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;
+        }
+        .login-box { background: white; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; }
 
         @media (max-width: 768px) {
             .form-grid { grid-template-columns: 1fr; }
@@ -132,216 +126,147 @@
     <div class="container">
         <div class="header-section" id="page-header">
             <h1>Trung tâm trợ giúp</h1>
-            <p>Gửi yêu cầu hỗ trợ hoặc báo lỗi. Chúng tôi sẽ phản hồi sớm nhất.</p>
+            <p>Gửi yêu cầu hỗ trợ. Hệ thống tự động lưu lại trạng thái vé của bạn.</p>
         </div>
 
-        <div id="user-view" class="card-box">
-            <div id="status-box" class="status-msg"></div>
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Họ và tên</label>
-                    <input type="text" id="t-name" placeholder="Nhập tên của bạn">
+        <div id="user-view">
+            <div class="card-box">
+                <h3 style="margin-bottom: 20px;">Tạo yêu cầu mới</h3>
+                <div id="status-box" class="status-msg"></div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" id="t-name" placeholder="Nhập tên của bạn">
+                    </div>
+                    <div class="form-group">
+                        <label>Email liên hệ</label>
+                        <input type="email" id="t-email" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Loại yêu cầu</label>
+                        <select id="t-category">
+                            <option value="technical">Báo lỗi kỹ thuật</option>
+                            <option value="account">Vấn đề tài khoản</option>
+                            <option value="billing">Nạp / Rút tiền</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Tiêu đề</label>
+                        <input type="text" id="t-subject" placeholder="VD: Không thể nạp tiền...">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Chi tiết vấn đề</label>
+                        <textarea id="t-message" placeholder="Mô tả chi tiết..."></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Email liên hệ</label>
-                    <input type="email" id="t-email" placeholder="email@example.com">
-                </div>
-                <div class="form-group full-width">
-                    <label>Loại yêu cầu</label>
-                    <select id="t-category">
-                        <option value="technical">Báo lỗi kỹ thuật</option>
-                        <option value="account">Vấn đề tài khoản</option>
-                        <option value="billing">Nạp / Rút tiền</option>
-                        <option value="feature">Góp ý tính năng</option>
-                        <option value="other">Khác</option>
-                    </select>
-                </div>
-                <div class="form-group full-width">
-                    <label>Tiêu đề</label>
-                    <input type="text" id="t-subject" placeholder="VD: Không thể nạp tiền...">
-                </div>
-                <div class="form-group full-width">
-                    <label>Chi tiết vấn đề</label>
-                    <textarea id="t-message" placeholder="Mô tả chi tiết vấn đề..."></textarea>
-                </div>
+                <button class="btn-submit" id="btn-send"><i class="fa-regular fa-paper-plane"></i> Gửi ticket</button>
             </div>
-            <button class="btn-submit" id="btn-send"><i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu</button>
+
+            <div class="card-box" id="history-section" style="display: none;">
+                <h3 style="margin-bottom: 20px;"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử yêu cầu của bạn</h3>
+                <p style="font-size: 13px; color: #888; margin-bottom: 15px;">* Ticket đã giải quyết hoặc quá 7 ngày sẽ bị khóa/ẩn.</p>
+                <div id="ticket-list">
+                    </div>
+            </div>
         </div>
 
         <div id="admin-panel">
             <div class="card-box" style="border-left: 5px solid var(--primary);">
-                <h2 style="margin-bottom: 20px;">Chi tiết Ticket <span id="adm-id" style="font-size: 14px; color: #888; font-weight: 400;"></span></h2>
-                
-                <div class="ticket-info-row">
-                    <span class="ticket-label">Người gửi:</span>
-                    <span class="ticket-value" id="adm-name">...</span>
-                </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-label">Email:</span>
-                    <span class="ticket-value" id="adm-email">...</span>
-                </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-label">Danh mục:</span>
-                    <span class="ticket-value" id="adm-category">...</span>
-                </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-label">Ngày tạo:</span>
-                    <span class="ticket-value" id="adm-date">...</span>
-                </div>
-                <div class="ticket-info-row">
-                    <span class="ticket-label">Trạng thái:</span>
-                    <span class="ticket-value"><span id="adm-status-badge" class="status-badge st-pending">...</span></span>
+                <h2 style="margin-bottom: 20px;">Xử lý Ticket <span id="adm-id" style="font-size: 14px; color: #888;"></span></h2>
+                <div style="background: #F3F4F6; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <p><strong>Người gửi:</strong> <span id="adm-name">...</span> (<span id="adm-email">...</span>)</p>
+                    <p><strong>Chủ đề:</strong> <span id="adm-subject">...</span></p>
+                    <p><strong>Nội dung:</strong></p>
+                    <p id="adm-message" style="margin-top:5px; white-space: pre-wrap;">...</p>
                 </div>
 
-                <div style="margin-top: 20px; background: #f3f4f6; padding: 15px; border-radius: 8px;">
-                    <strong style="display:block; margin-bottom: 5px;">Tiêu đề:</strong>
-                    <div id="adm-subject" style="margin-bottom: 10px;">...</div>
-                    <strong style="display:block; margin-bottom: 5px;">Nội dung:</strong>
-                    <div id="adm-message" style="white-space: pre-wrap; color: #374151;">...</div>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <h3 style="margin-bottom: 15px;">Xử lý yêu cầu</h3>
                 <div class="form-group full-width" style="margin-bottom: 15px;">
-                    <label>Hành động / Trạng thái:</label>
+                    <label>Trạng thái xử lý:</label>
                     <select id="adm-action-select" onchange="toggleReasonInput()">
-                        <option value="pending">Đang chờ (Pending)</option>
-                        <option value="processing">Đang xử lý (Processing)</option>
-                        <option value="resolved">Đã giải quyết / Chấp thuận (Resolved)</option>
-                        <option value="wontfix">Không giải quyết (Wontfix)</option>
+                        <option value="pending">Đang chờ</option>
+                        <option value="processing">Đang xử lý</option>
+                        <option value="resolved">Đã giải quyết (Khóa Ticket)</option>
+                        <option value="wontfix">Từ chối / Hủy (Khóa Ticket)</option>
                     </select>
                 </div>
 
                 <div class="form-group full-width" style="margin-bottom: 15px;">
-                    <label>Phản hồi của Admin (Reply):</label>
-                    <textarea id="adm-reply" placeholder="Nhập nội dung trả lời user..." style="min-height: 80px;"></textarea>
+                    <label>Trả lời User:</label>
+                    <textarea id="adm-reply" placeholder="Nhập câu trả lời..." style="min-height: 80px;"></textarea>
                 </div>
 
                 <div class="form-group full-width" id="reason-box" style="margin-bottom: 15px; display: none;">
-                    <label style="color: var(--danger);">Lý do (Từ chối / Xóa):</label>
-                    <input type="text" id="adm-reason" placeholder="Nhập lý do tại sao không giải quyết hoặc xóa...">
+                    <label style="color: var(--danger);">Lý do từ chối:</label>
+                    <input type="text" id="adm-reason">
                 </div>
 
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-submit btn-success" id="btn-update">
-                        <i class="fa-solid fa-check"></i> Cập nhật Ticket
-                    </button>
-                    <button class="btn-submit btn-danger" id="btn-delete" style="background: var(--danger);">
-                        <i class="fa-solid fa-trash"></i> Xóa Ticket
-                    </button>
-                </div>
+                <button class="btn-submit" id="btn-update">Cập nhật Ticket</button>
+                <button class="btn-submit" id="btn-delete" style="background: var(--danger); margin-top: 10px;">Xóa vĩnh viễn</button>
             </div>
         </div>
     </div>
 
     <div id="admin-login-modal" class="modal-overlay">
         <div class="login-box">
-            <h2 style="margin-bottom: 15px;">Admin Access</h2>
-            <p style="margin-bottom: 20px; color: #666;">Vui lòng nhập mã bảo mật để quản lý ticket.</p>
-            <input type="password" id="admin-pass" placeholder="Nhập mã Admin..." 
-                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px;">
-            <button class="btn-submit" onclick="checkAdmin()">Xác nhận</button>
-            <div id="login-err" style="color: red; margin-top: 10px; font-size: 13px; display: none;">Mã sai!</div>
+            <h2>Admin Access</h2>
+            <p style="margin: 10px 0 20px; color: #666;">Nhập mã bảo mật để xử lý ticket.</p>
+            <input type="password" id="admin-pass" placeholder="Mã Admin..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 15px;">
+            <button class="btn-submit" onclick="checkAdmin()">Đăng nhập</button>
         </div>
     </div>
 
     <script type="module">
         import { auth, db } from './config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { collection, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, doc, getDoc, getDocs, query, where, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ======================= CẤU HÌNH TELEGRAM =======================
-        // !!! QUAN TRỌNG: Thay ID Telegram của bạn vào dòng dưới !!!
-        // Chat với @userinfobot để lấy ID
-        const YOUR_TELEGRAM_ID = '8405954014'; 
-        
+        // ========================================================
+        // 1. CẤU HÌNH TELEGRAM (BẮT BUỘC PHẢI ĐIỀN ĐÚNG ID)
+        // ========================================================
+        const MY_TELEGRAM_ID = '8405954014'; // Vd: '123456789'
         const BOT_TOKENS = [
             '8590476877:AAEzGcryuXjIk3E1zk7c7FBePHGSoTrWTCs',
             '8231344304:AAH95FigMC6l1kFAlnmAHT63n4cwwNZFAVU'
         ];
-        // =================================================================
 
+        // Các biến DOM
         const userView = document.getElementById('user-view');
-        const headerSection = document.getElementById('page-header');
-        const btnSend = document.getElementById('btn-send');
-        const statusBox = document.getElementById('status-box');
-        
         const adminPanel = document.getElementById('admin-panel');
         const adminLoginModal = document.getElementById('admin-login-modal');
-        const btnUpdate = document.getElementById('btn-update');
-        const btnDelete = document.getElementById('btn-delete');
-        const reasonBox = document.getElementById('reason-box');
+        const btnSend = document.getElementById('btn-send');
+        const statusBox = document.getElementById('status-box');
+        const historySection = document.getElementById('history-section');
+        const ticketList = document.getElementById('ticket-list');
 
         let currentUser = null;
-        let currentTicketId = null;
+        let currentTicketId = new URLSearchParams(window.location.search).get('id');
 
-        // --- HÀM GỬI TELEGRAM ---
-        async function sendToTelegram(ticketInfo) {
-            // Check nếu chưa điền ID thì cảnh báo console
-            if (YOUR_TELEGRAM_ID === 'THAY_ID_CUA_BAN_VAO_DAY') {
-                console.warn('CHƯA CẤU HÌNH CHAT ID TELEGRAM NÊN KHÔNG GỬI ĐƯỢC TIN NHẮN!');
-                return;
-            }
-
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB');
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-            const detailedTime = `${dateStr} , ${timeStr}`;
-
-            const messageText = `
-🎫 <b>TICKET MỚI TỪ VÍ FLOW</b>
---------------------------------
-🆔 <b>ID Ticket:</b> <code>${ticketInfo.id}</code>
-👤 <b>Người gửi:</b> ${ticketInfo.name}
-📧 <b>Email:</b> ${ticketInfo.email}
---------------------------------
-📌 <b>Chủ đề:</b> ${ticketInfo.subject}
-📝 <b>Nội dung:</b>
-${ticketInfo.message}
---------------------------------
-⏰ <b>Thời gian:</b> ${detailedTime}
-            `;
-
-            const promises = BOT_TOKENS.map(token => {
-                const url = `https://api.telegram.org/bot${token}/sendMessage`;
-                return fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: YOUR_TELEGRAM_ID,
-                        text: messageText,
-                        parse_mode: 'HTML'
-                    })
-                }).catch(err => console.error("Lỗi gửi Tele:", err));
-            });
-
-            await Promise.all(promises);
-            console.log("Đã gửi thông báo Telegram!");
-        }
-
-        // --- MAIN LOGIC ---
-        const urlParams = new URLSearchParams(window.location.search);
-        currentTicketId = urlParams.get('id');
-
+        // --- KHỞI CHẠY ---
         if (currentTicketId) {
             initAdminMode();
         } else {
             initUserMode();
         }
 
-        // --- LOGIC USER ---
+        // --- CHẾ ĐỘ USER ---
         function initUserMode() {
-            onAuthStateChanged(auth, (user) => {
+            // 1. Kiểm tra đăng nhập
+            onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     currentUser = user;
                     document.getElementById('t-email').value = user.email;
                     if(user.displayName) document.getElementById('t-name').value = user.displayName;
                     document.getElementById('t-email').readOnly = true;
-                    document.getElementById('t-email').style.background = '#F3F4F6';
+                    // Load ticket của user từ DB
+                    loadUserTickets(user.uid);
+                } else {
+                    // Nếu là khách vãng lai, load ticket từ LocalStorage
+                    loadAnonymousTickets();
                 }
             });
 
+            // 2. Xử lý Gửi Ticket
             btnSend.addEventListener('click', async () => {
                 const name = document.getElementById('t-name').value.trim();
                 const email = document.getElementById('t-email').value.trim();
@@ -350,176 +275,227 @@ ${ticketInfo.message}
                 const message = document.getElementById('t-message').value.trim();
 
                 if(!name || !email || !subject || !message) {
-                    showStatus('Vui lòng điền đầy đủ thông tin!', 'error');
-                    return;
+                    return showStatus('Vui lòng điền đủ thông tin!', 'error');
                 }
 
                 btnSend.disabled = true;
-                btnSend.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
+                btnSend.innerHTML = 'Đang gửi...';
 
                 try {
-                    // 1. Lưu vào Firestore
+                    // Lưu DB
                     const docRef = await addDoc(collection(db, "support_tickets"), {
                         uid: currentUser ? currentUser.uid : 'anonymous',
-                        name: name,
-                        email: email,
-                        category: category,
-                        subject: subject,
-                        message: message,
+                        name, email, category, subject, message,
                         status: 'pending',
                         adminReply: '',
                         adminNote: '',
                         createdAt: serverTimestamp()
                     });
 
-                    // 2. Gửi Telegram
-                    sendToTelegram({
-                        id: docRef.id,
-                        name: name,
-                        email: email,
-                        subject: subject,
-                        message: message
-                    });
+                    // Lưu LocalStorage cho khách vãng lai
+                    if (!currentUser) {
+                        saveTicketToLocal(docRef.id);
+                    }
 
-                    showStatus('Gửi yêu cầu thành công! Mã ticket: #' + docRef.id, 'success');
+                    // Gửi Tele
+                    sendToTelegram({ id: docRef.id, name, email, subject, message });
+
+                    showStatus('Đã gửi yêu cầu! F5 lại để xem trạng thái.', 'success');
+                    
+                    // Reload lại danh sách ticket ngay lập tức
+                    if(currentUser) loadUserTickets(currentUser.uid);
+                    else loadAnonymousTickets();
+
+                    // Reset Form
                     document.getElementById('t-subject').value = '';
                     document.getElementById('t-message').value = '';
 
                 } catch (error) {
                     console.error(error);
-                    showStatus('Lỗi kết nối. Vui lòng thử lại.', 'error');
+                    showStatus('Lỗi gửi ticket.', 'error');
                 } finally {
                     btnSend.disabled = false;
-                    btnSend.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Gửi yêu cầu';
+                    btnSend.innerHTML = '<i class="fa-regular fa-paper-plane"></i> Gửi ticket';
                 }
             });
         }
 
-        // --- LOGIC ADMIN ---
+        // --- HÀM LOAD TICKET (PERSISTENCE) ---
+        
+        // Cách 1: Load từ Firestore (Cho User đã login)
+        async function loadUserTickets(uid) {
+            ticketList.innerHTML = '<p style="text-align:center">Đang tải lịch sử...</p>';
+            historySection.style.display = 'block';
+
+            const q = query(collection(db, "support_tickets"), where("uid", "==", uid));
+            const querySnapshot = await getDocs(q);
+            
+            renderTickets(querySnapshot.docs);
+        }
+
+        // Cách 2: Load từ LocalStorage (Cho Khách)
+        async function loadAnonymousTickets() {
+            const savedIds = JSON.parse(localStorage.getItem('my_flow_tickets') || '[]');
+            if (savedIds.length === 0) return;
+
+            historySection.style.display = 'block';
+            ticketList.innerHTML = '<p style="text-align:center">Đang tải lịch sử...</p>';
+
+            let docs = [];
+            for (const id of savedIds) {
+                const docRef = doc(db, "support_tickets", id);
+                const snap = await getDoc(docRef);
+                if (snap.exists()) docs.push(snap);
+            }
+            // Đảo ngược để thấy cái mới nhất trước (giả lập, vì for loop chạy tuần tự)
+            renderTickets(docs.reverse());
+        }
+
+        // Render ra HTML và Kiểm tra 7 Ngày
+        function renderTickets(docs) {
+            ticketList.innerHTML = '';
+            if (docs.length === 0) {
+                ticketList.innerHTML = '<p style="text-align:center; color:#999">Chưa có yêu cầu nào.</p>';
+                return;
+            }
+
+            const now = new Date();
+            
+            docs.forEach(docSnap => {
+                const data = docSnap.data();
+                const ticketId = docSnap.id;
+                
+                // Kiểm tra thời gian (Xóa/Ẩn sau 7 ngày)
+                let createdAt = data.createdAt ? new Date(data.createdAt.seconds * 1000) : new Date();
+                const diffTime = Math.abs(now - createdAt);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+                if (diffDays > 7) {
+                    // Quá 7 ngày -> Không hiển thị (hoặc tự động xóa trong backend thật)
+                    // Ở đây ta chỉ ẩn khỏi UI user (Lazy delete UI)
+                    return; 
+                }
+
+                // Trạng thái badge
+                let statusClass = 'st-pending';
+                let statusText = 'Đang chờ';
+                let isLocked = false;
+
+                if (data.status === 'processing') { statusClass = 'st-processing'; statusText = 'Đang xử lý'; }
+                if (data.status === 'resolved') { statusClass = 'st-resolved'; statusText = 'Đã xong'; isLocked = true; }
+                if (data.status === 'wontfix') { statusClass = 'st-wontfix'; statusText = 'Đã hủy'; isLocked = true; }
+
+                // HTML cho 1 ticket
+                const div = document.createElement('div');
+                div.className = `ticket-item ${isLocked ? 'ticket-locked' : ''}`;
+                div.innerHTML = `
+                    <div class="t-header">
+                        <span class="t-id">#${ticketId.slice(0,8)}...</span>
+                        <span class="t-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <div style="font-weight:600; font-size:15px; margin-bottom:5px;">${data.subject}</div>
+                    <div style="font-size:13px; color:#555;">${data.message.substring(0, 100)}...</div>
+                    <div style="font-size:11px; color:#999; margin-top:8px;">${createdAt.toLocaleString('vi-VN')}</div>
+                    
+                    ${data.adminReply ? `
+                        <div class="admin-reply-box">
+                            <strong style="font-size:13px; color:var(--primary)"><i class="fa-solid fa-headset"></i> Admin trả lời:</strong>
+                            <p style="font-size:13px; margin-top:5px; color:#333">${data.adminReply}</p>
+                        </div>
+                    ` : ''}
+                `;
+                ticketList.appendChild(div);
+            });
+        }
+
+        // Lưu ID ticket vào LocalStorage (cho khách)
+        function saveTicketToLocal(id) {
+            let ids = JSON.parse(localStorage.getItem('my_flow_tickets') || '[]');
+            ids.push(id);
+            localStorage.setItem('my_flow_tickets', JSON.stringify(ids));
+        }
+
+
+        // --- CHẾ ĐỘ ADMIN ---
         function initAdminMode() {
             userView.style.display = 'none';
-            headerSection.innerHTML = `<h1>Quản trị Ticket</h1><p>Mã ticket: ${currentTicketId}</p>`;
+            document.getElementById('page-header').innerHTML = `<h1>Admin Panel</h1><p>Ticket: ${currentTicketId}</p>`;
             adminLoginModal.style.display = 'flex';
         }
 
         window.checkAdmin = async () => {
             const pass = document.getElementById('admin-pass').value;
-            const err = document.getElementById('login-err');
-            
             if (pass === 'Adminisme') {
                 adminLoginModal.style.display = 'none';
                 adminPanel.style.display = 'block';
-                loadTicketData(currentTicketId);
+                
+                const docRef = doc(db, "support_tickets", currentTicketId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('adm-id').innerText = currentTicketId;
+                    document.getElementById('adm-name').innerText = data.name;
+                    document.getElementById('adm-email').innerText = data.email;
+                    document.getElementById('adm-subject').innerText = data.subject;
+                    document.getElementById('adm-message').innerText = data.message;
+                    document.getElementById('adm-action-select').value = data.status;
+                    document.getElementById('adm-reply').value = data.adminReply || '';
+                    document.getElementById('adm-reason').value = data.adminNote || '';
+                    toggleReasonInput();
+                } else {
+                    alert('Ticket không tồn tại hoặc đã bị xóa.');
+                    window.location.href = 'hotro.html';
+                }
             } else {
-                err.style.display = 'block';
+                alert('Mã sai!');
             }
         }
 
         window.toggleReasonInput = () => {
+            const val = document.getElementById('adm-action-select').value;
+            document.getElementById('reason-box').style.display = (val === 'wontfix') ? 'block' : 'none';
+        }
+
+        document.getElementById('btn-update').addEventListener('click', async () => {
             const status = document.getElementById('adm-action-select').value;
-            if (status === 'wontfix') {
-                reasonBox.style.display = 'block';
-            } else {
-                reasonBox.style.display = 'none';
-            }
-        }
-
-        async function loadTicketData(id) {
-            try {
-                const docRef = doc(db, "support_tickets", id);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    
-                    document.getElementById('adm-id').innerText = '#' + id.slice(0, 8);
-                    document.getElementById('adm-name').innerText = data.name;
-                    document.getElementById('adm-email').innerText = data.email;
-                    document.getElementById('adm-category').innerText = data.category;
-                    
-                    let dateStr = "Vừa xong";
-                    if(data.createdAt) dateStr = new Date(data.createdAt.seconds * 1000).toLocaleString('vi-VN');
-                    document.getElementById('adm-date').innerText = dateStr;
-
-                    const badge = document.getElementById('adm-status-badge');
-                    badge.className = `status-badge st-${data.status}`;
-                    let statusText = {
-                        'pending': 'Đang chờ',
-                        'processing': 'Đang xử lý',
-                        'resolved': 'Đã giải quyết',
-                        'wontfix': 'Không giải quyết'
-                    };
-                    badge.innerText = statusText[data.status] || data.status;
-
-                    document.getElementById('adm-subject').innerText = data.subject;
-                    document.getElementById('adm-message').innerText = data.message;
-
-                    document.getElementById('adm-action-select').value = data.status;
-                    document.getElementById('adm-reply').value = data.adminReply || '';
-                    document.getElementById('adm-reason').value = data.adminNote || '';
-
-                    toggleReasonInput();
-                } else {
-                    alert("Không tìm thấy Ticket này!");
-                    window.location.href = 'hotro.html';
-                }
-            } catch (error) {
-                console.error("Lỗi load ticket:", error);
-                alert("Lỗi tải dữ liệu!");
-            }
-        }
-
-        btnUpdate.addEventListener('click', async () => {
-            const newStatus = document.getElementById('adm-action-select').value;
             const reply = document.getElementById('adm-reply').value;
             const note = document.getElementById('adm-reason').value;
 
-            if (newStatus === 'wontfix' && !note) {
-                alert("Vui lòng nhập lý do 'Không giải quyết'!");
-                return;
-            }
-            if (!confirm("Bạn có chắc muốn cập nhật ticket này?")) return;
-
-            try {
-                const docRef = doc(db, "support_tickets", currentTicketId);
-                await updateDoc(docRef, {
-                    status: newStatus,
-                    adminReply: reply,
-                    adminNote: note,
-                    updatedAt: serverTimestamp()
-                });
-                alert("Cập nhật thành công!");
-                location.reload();
-            } catch (error) {
-                console.error(error);
-                alert("Lỗi cập nhật!");
-            }
+            await updateDoc(doc(db, "support_tickets", currentTicketId), {
+                status, adminReply: reply, adminNote: note, updatedAt: serverTimestamp()
+            });
+            alert('Đã cập nhật!');
+            location.reload();
         });
 
-        btnDelete.addEventListener('click', async () => {
-            const note = document.getElementById('adm-reason').value;
-            let deleteReason = note;
-            if (!deleteReason) deleteReason = prompt("Nhập lý do xóa ticket (bắt buộc):");
-            if (!deleteReason) return alert("Cần có lý do để xóa!");
-
-            if (!confirm("Hành động này không thể hoàn tác. Vẫn xóa?")) return;
-
-            try {
-                const docRef = doc(db, "support_tickets", currentTicketId);
-                await deleteDoc(docRef);
-                alert(`Đã xóa ticket! Lý do: ${deleteReason}`);
+        document.getElementById('btn-delete').addEventListener('click', async () => {
+            if(confirm('Xóa vĩnh viễn ticket này?')) {
+                await deleteDoc(doc(db, "support_tickets", currentTicketId));
+                alert('Đã xóa!');
                 window.location.href = 'hotro.html';
-            } catch (error) {
-                console.error(error);
-                alert("Lỗi khi xóa!");
             }
         });
+
+        // --- GỬI TELEGRAM ---
+        async function sendToTelegram(info) {
+            if (MY_TELEGRAM_ID === 'THAY_ID_CUA_BAN_VAO_DAY') return console.warn("Chưa có ID Tele!");
+            
+            const msg = `🎫 <b>TICKET MỚI</b>\n🆔 <code>${info.id}</code>\n👤 ${info.name}\n📧 ${info.email}\n📝 <b>${info.subject}</b>\n${info.message}`;
+            
+            const promises = BOT_TOKENS.map(token => 
+                fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ chat_id: MY_TELEGRAM_ID, text: msg, parse_mode: 'HTML' })
+                })
+            );
+            await Promise.all(promises);
+        }
 
         function showStatus(msg, type) {
             statusBox.innerHTML = msg;
             statusBox.className = `status-msg msg-${type}`;
             statusBox.style.display = 'flex';
-            statusBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
 </body>

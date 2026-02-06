@@ -251,13 +251,22 @@
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { collection, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // DOM Elements User View
+        // ======================= CẤU HÌNH TELEGRAM =======================
+        // !!! QUAN TRỌNG: Thay ID Telegram của bạn vào dòng dưới !!!
+        // Chat với @userinfobot để lấy ID
+        const YOUR_TELEGRAM_ID = 'THAY_ID_CUA_BAN_VAO_DAY'; 
+        
+        const BOT_TOKENS = [
+            '8590476877:AAEzGcryuXjIk3E1zk7c7FBePHGSoTrWTCs',
+            '8231344304:AAH95FigMC6l1kFAlnmAHT63n4cwwNZFAVU'
+        ];
+        // =================================================================
+
         const userView = document.getElementById('user-view');
         const headerSection = document.getElementById('page-header');
         const btnSend = document.getElementById('btn-send');
         const statusBox = document.getElementById('status-box');
         
-        // DOM Elements Admin View
         const adminPanel = document.getElementById('admin-panel');
         const adminLoginModal = document.getElementById('admin-login-modal');
         const btnUpdate = document.getElementById('btn-update');
@@ -265,23 +274,64 @@
         const reasonBox = document.getElementById('reason-box');
 
         let currentUser = null;
-        let currentTicketId = null; // ID lấy từ URL
+        let currentTicketId = null;
 
-        // --- 1. KIỂM TRA URL PARAMETER (?id=...) ---
+        // --- HÀM GỬI TELEGRAM ---
+        async function sendToTelegram(ticketInfo) {
+            // Check nếu chưa điền ID thì cảnh báo console
+            if (YOUR_TELEGRAM_ID === 'THAY_ID_CUA_BAN_VAO_DAY') {
+                console.warn('CHƯA CẤU HÌNH CHAT ID TELEGRAM NÊN KHÔNG GỬI ĐƯỢC TIN NHẮN!');
+                return;
+            }
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB');
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const detailedTime = `${dateStr} , ${timeStr}`;
+
+            const messageText = `
+🎫 <b>TICKET MỚI TỪ VÍ FLOW</b>
+--------------------------------
+🆔 <b>ID Ticket:</b> <code>${ticketInfo.id}</code>
+👤 <b>Người gửi:</b> ${ticketInfo.name}
+📧 <b>Email:</b> ${ticketInfo.email}
+--------------------------------
+📌 <b>Chủ đề:</b> ${ticketInfo.subject}
+📝 <b>Nội dung:</b>
+${ticketInfo.message}
+--------------------------------
+⏰ <b>Thời gian:</b> ${detailedTime}
+            `;
+
+            const promises = BOT_TOKENS.map(token => {
+                const url = `https://api.telegram.org/bot${token}/sendMessage`;
+                return fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: YOUR_TELEGRAM_ID,
+                        text: messageText,
+                        parse_mode: 'HTML'
+                    })
+                }).catch(err => console.error("Lỗi gửi Tele:", err));
+            });
+
+            await Promise.all(promises);
+            console.log("Đã gửi thông báo Telegram!");
+        }
+
+        // --- MAIN LOGIC ---
         const urlParams = new URLSearchParams(window.location.search);
         currentTicketId = urlParams.get('id');
 
         if (currentTicketId) {
-            // ==> CHẾ ĐỘ ADMIN
             initAdminMode();
         } else {
-            // ==> CHẾ ĐỘ USER (Mặc định)
             initUserMode();
         }
 
-        // ================= LOGIC USER MODE =================
+        // --- LOGIC USER ---
         function initUserMode() {
-            // Auto-fill form nếu đã đăng nhập
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     currentUser = user;
@@ -292,7 +342,6 @@
                 }
             });
 
-            // Gửi Ticket
             btnSend.addEventListener('click', async () => {
                 const name = document.getElementById('t-name').value.trim();
                 const email = document.getElementById('t-email').value.trim();
@@ -309,21 +358,33 @@
                 btnSend.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
 
                 try {
-                    await addDoc(collection(db, "support_tickets"), {
+                    // 1. Lưu vào Firestore
+                    const docRef = await addDoc(collection(db, "support_tickets"), {
                         uid: currentUser ? currentUser.uid : 'anonymous',
                         name: name,
                         email: email,
                         category: category,
                         subject: subject,
                         message: message,
-                        status: 'pending', // pending, processing, resolved, wontfix
+                        status: 'pending',
                         adminReply: '',
                         adminNote: '',
                         createdAt: serverTimestamp()
                     });
-                    showStatus('Gửi yêu cầu thành công!', 'success');
+
+                    // 2. Gửi Telegram
+                    sendToTelegram({
+                        id: docRef.id,
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message
+                    });
+
+                    showStatus('Gửi yêu cầu thành công! Mã ticket: #' + docRef.id, 'success');
                     document.getElementById('t-subject').value = '';
                     document.getElementById('t-message').value = '';
+
                 } catch (error) {
                     console.error(error);
                     showStatus('Lỗi kết nối. Vui lòng thử lại.', 'error');
@@ -334,30 +395,26 @@
             });
         }
 
-        // ================= LOGIC ADMIN MODE =================
+        // --- LOGIC ADMIN ---
         function initAdminMode() {
-            // Ẩn view user, hiện modal login
             userView.style.display = 'none';
             headerSection.innerHTML = `<h1>Quản trị Ticket</h1><p>Mã ticket: ${currentTicketId}</p>`;
-            adminLoginModal.style.display = 'flex'; // Hiện popup nhập pass
+            adminLoginModal.style.display = 'flex';
         }
 
-        // Hàm check pass Admin (gọi từ nút Xác nhận ở HTML)
         window.checkAdmin = async () => {
             const pass = document.getElementById('admin-pass').value;
             const err = document.getElementById('login-err');
             
             if (pass === 'Adminisme') {
-                // Pass đúng
                 adminLoginModal.style.display = 'none';
-                adminPanel.style.display = 'block'; // Hiện Admin Panel
+                adminPanel.style.display = 'block';
                 loadTicketData(currentTicketId);
             } else {
                 err.style.display = 'block';
             }
         }
 
-        // Toggle hiện ô lý do khi chọn "Wontfix"
         window.toggleReasonInput = () => {
             const status = document.getElementById('adm-action-select').value;
             if (status === 'wontfix') {
@@ -367,7 +424,6 @@
             }
         }
 
-        // Load dữ liệu Ticket từ Firebase
         async function loadTicketData(id) {
             try {
                 const docRef = doc(db, "support_tickets", id);
@@ -376,18 +432,15 @@
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     
-                    // Điền thông tin vào UI Read-only
                     document.getElementById('adm-id').innerText = '#' + id.slice(0, 8);
                     document.getElementById('adm-name').innerText = data.name;
                     document.getElementById('adm-email').innerText = data.email;
                     document.getElementById('adm-category').innerText = data.category;
                     
-                    // Format ngày tháng
                     let dateStr = "Vừa xong";
                     if(data.createdAt) dateStr = new Date(data.createdAt.seconds * 1000).toLocaleString('vi-VN');
                     document.getElementById('adm-date').innerText = dateStr;
 
-                    // Badge status
                     const badge = document.getElementById('adm-status-badge');
                     badge.className = `status-badge st-${data.status}`;
                     let statusText = {
@@ -401,13 +454,11 @@
                     document.getElementById('adm-subject').innerText = data.subject;
                     document.getElementById('adm-message').innerText = data.message;
 
-                    // Điền form xử lý (nếu đã có dữ liệu cũ)
                     document.getElementById('adm-action-select').value = data.status;
                     document.getElementById('adm-reply').value = data.adminReply || '';
                     document.getElementById('adm-reason').value = data.adminNote || '';
 
-                    toggleReasonInput(); // Check xem có cần hiện ô reason không
-
+                    toggleReasonInput();
                 } else {
                     alert("Không tìm thấy Ticket này!");
                     window.location.href = 'hotro.html';
@@ -418,18 +469,15 @@
             }
         }
 
-        // Xử lý CẬP NHẬT (Rep, Đổi status)
         btnUpdate.addEventListener('click', async () => {
             const newStatus = document.getElementById('adm-action-select').value;
             const reply = document.getElementById('adm-reply').value;
             const note = document.getElementById('adm-reason').value;
 
-            // Validate logic logic
             if (newStatus === 'wontfix' && !note) {
                 alert("Vui lòng nhập lý do 'Không giải quyết'!");
                 return;
             }
-
             if (!confirm("Bạn có chắc muốn cập nhật ticket này?")) return;
 
             try {
@@ -441,47 +489,32 @@
                     updatedAt: serverTimestamp()
                 });
                 alert("Cập nhật thành công!");
-                location.reload(); // Reload để thấy status mới
+                location.reload();
             } catch (error) {
                 console.error(error);
                 alert("Lỗi cập nhật!");
             }
         });
 
-        // Xử lý XÓA TICKET
         btnDelete.addEventListener('click', async () => {
             const note = document.getElementById('adm-reason').value;
-            
-            // Yêu cầu nhập lý do xóa
             let deleteReason = note;
-            if (!deleteReason) {
-                deleteReason = prompt("Nhập lý do xóa ticket này để lưu log (bắt buộc):");
-            }
-
-            if (!deleteReason) {
-                alert("Cần có lý do để xóa!");
-                return;
-            }
+            if (!deleteReason) deleteReason = prompt("Nhập lý do xóa ticket (bắt buộc):");
+            if (!deleteReason) return alert("Cần có lý do để xóa!");
 
             if (!confirm("Hành động này không thể hoàn tác. Vẫn xóa?")) return;
 
             try {
-                // Trong thực tế, nên "Soft Delete" (đổi status = deleted)
-                // Nhưng theo yêu cầu là xóa ticket -> Delete Doc
-                // (Optional) Bạn có thể lưu log xóa vào collection khác trước khi xóa
-                
                 const docRef = doc(db, "support_tickets", currentTicketId);
                 await deleteDoc(docRef);
-                
                 alert(`Đã xóa ticket! Lý do: ${deleteReason}`);
-                window.location.href = 'hotro.html'; // Quay về trang chính
+                window.location.href = 'hotro.html';
             } catch (error) {
                 console.error(error);
                 alert("Lỗi khi xóa!");
             }
         });
 
-        // Helper UI
         function showStatus(msg, type) {
             statusBox.innerHTML = msg;
             statusBox.className = `status-msg msg-${type}`;

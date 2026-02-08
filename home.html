@@ -177,6 +177,29 @@
             margin-right: 18px; font-size: 18px; flex-shrink: 0;
         }
 
+        /* --- PREMIUM UPGRADE UI --- */
+        .upgrade-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) { .upgrade-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+        .plan-card { border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; border: 2px solid transparent; position: relative; overflow: hidden; }
+        .plan-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+        .plan-plus { background: #E0F2FE; color: #0284C7; border: 1px solid #BAE6FD; }
+        .plan-plus:hover { border-color: #0284C7; }
+
+        .plan-pro { background: #DCFCE7; color: #16A34A; border: 1px solid #BBF7D0; }
+        .plan-pro:hover { border-color: #16A34A; }
+
+        .plan-premium { background: linear-gradient(135deg, #FEF9C3 0%, #FEF08A 100%); color: #854D0E; border: 1px solid #FDE047; }
+        .plan-premium:hover { border-color: #EAB308; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+
+        .plan-name { font-weight: 800; font-size: 18px; margin-bottom: 5px; text-transform: uppercase; }
+        .plan-price { font-size: 20px; font-weight: 700; margin-bottom: 15px; }
+        .plan-features { list-style: none; padding: 0; font-size: 12px; opacity: 0.9; text-align: left; margin-left: 10px; }
+        .plan-features li { margin-bottom: 5px; }
+        .plan-badge { position: absolute; top: 10px; right: 10px; background: white; color: inherit; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; }
+        .plan-icon { font-size: 24px; margin-bottom: 10px; }
+
         /* MOBILE & RESPONSIVE */
         .mobile-header { display: none; }
         .bottom-nav { display: none; }
@@ -533,7 +556,7 @@
                         </div>
                     </div>
                     
-                    <div class="card" style="background: linear-gradient(135deg, #111 0%, #333 100%); color: white; border:none;">
+                    <div class="card" style="background: linear-gradient(135deg, #111 0%, #333 100%); color: white; border:none; cursor: pointer;" onclick="app.openModal('upgrade')">
                         <div style="display:flex; gap:15px; align-items:center;">
                             <div style="width:40px; height:40px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center;">
                                 <i class="fa-solid fa-crown" style="color: #FFD700;"></i>
@@ -784,6 +807,76 @@
     </div>
 </div>
 
+<div class="modal-overlay" id="modal-upgrade">
+    <div class="modal-box" style="max-width: 500px;">
+        <h3>Nâng cấp tài khoản</h3>
+        <p style="color:#666; font-size:13px; margin-bottom:20px">Chọn gói phù hợp để mở khóa các tính năng giới hạn.</p>
+        
+        <div id="upgrade-step-1" class="upgrade-grid">
+            <div class="plan-card plan-plus" onclick="app.selectUpgradePlan('Plus', 10000)">
+                <div class="plan-badge">Phổ biến</div>
+                <div class="plan-name">PLUS</div>
+                <div class="plan-price">10.000 đ</div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-check"></i> Thêm 5 ví liên kết</li>
+                    <li><i class="fa-solid fa-check"></i> Báo cáo PDF</li>
+                </ul>
+            </div>
+
+            <div class="plan-card plan-pro" onclick="app.selectUpgradePlan('Pro', 30000)">
+                <div class="plan-name">PRO</div>
+                <div class="plan-price">30.000 đ</div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-check"></i> Mọi tính năng Plus</li>
+                    <li><i class="fa-solid fa-check"></i> Không giới hạn nhóm</li>
+                </ul>
+            </div>
+
+            <div class="plan-card plan-premium" onclick="app.selectUpgradePlan('Premium', 50000)">
+                <div class="plan-icon"><i class="fa-solid fa-crown"></i></div>
+                <div class="plan-name">PREMIUM</div>
+                <div class="plan-price">50.000 đ</div>
+                <ul class="plan-features">
+                    <li><i class="fa-solid fa-check"></i> <strong>Full tính năng</strong></li>
+                    <li><i class="fa-solid fa-check"></i> Hỗ trợ 24/7</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="upgrade-step-2" style="display:none; text-align:center; animation: fadeUp 0.3s">
+            <div style="background: #F8F9FA; padding: 15px; border-radius: 15px; margin-bottom: 15px;">
+                <p style="font-size:13px; color:#666; margin-bottom:10px">Quét mã để thanh toán:</p>
+                <img id="sepay-qr-img" src="" style="width: 200px; border-radius: 10px; border: 1px solid #eee;">
+                
+                <div style="margin-top:15px; text-align:left; font-size:13px; border-top:1px dashed #ccc; padding-top:10px">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px">
+                        <span>Ngân hàng:</span> <strong id="pay-bank-name">MBBank</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px">
+                        <span>Số tài khoản:</span> <strong id="pay-acc-num">...</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px">
+                        <span>Số tiền:</span> <strong id="pay-amount" style="color:var(--primary)">...</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center">
+                        <span>Nội dung:</span> 
+                        <strong id="pay-content" style="background:#FFF3E0; padding:2px 8px; border-radius:4px; color:#E65100; font-family:monospace">...</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="font-size:12px; color:#888; margin-bottom:15px">
+                <i class="fa-solid fa-circle-info"></i> Sau khi chuyển khoản, vui lòng chụp màn hình và gửi cho Admin để được kích hoạt.
+            </p>
+
+            <button class="btn-primary" onclick="app.closeModal()">Đã chuyển khoản</button>
+            <button class="btn-outline" style="margin-top:10px" onclick="app.backToPlans()">Chọn gói khác</button>
+        </div>
+
+        <button id="btn-close-upgrade" class="btn-outline" style="margin-top:20px" onclick="app.closeModal()">Đóng</button>
+    </div>
+</div>
+
 <div class="modal-overlay" id="modal-faceid-setup">
     <div class="modal-box" style="text-align:center; max-width: 600px;">
         <h3>Thiết lập FaceID</h3>
@@ -937,15 +1030,21 @@
         transferTarget: null, generatedOTP: null, 
         currentDeviceId: null, temp2FASecret: null,
         report: { inc: 0, exp: 0, fund: 0 }, 
-        html5QrcodeScanner: null, // Scanner Instance
+        html5QrcodeScanner: null, 
+
+        // --- ADMIN BANK CONFIG ---
+        adminBankInfo: {
+            acc: '0353256543', 
+            bank: 'MBBank', 
+            bankNameDisplay: 'MB Bank'
+        },
 
         init() {
-            this.loadTheme(); // Init Theme
+            this.loadTheme();
             let dId = localStorage.getItem('flow_device_id');
             if(!dId) { dId = 'dev_' + Math.random().toString(36).substr(2, 9); localStorage.setItem('flow_device_id', dId); }
             this.currentDeviceId = dId;
             
-            // Load Face API models
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
                 faceapi.nets.faceLandmark68Net.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models'),
@@ -960,11 +1059,9 @@
                     if (userDoc.exists()) {
                         this.userData = userDoc.data();
                         
-                        // LOGIN CHECKS
                         if(this.userData.is2FAEnabled) {
                             document.getElementById('auth-check-overlay').classList.add('active');
                         }
-                        // FACE ID CHECK
                         if(this.userData.faceDescriptor) {
                             this.checkLoginFaceID();
                         }
@@ -972,11 +1069,39 @@
                         this.renderProfile(); this.renderWallet(); this.listenGroup();
                         this.initDeviceHeartbeat();
                         this.listenUserFund(); 
-                        this.listenGoals(); // Start listening for savings goals
+                        this.listenGoals();
                     }
                     this.listenTransactions();
                 } else { window.location.href = 'dangnhap.html'; }
             });
+        },
+
+        // --- UPGRADE PREMIUM LOGIC ---
+        selectUpgradePlan(planType, amount) {
+            const username = this.userData.username || this.userData.name || "User";
+            // Xử lý chuỗi tên để không bị lỗi URL
+            const cleanName = username.replace(/[^a-zA-Z0-9]/g, ''); 
+            
+            const content = `${cleanName} - ${planType}`;
+            
+            // Link SePay: acc, bank, amount, des
+            const qrUrl = `https://qr.sepay.vn/img?acc=${this.adminBankInfo.acc}&bank=${this.adminBankInfo.bank}&amount=${amount}&des=${encodeURIComponent(content)}`;
+
+            document.getElementById('sepay-qr-img').src = qrUrl;
+            document.getElementById('pay-bank-name').innerText = this.adminBankInfo.bankNameDisplay;
+            document.getElementById('pay-acc-num').innerText = this.adminBankInfo.acc;
+            document.getElementById('pay-amount').innerText = new Intl.NumberFormat('vi-VN').format(amount) + ' đ';
+            document.getElementById('pay-content').innerText = content;
+
+            document.getElementById('upgrade-step-1').style.display = 'none';
+            document.getElementById('btn-close-upgrade').style.display = 'none';
+            document.getElementById('upgrade-step-2').style.display = 'block';
+        },
+
+        backToPlans() {
+            document.getElementById('upgrade-step-1').style.display = 'grid';
+            document.getElementById('btn-close-upgrade').style.display = 'block';
+            document.getElementById('upgrade-step-2').style.display = 'none';
         },
 
         // --- THEME & UTILS ---
@@ -1005,7 +1130,7 @@
         },
         closePopup() { document.getElementById('custom-popup').classList.remove('active'); },
         
-        // --- SAVINGS GOALS (New) ---
+        // --- SAVINGS GOALS ---
         async createGoal() {
             const name = document.getElementById('goal-name').value;
             const target = Number(document.getElementById('goal-target').value);
@@ -1017,7 +1142,7 @@
                     name: name,
                     targetAmount: target,
                     currentAmount: 0,
-                    icon: 'fa-bullseye', // Default icon
+                    icon: 'fa-bullseye',
                     createdAt: Date.now()
                 });
                 this.closeModal();
@@ -1072,15 +1197,12 @@
             if(!amt || amt <= 0) return;
 
             try {
-                // 1. Get current goal data
                 const goalRef = doc(db, "savings_goals", id);
                 const goalSnap = await getDoc(goalRef);
                 const current = goalSnap.data().currentAmount || 0;
 
-                // 2. Update goal amount
                 await updateDoc(goalRef, { currentAmount: current + amt });
 
-                // 3. Log as expense transaction
                 await addDoc(collection(db, "transactions"), { 
                     uid: this.currentUser.uid, 
                     amount: amt, 
@@ -1097,14 +1219,13 @@
             }
         },
 
-        // --- SPLIT BILL (New) ---
+        // --- SPLIT BILL ---
         openSplitBill() {
             if(!this.currentGroup) return this.showPopup('error', 'Bạn chưa có nhóm');
             this.openModal('split_bill');
             const list = document.getElementById('split-members-list');
             list.innerHTML = '';
             this.currentGroup.members.forEach(m => {
-                // Check all by default, except self maybe? Or check all.
                 list.innerHTML += `
                     <div style="display:flex; align-items:center; margin-bottom:8px;">
                         <input type="checkbox" class="split-check" value="${m.uid}" checked style="width:16px; height:16px; margin-right:10px">
@@ -1129,7 +1250,7 @@
                     groupId: this.currentGroup.id,
                     uid: this.currentUser.uid,
                     userName: this.userData.name,
-                    amount: 0, // This is an informational transaction mostly, or logic depends on how strict money flow is
+                    amount: 0,
                     note: `CHIA TIỀN: ${note}. Tổng ${new Intl.NumberFormat('vi-VN').format(amt)}. Chia cho: ${names}. Mỗi người: ${new Intl.NumberFormat('vi-VN').format(perPerson)}`,
                     timestamp: Date.now()
                 });
@@ -1166,7 +1287,7 @@
             setTimeout(() => t.classList.remove('show'), 4000);
         },
 
-        // --- FACE ID LOGIC (UPDATED) ---
+        // --- FACE ID LOGIC ---
         openSetupFaceID() {
             this.openModal('faceid-setup');
             const video = document.getElementById('video-setup');
@@ -1177,7 +1298,6 @@
             const video = document.getElementById('video-setup');
             const container = document.getElementById('face-container-setup'); 
 
-            // Giả lập trạng thái detect để UI phản hồi
             container.classList.add('face-detected');
 
             const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
@@ -1202,7 +1322,6 @@
         },
 
         async checkLoginFaceID() {
-            // [SESSION CHECK] Đã xác thực trong phiên này chưa?
             if (sessionStorage.getItem('isFaceVerified') === 'true') {
                 return; 
             }
@@ -1230,7 +1349,6 @@
                     const detection = await faceapi.detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
                     
                     if (detection) {
-                        // [UI CHANGE] Thấy mặt -> Đổi viền + Animation
                         container.classList.add('face-detected');
                         statusText.innerText = "Đang xác thực...";
                         statusText.style.color = "var(--primary)";
@@ -1241,7 +1359,6 @@
                             statusText.innerHTML = '<span style="color:var(--success)"><i class="fa-solid fa-check"></i> OK!</span>';
                             container.style.borderColor = 'var(--success)';
                             
-                            // [SESSION SAVE]
                             sessionStorage.setItem('isFaceVerified', 'true');
 
                             setTimeout(() => {
@@ -1250,7 +1367,6 @@
                             }, 800);
                         }
                     } else {
-                        // [UI CHANGE] Mất mặt -> Reset về viền đứt
                         container.classList.remove('face-detected');
                         statusText.innerText = "Di chuyển khuôn mặt vào khung...";
                         statusText.style.color = "#666";
@@ -1291,7 +1407,7 @@
             if(this.html5QrcodeScanner) { this.html5QrcodeScanner.stop().then(_ => { this.html5QrcodeScanner.clear(); this.closeModal(); }).catch(error => { console.error("Failed to stop scanner", error); this.closeModal(); }); } else { this.closeModal(); }
         },
 
-        // --- EXISTING LOGIC ---
+        // --- GENERAL LOGIC ---
         initDeviceHeartbeat() { this.sendHeartbeat(); setInterval(() => this.sendHeartbeat(), 10000); },
         async sendHeartbeat() {
             if(!this.currentUser) return;

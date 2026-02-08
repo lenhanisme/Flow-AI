@@ -281,8 +281,23 @@
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(5px); }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
-        .modal-box { background: white; width: 90%; max-width: 450px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); padding: 35px; transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; }
+        .modal-box { 
+            background: white; width: 90%; max-width: 450px; border-radius: 24px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); padding: 35px; 
+            transform: scale(0.9); transition: 0.3s; max-height: 90vh; overflow-y: auto; 
+            position: relative; /* Để đặt nút X */
+        }
         .modal-overlay.open .modal-box { transform: scale(1); }
+
+        /* Nút X Close Modal */
+        .btn-close-x {
+            position: absolute; top: 15px; right: 15px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: #f1f5f9; color: #64748b;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s; z-index: 10;
+        }
+        .btn-close-x:hover { background: #e2e8f0; color: #ef4444; }
 
         /* OTHER STYLES (Kept for compatibility) */
         .bank-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 20px; margin-bottom: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden; min-height: 180px; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
@@ -380,7 +395,7 @@
         /* Popup */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.3s; }
         .popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; }
+        .popup-box { background: white; padding: 30px; border-radius: 20px; width: 90%; max-width: 350px; text-align: center; position: relative; }
         
         .sec-step-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 14px; }
         .sec-score-box { text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 15px; }
@@ -808,8 +823,9 @@
     </nav>
 </div>
 
-<div class="popup-overlay" id="custom-popup">
+<div class="popup-overlay" id="custom-popup" onclick="if(event.target===this) app.closePopup()">
     <div class="popup-box">
+        <div class="btn-close-x" onclick="app.closePopup()"><i class="fa-solid fa-xmark"></i></div>
         <div class="popup-icon" id="pop-icon" style="font-size:40px; margin-bottom:15px"></div>
         <div class="popup-title" id="pop-title" style="font-weight:700; font-size:18px; margin-bottom:10px"></div>
         <div class="popup-desc" id="pop-desc" style="color:#666; margin-bottom:20px; font-size:14px"></div>
@@ -817,8 +833,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-upgrade">
+<div class="modal-overlay" id="modal-upgrade" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box" style="max-width: 500px;">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Nâng cấp tài khoản</h3>
         <p style="color:#666; font-size:13px; margin-bottom:20px">Chọn gói phù hợp để mở khóa các tính năng giới hạn.</p>
         
@@ -832,7 +849,6 @@
                     <li><i class="fa-solid fa-check"></i> Báo cáo PDF</li>
                 </ul>
             </div>
-
             <div class="plan-card plan-pro" onclick="app.selectUpgradePlan('Pro', 30000)">
                 <div class="plan-name">PRO</div>
                 <div class="plan-price">30.000 đ</div>
@@ -841,7 +857,6 @@
                     <li><i class="fa-solid fa-check"></i> Không giới hạn nhóm</li>
                 </ul>
             </div>
-
             <div class="plan-card plan-premium" onclick="app.selectUpgradePlan('Premium', 50000)">
                 <div class="plan-icon"><i class="fa-solid fa-crown"></i></div>
                 <div class="plan-name">PREMIUM</div>
@@ -882,13 +897,12 @@
             <button class="btn-primary" onclick="app.closeModal()">Đã chuyển khoản</button>
             <button class="btn-outline" style="margin-top:10px" onclick="app.backToPlans()">Chọn gói khác</button>
         </div>
-
-        <button id="btn-close-upgrade" class="btn-outline" style="margin-top:20px" onclick="app.closeModal()">Đóng</button>
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-faceid-setup">
+<div class="modal-overlay" id="modal-faceid-setup" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box" style="text-align:center; max-width: 600px;">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Thiết lập FaceID</h3>
         <p class="face-instruction">Giữ khuôn mặt trong khung hình</p>
         <div class="face-scan-container" id="face-container-setup">
@@ -901,8 +915,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-setup_2fa">
+<div class="modal-overlay" id="modal-setup_2fa" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box" style="text-align:center">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Thiết lập 2FA</h3>
         <p style="font-size:13px; color:#666; margin-bottom:15px">Quét mã QR bên dưới bằng Google Authenticator</p>
         <div id="qrcode" style="display:flex; justify-content:center; margin:15px 0"></div>
@@ -914,8 +929,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-my-qr">
+<div class="modal-overlay" id="modal-my-qr" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box" style="text-align:center; background:linear-gradient(135deg, #4361EE 0%, #4CC9F0 100%); color:white">
+        <div class="btn-close-x" style="background:rgba(255,255,255,0.2); color:white" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3 style="margin-bottom:5px">Mã Nhận Tiền</h3>
         <p style="font-size:13px; margin-bottom:20px; opacity:0.9">Đưa mã này cho người khác để quét</p>
         <div style="background:white; padding:20px; border-radius:20px; display:inline-block; box-shadow: 0 10px 30px rgba(0,0,0,0.2)">
@@ -927,16 +943,18 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-scan-qr">
+<div class="modal-overlay" id="modal-scan-qr" onclick="if(event.target===this) app.closeScanner()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeScanner()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Quét Mã Chuyển Tiền</h3>
         <div id="qr-reader"></div>
         <button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeScanner()">Hủy</button>
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-backup_codes">
+<div class="modal-overlay" id="modal-backup_codes" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Mã dự phòng</h3>
         <p style="font-size:13px; color:#666">Lưu lại các mã này để đăng nhập khi mất điện thoại. Mỗi mã chỉ dùng 1 lần.</p>
         <div id="backup-codes-list" class="backup-codes-grid"></div>
@@ -944,8 +962,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-security_check">
+<div class="modal-overlay" id="modal-security_check" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3><i class="fa-solid fa-user-shield" style="color:var(--primary)"></i> Quét Bảo Mật</h3>
         <p style="font-size:13px; color:#666; margin-bottom:15px">Hệ thống đang phân tích dữ liệu thực tế...</p>
         <div class="security-progress" style="background:#eee; height:6px; border-radius:3px; overflow:hidden; margin-bottom:15px">
@@ -961,8 +980,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-add_goal">
+<div class="modal-overlay" id="modal-add_goal" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Tạo Mục Tiêu</h3>
         <input type="text" id="goal-name" class="form-input" placeholder="Tên mục tiêu (VD: Mua xe)">
         <input type="number" id="goal-target" class="form-input" placeholder="Số tiền cần (VD: 50.000.000)">
@@ -971,8 +991,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-split_bill">
+<div class="modal-overlay" id="modal-split_bill" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Chia tiền hóa đơn</h3>
         <input type="number" id="split-amt" class="form-input" placeholder="Tổng tiền đã chi">
         <input type="text" id="split-note" class="form-input" placeholder="Nội dung (Ăn uống, Grab...)">
@@ -982,8 +1003,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-deposit_goal">
+<div class="modal-overlay" id="modal-deposit_goal" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Nạp tiền vào mục tiêu</h3>
         <div id="deposit-goal-name" style="margin-bottom:10px; font-weight:600"></div>
         <input type="number" id="deposit-amt" class="form-input" placeholder="Số tiền muốn nạp">
@@ -993,8 +1015,9 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-create_group">
+<div class="modal-overlay" id="modal-create_group" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box" style="text-align: center;">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <div style="font-size:40px; color:var(--primary); margin-bottom:15px;"><i class="fa-solid fa-users"></i></div>
         <h3 style="margin-bottom: 20px;">Tạo Nhóm Mới</h3>
         <input type="text" id="group-name-inp" class="form-input" placeholder="Đặt tên nhóm của bạn..." style="text-align:center; font-weight:500;">
@@ -1003,12 +1026,30 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-group_contribute"><div class="modal-box"><h3>Đóng quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
-<div class="modal-overlay" id="modal-invite_member"><div class="modal-box"><h3>Mời thành viên</h3><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Mời</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
-<div class="modal-overlay" id="modal-add_trans"><div class="modal-box"><h3>Thêm GD</h3><div style="display:flex;gap:10px;margin-bottom:15px"><button class="btn-primary" style="flex:1;background:#EF476F" onclick="app.setType('exp',this)">Chi tiêu</button><button class="btn-primary" style="flex:1;background:#eee;color:#333" onclick="app.setType('inc',this)">Thu nhập</button></div><input type="number" id="inp-amt" class="form-input" placeholder="Số tiền"><input type="text" id="inp-desc" class="form-input" placeholder="Nội dung"><button class="btn-primary" onclick="app.addTransaction()">Lưu</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button></div></div>
-
-<div class="modal-overlay" id="modal-transfer">
+<div class="modal-overlay" id="modal-group_contribute" onclick="if(event.target===this) app.closeModal()">
     <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
+        <h3>Đóng quỹ</h3><input type="number" id="contribute-amt" class="form-input" placeholder="Số tiền"><input type="text" id="contribute-note" class="form-input" placeholder="Ghi chú"><button class="btn-primary" onclick="app.contributeFund()">Xác nhận</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-invite_member" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
+        <h3>Mời thành viên</h3><input type="email" id="invite-email" class="form-input" placeholder="Email"><button class="btn-primary" onclick="app.inviteMember()">Mời</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-add_trans" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
+        <h3>Thêm GD</h3><div style="display:flex;gap:10px;margin-bottom:15px"><button class="btn-primary" style="flex:1;background:#EF476F" onclick="app.setType('exp',this)">Chi tiêu</button><button class="btn-primary" style="flex:1;background:#eee;color:#333" onclick="app.setType('inc',this)">Thu nhập</button></div><input type="number" id="inp-amt" class="form-input" placeholder="Số tiền"><input type="text" id="inp-desc" class="form-input" placeholder="Nội dung"><button class="btn-primary" onclick="app.addTransaction()">Lưu</button><button class="btn-primary" style="background:#eee;color:#333;margin-top:10px" onclick="app.closeModal()">Hủy</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-transfer" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
         <h3>Chuyển tiền</h3>
         <div class="input-group">
             <input type="text" id="tf-dest" class="form-input" placeholder="Nhập Username hoặc Email" onblur="app.checkUser(this)">
@@ -1028,8 +1069,10 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="modal-link_bank">
-    <div class="modal-box"><h3>Liên kết Ngân hàng</h3>
+<div class="modal-overlay" id="modal-link_bank" onclick="if(event.target===this) app.closeModal()">
+    <div class="modal-box">
+        <div class="btn-close-x" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></div>
+        <h3>Liên kết Ngân hàng</h3>
         <select id="bank-select" class="form-input">
             <option value="">-- Chọn ngân hàng --</option>
             <optgroup label="Ngân hàng Nhà nước & Big 4">
@@ -1058,6 +1101,27 @@
                 <option value="PublicBank">PublicBank</option>
                 <option value="OCB">OCB</option>
                 <option value="KienLongBank">KienLongBank</option>
+                <option value="NamABank">Nam A Bank</option>
+                <option value="GPBank">GPBank</option>
+                <option value="PVcomBank">PVcomBank</option>
+                <option value="NCB">NCB</option>
+                <option value="SCB">SCB</option>
+                <option value="PGBank">PGBank</option>
+                <option value="SaigonBank">SaigonBank</option>
+                <option value="DongABank">DongA Bank</option>
+                <option value="StandardChartered">Standard Chartered</option>
+                <option value="Oceanbank">Oceanbank</option>
+                <option value="VRB">VRB</option>
+                <option value="VietABank">VietABank</option>
+                <option value="VietBank">VietBank</option>
+                <option value="IndovinaBank">Indovina Bank</option>
+                <option value="BaoVietBank">BaoViet Bank</option>
+                <option value="SHB">SHB</option>
+                <option value="CBBank">CBBank</option>
+                <option value="CIMB">CIMB</option>
+                <option value="HSBC">HSBC</option>
+                <option value="UOB">UOB</option>
+                <option value="Woori">Woori Bank</option>
                 <option value="Momo">Ví Momo</option>
                 <option value="ZaloPay">ZaloPay</option>
             </optgroup>
@@ -1081,7 +1145,7 @@
 
         // --- ADMIN BANK CONFIG ---
         adminBankInfo: {
-            acc: '0817047250', 
+            acc: '0353256543', 
             bank: 'MBBank', 
             bankNameDisplay: 'MB Bank'
         },
@@ -1626,4 +1690,3 @@
 </script>
 </body>
 </html>
-
